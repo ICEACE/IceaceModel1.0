@@ -1,0 +1,905 @@
+<xmodel version="2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation='http://flame.ac.uk/schema/xmml_v2.xsd'>
+    <!-- Model descriptions  -->
+    <name>ICEACE</name>
+    <version>Version 0.1.0, 29/03/2012</version>
+    <description>'Labour Market.</description>
+    <environment>
+        <constants>
+            <variable>
+                <type>double</type>
+                <name>turnover_probability</name>
+                <description>A probability of a uniform distribution that determines turnover rate.</description>
+            </variable>
+        </constants>
+        <functionFiles>
+        <!-- List of C files that hold agent functions -->
+            <file>household_functions_labour.c</file>
+            <file>firm_functions_labour.c</file>
+            <file>jpoffice_functions_labour.c</file>
+            <file>centralbank_functions_labour.c</file>
+            <file>government_functions_labour.c</file>
+            <file>equityfund_functions_labour.c</file>
+        </functionFiles>
+        <dataTypes>
+            <dataType>
+                <name>vacancy</name>
+                <description>Firm vacancy information.</description>
+                <variables>
+                    <variable>
+                        <type>int</type>
+                        <name>id</name>
+                        <description>Id of the firm agent.</description>
+                    </variable>
+                    <variable>
+                        <type>double</type>
+                        <name>wage</name>
+                        <description>Wage offered by the firm that holds the vacancy.</description>
+                    </variable>
+                </variables>
+            </dataType>
+            <dataType>
+                <name>employee</name>
+                <description>Job applicant data.</description>
+                <variables>
+                    <variable>
+                        <type>int</type>
+                        <name>id</name>
+                        <description>Id of the household agent.</description>
+                    </variable>
+                    <variable>
+                        <type>double</type>
+                        <name>wage</name>
+                        <description>Current wage of the job applicant.</description>
+                    </variable>
+                </variables>
+            </dataType>
+        </dataTypes>
+    </environment>
+	<!-- List of agents -->
+    <agents>
+        <xagent>
+            <name>jpoffice</name>
+            <description>Job Placement Office, an institutional agent. The agent performs job placement work in labour market.</description>
+            <!-- Agent memory holding a list of variables -->
+            <memory>
+                <variable>
+                    <type>int</type>
+                    <name>day_of_month_to_act</name>
+                    <description>The day of mont to perform job matching.</description>
+                </variable>
+            </memory>
+            <!-- List of agent functions -->
+            <functions>
+                <function>
+                    <name>idle</name>
+                    <description>Job matching is not active.</description>
+                    <currentState>JPOLabourMarket</currentState>
+                    <nextState>end</nextState>
+                    <condition>
+                        <not><time>
+                        <period>monthly</period>
+                        <phase>a.day_of_month_to_act</phase>
+                        </time></not>
+                    </condition>
+                </function>
+                <function>
+                    <name>jpoffice_labour_stage1</name>
+                    <description>Collecting vacancies and job applications. Vacancies and turnover applications are matched.</description>
+                    <currentState>JPOLabourMarket</currentState>
+                    <nextState>JPOLabourStage2</nextState>
+                    <condition>
+                        <time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_to_act</phase>
+                        </time>
+                    </condition>
+                    <inputs>
+                        <input>
+                        <!-- job announcement messages -->
+                            <messageName>vacancy_stage1</messageName>
+                            <sort>
+                                <key>wage</key>
+                                <order>descend</order>
+                            </sort>
+                        </input>
+                        <input>
+                            <messageName>job_application_stage1</messageName>
+                            <sort>
+                                <key>employee_id</key>
+                                <order>ascend</order>
+                            </sort>
+                        </input>
+                    </inputs>
+                    <outputs>
+                        <output>
+                            <messageName>job_match_stage1</messageName>
+                        </output>
+                    </outputs>
+                </function>
+                <function>
+                    <name>jpoffice_labour_stage2</name>
+                    <description>Second stage job matching.</description>
+                    <currentState>JPOLabourStage2</currentState>
+                    <nextState>end</nextState>
+                    <inputs>
+                        <input>
+                        <!-- job announcement messages -->
+                            <messageName>vacancy_stage2</messageName>
+                            <sort>
+                                <key>wage</key>
+                                <order>descend</order>
+                            </sort>
+                        </input>
+                        <input>
+                            <messageName>job_application_stage2</messageName>
+                            <sort>
+                                <key>employee_id</key>
+                                <order>ascend</order>
+                            </sort>
+                        </input>
+                    </inputs>
+                    <outputs>
+                        <output>
+                            <messageName>job_match_stage2</messageName>
+                        </output>
+                    </outputs>
+                </function>
+            </functions>
+        </xagent>
+        <xagent>
+            <name>household</name>
+            <description>A simple consumer and labourer agent.</description>
+            <!-- Agent memory holding a list of variables -->
+            <memory>
+                <variable>
+                    <type>int</type>
+                    <name>my_employer_id</name>
+                    <description>Employer ID of an household. A 0 means unemployed.</description>
+                </variable>
+                <variable>
+                    <type>double</type>
+                    <name>wage</name>
+                    <description>Current wage earned.</description>
+                </variable>
+                <variable>
+                    <type>double</type>
+                    <name>government_benefits</name>
+                    <description>General benefit plus unemployment benefit recieved from the government.</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>day_of_month_to_act</name>
+                    <description>The day of the month to act for seeking a job.</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>day_of_month_wage_recieved</name>
+                    <description>The day of the month to wage recieved.</description>
+                </variable>
+            </memory>
+            <!-- List of agent functions -->
+            <functions>
+                <function>
+                    <name>idle</name>
+                    <description>Job searching is not active.</description>
+                    <currentState>HHLabourStart</currentState>
+                    <nextState>HHConsumptionStart</nextState>
+                    <condition>
+                        <not><time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_to_act</phase>
+                        </time></not>
+                    </condition>
+                </function>
+                <function>
+                    <name>household_labour_check_fired</name>
+                    <description>Household checks layout status.</description>
+                    <currentState>HHLabourStart</currentState>
+                    <nextState>HHLabourStage1</nextState>
+                    <condition>
+                        <time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_to_act</phase>
+                        </time>
+                    </condition>
+                    <inputs> <!-- fired messages -->
+                        <input>
+                            <messageName>fired</messageName>
+                            <filter>
+                            <!-- checks self id. -->
+                                <lhs><value>a.id</value></lhs>
+                                <op>EQ</op>
+                                <rhs><value>m.employee_id</value></rhs>
+                            </filter>
+                        </input>
+                    </inputs>
+                </function>
+                <function>
+                    <name>household_labour_reemployment_application</name>
+                    <description>Stage 01 of job applications. Already employed households apply with a turnover probability</description>
+                    <currentState>HHLabourStage1</currentState>
+                    <nextState>HHLabourStage2</nextState>
+                    <condition>
+                        <lhs>
+                            <value>a.my_employer_id</value>
+                        </lhs>
+                        <op>GT</op>
+                        <rhs>
+                            <value>0</value>
+                        </rhs>
+                    </condition>
+                    <outputs>
+                        <output>
+                            <messageName>job_application_stage1</messageName>
+                        </output>
+                    </outputs>
+                </function>
+                <function>
+                    <name>idle</name>
+                    <description>Stage 01 of job applications. Unemployed households skip this stage</description>
+                    <currentState>HHLabourStage1</currentState>
+                    <nextState>HHLabourStage1Applications</nextState>
+                    <condition>
+                        <not>
+                            <lhs><value>a.my_employer_id</value></lhs>
+                            <op>GT</op>
+                            <rhs><value>0</value></rhs>
+                        </not>
+                    </condition>
+                </function>
+                <function>
+                    <name>household_labour_turnover</name>
+                    <description>A job turnover.</description>
+                    <currentState>HHLabourStage2</currentState>
+                    <nextState>HHConsumptionStart</nextState>
+                    <inputs>
+                        <input>
+                            <messageName>job_match_stage1</messageName>
+                            <filter>
+                                <lhs><value>a.id</value></lhs>
+                                <op>EQ</op>
+                                <rhs><value>m.employee_id</value></rhs>
+                            </filter>
+                        </input>
+                    </inputs>
+                    <outputs>
+                        <output>
+                            <messageName>job_change</messageName>
+                        </output>
+                    </outputs>
+                </function>
+                <function>
+                    <name>household_labour_employment_application</name>
+                    <description>Stage 02 of job market. Unemployed households apply.</description>
+                    <currentState>HHLabourStage1Applications</currentState>
+                    <nextState>HHLabourStage1Placement</nextState>
+                    <outputs>
+                        <output>
+                            <messageName>job_application_stage2</messageName>
+                        </output>
+                    </outputs>
+                </function>
+                <function>
+                    <name>household_labour_employment</name>
+                    <description>A new employment.</description>
+                    <currentState>HHLabourStage1Placement</currentState>
+                    <nextState>HHConsumptionStart</nextState>
+                    <inputs>
+                        <input>
+                        <messageName>job_match_stage2</messageName>
+                            <filter>
+                                <lhs><value>a.id</value></lhs>
+                                <op>EQ</op>
+                                <rhs><value>m.employee_id</value></rhs>
+                            </filter>
+                        </input>
+                    </inputs>
+                </function>
+                <function>
+                    <name>idle</name>
+                    <description>Does nothing at the point when it is not last day of the month.</description>
+                    <currentState>HHLabourPayroll</currentState>
+                    <nextState>HouseholdUpdateDeposits</nextState>
+                    <condition>
+                        <not><time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_wage_recieved</phase>
+                        </time></not>
+                    </condition>
+                </function>
+                <function>
+                    <name>household_labour_receive_wage</name>
+                    <description>Receives payment and update wage history.</description>
+                    <currentState>HHLabourPayroll</currentState>
+                    <nextState>HHLabourEmploymentStatus</nextState>
+                    <condition>
+                        <time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_wage_recieved</phase>
+                        </time>
+                    </condition>
+                    <inputs>
+                        <input>
+                            <messageName>firm_household_wage_payment</messageName>
+                            <filter>
+                                <lhs><value>a.my_employer_id</value></lhs>
+                                <op>EQ</op>
+                                <rhs><value>m.firm_id</value></rhs>
+                            </filter>
+                        </input>
+                    </inputs>
+                </function>
+                <function>
+                    <name>household_labour_report_status</name>
+                    <description>Sends out its employment status.</description>
+                    <currentState>HHLabourEmploymentStatus</currentState>
+                    <nextState>HouseholdUpdateDeposits</nextState>
+                    <outputs>
+                        <output>
+                            <messageName>employment_status</messageName>
+                        </output>
+                    </outputs>
+                </function>
+            </functions>
+        </xagent>
+        <xagent>
+            <name>firm</name>
+            <description>A simple production firm agent.</description>
+            <!-- Agent memory holding a list of variables -->
+            <memory>
+                <variable>
+                    <type>int_array</type>
+                    <name>employees</name>
+                    <description>Holds employee ids</description>
+                </variable>
+                <variable>
+                    <type>double</type>
+                    <name>wage_offer</name>
+                    <description>Monthly wage offer.</description>
+                </variable>
+                <variable>
+                    <type>double</type>
+                    <name>average_wage</name>
+                    <description>Average wage in the market.</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>no_employees</name>
+                    <description>Number of employees</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>vacancies</name>
+                    <description>Number of vacancies</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>employees_needed</name>
+                    <description>Number of workers a firm needs for next production</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>day_of_month_wages_paid</name>
+                    <description>The day of the month wages paid.</description>
+                </variable>
+            </memory>
+            <!-- List of firm functions -->
+            <functions>
+                <function>
+                    <name>idle</name>
+                    <description>Labour hiring is not active.</description>
+                    <currentState>FirmLabourStart</currentState>
+                    <nextState>FirmConsumptionStart</nextState>
+                    <condition>
+                        <not>
+                            <time>
+                                <period>monthly</period>
+                                <phase>a.day_of_month_to_act</phase>
+                            </time>
+                        </not>
+                    </condition>
+                </function>
+                <function>
+                    <name>firm_labour_workforce_needed</name>
+                    <description>The firm computes required number of employees needed for incoming month.</description>
+                    <currentState>FirmLabourStart</currentState>
+                    <nextState>FirmLabourStage1</nextState>
+                    <condition>
+                        <time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_to_act</phase>
+                        </time>
+                    </condition>
+                </function>
+                <function>
+                    <name>idle</name>
+                    <description>Firm does nothing</description>
+                    <currentState>FirmLabourStage1</currentState>
+                    <nextState>FirmLabourStage1End</nextState>
+                    <condition>
+                        <lhs>
+                            <value>a.vacancies</value>
+                        </lhs>
+                        <op>EQ</op>
+                        <rhs>
+                            <value>0</value>
+                        </rhs>
+                    </condition>
+                    <inputs/>
+                    <outputs/>
+                </function>
+                <function>
+                    <name>firm_labour_fire</name>
+                    <description>The firm decides to fire if employee needed is below number of employees it does have.</description>
+                    <currentState>FirmLabourStage1</currentState>
+                    <nextState>FirmLabourStage1End</nextState>
+                    <condition>
+                        <lhs>
+                            <value>a.vacancies</value>
+                        </lhs>
+                        <op>LT</op>
+                        <rhs>
+                            <value>0</value>
+                        </rhs>
+                    </condition>
+                    <outputs>
+                    <!-- List of possible messages sent out-->
+                        <output>
+                            <messageName>fired</messageName>
+                        </output>
+                    </outputs>
+                </function>
+                <function>
+                    <name>firm_labour_job_announcement_stage1</name>
+                    <description>The agent posts available positions.</description>
+                    <currentState>FirmLabourStage1</currentState>
+                    <nextState>FirmLabourStage1Application</nextState>
+                    <condition>
+                        <lhs>
+                            <value>a.vacancies</value>
+                        </lhs>
+                        <op>GT</op>
+                        <rhs>
+                            <value>0</value>
+                        </rhs>
+                    </condition>
+                    <outputs>
+                    <!-- List of possible messages sent out-->
+                        <output>
+                            <messageName>vacancy_stage1</messageName>
+                        </output>
+                    </outputs>
+                </function>
+                <function>
+                    <name>firm_labour_job_offer_stage1</name>
+                    <description>The agent takes job matches done by jpoffice.</description>
+                    <currentState>FirmLabourStage1Application</currentState>
+                    <nextState>FirmLabourStage1End</nextState>
+                    <inputs>
+                        <input>
+                            <messageName>job_match_stage1</messageName>
+                            <filter>
+                            <!-- checks applications sent to the firm. -->
+                                <lhs><value>a.id</value></lhs>
+                                <op>EQ</op>
+                                <rhs><value>m.employer_id</value></rhs>
+                            </filter>
+                        </input>
+                    </inputs>
+                </function>
+                <function>
+                    <name>firm_labour_update</name>
+                    <description>The agent updates labour status. In case of resignments.</description>
+                        <currentState>FirmLabourStage1End</currentState>
+                        <nextState>FirmLabourStage2</nextState>
+                        <inputs>
+                            <input>
+                                <messageName>job_change</messageName>
+                                <filter>
+                                <!-- Checks worker resignation. -->
+                                <lhs><value>a.id</value></lhs>
+                                    <op>EQ</op>
+                                <rhs><value>m.employer_id</value></rhs>
+                                </filter>
+                            </input>
+                        </inputs>
+                </function>
+                <function>
+                    <name>firm_labour_job_announcement_stage2</name>
+                    <description>The agent posts unfilled positions.</description>
+                    <currentState>FirmLabourStage2</currentState>
+                    <nextState>FirmLabourStage2End</nextState>
+                    <condition>
+                        <lhs>
+                            <value>a.vacancies</value>
+                        </lhs>
+                        <op>GEQ</op>
+                        <rhs>
+                            <value>1</value>
+                        </rhs>
+                    </condition>
+                    <outputs>
+                        <output>
+                            <messageName>vacancy_stage2</messageName>
+                        </output>
+                    </outputs>
+                </function>
+                <function>
+                    <name>idle</name>
+                    <description>The agent has no vacant positions</description>
+                    <currentState>FirmLabourStage2</currentState>
+                    <nextState>FirmConsumptionStart</nextState>
+                    <condition>
+                        <lhs>
+                            <value>a.vacancies</value>
+                        </lhs>
+                        <op>LT</op>
+                        <rhs>
+                            <value>1</value>
+                        </rhs>
+                    </condition>
+                </function>
+                <function>
+                    <name>firm_labour_job_offer_stage2</name>
+                    <description>The agent completes the job placement.</description>
+                    <currentState>FirmLabourStage2End</currentState>
+                    <nextState>FirmConsumptionStart</nextState>
+                    <inputs>
+                        <input>
+                            <messageName>job_match_stage2</messageName>
+                            <filter>
+                            <!-- checks applications sent to the firm. -->
+                                <lhs><value>a.id</value></lhs>
+                                <op>EQ</op>
+                                <rhs><value>m.employer_id</value></rhs>
+                            </filter>
+                        </input>
+                    </inputs>
+                </function>
+                
+                
+                <function>
+                    <name>idle</name>
+                    <description>Does nothing at the point when it is not last day of the month.</description>
+                    <currentState>FirmLabourPayWages</currentState>
+                    <nextState>FirmUpdateDeposits</nextState>
+                    <condition>
+                        <not><time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_wages_paid</phase>
+                        </time></not>
+                    </condition>
+                </function>
+                <function>
+                    <name>firm_labour_pay_wages</name>
+                    <description>Pay wages and update liquidity.</description>
+                    <currentState>FirmLabourPayWages</currentState>
+                    <nextState>FirmLabourWageAdjustment</nextState>
+                    <condition>
+                        <time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_wages_paid</phase>
+                        </time>
+                    </condition>
+                    <outputs>
+                        <output>
+                            <messageName>firm_household_wage_payment</messageName>
+                        </output>
+                        <output>
+                            <messageName>labour_tax</messageName>
+                        </output>
+                    </outputs>
+                </function>
+                <function>
+                    <name>firm_labour_trace_wages</name>
+                    <description>Firm checks wage in the market and updates its wage offer.</description>
+                    <currentState>FirmLabourWageAdjustment</currentState>
+                    <nextState>FirmUpdateDeposits</nextState>
+                    <inputs>
+                        <input>
+                            <messageName>employment_status</messageName>
+                        </input>
+                    </inputs>
+                </function>
+                
+            </functions>
+        </xagent>
+        <xagent>
+            <name>centralbank</name>
+            <description>A Central Bank agent.</description>
+            <!-- Agent memory holding a list of variables -->
+            <memory>
+                <variable>
+                    <type>int</type>
+                    <name>day_of_month_wages_paid</name>
+                    <description>The day of the month wages paid.</description>
+                </variable>
+            </memory>
+            <!-- List of agent functions -->
+            <functions>
+                <function>
+                    <name>idle</name>
+                    <description>It is not the day of the month to act.</description>
+                    <currentState>CentralBankLabour</currentState>
+                    <nextState>CentralBankPolicy</nextState>
+                    <condition>
+                        <not><time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_wages_paid</phase>
+                        </time></not>
+                    </condition>
+                </function>
+                <function>
+                    <name>centralbank_trace_unemployment_status</name>
+                    <description>Makes a sensus on employment status.</description>
+                    <currentState>CentralBankLabour</currentState>
+                    <nextState>CentralBankPolicy</nextState>
+                    <condition>
+                        <time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_wages_paid</phase>
+                        </time>
+                    </condition>
+                    <inputs>
+                        <input>
+                            <messageName>employment_status</messageName>
+                        </input>
+                    </inputs>
+                </function>
+            </functions>
+        </xagent>
+        <xagent>
+            <name>government</name>
+            <description>The government agent.</description>
+            <!-- Agent memory holding a list of variables -->
+            <memory>
+                <variable>
+                    <type>double</type>
+                    <name>average_wage</name>
+                    <description>Average wage for employed households.</description>
+                </variable>
+                <variable>
+                    <type>double</type>
+                    <name>unemployment_rate</name>
+                    <description>The unemployment rate</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>population_size</name>
+                    <description>Number of households.</description>
+                </variable>
+            </memory>
+            <!-- List of agent functions -->
+            <functions>
+                <function>
+                    <name>government_trace_unemployment_status</name>
+                    <description>Makes a sensus on employment status.</description>
+                    <currentState>GovernmentLabourStatus</currentState>
+                    <nextState>GovernmentFiscalPolicy</nextState>
+                    <inputs>
+                        <input>
+                            <messageName>employment_status</messageName>
+                        </input>
+                    </inputs>
+                </function>
+            </functions>
+        </xagent>
+        <xagent>
+            <name>equityfund</name>
+            <description>The funding agency.</description>
+            <!-- Agent memory holding a list of variables -->
+            <memory>
+                <variable>
+                    <type>int</type>
+                    <name>day_of_month_to_act</name>
+                    <description>Activation day for the shareholder audition.</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>day_of_month_wages_paid</name>
+                    <description>Activation day for the shareholder audition.</description>
+                </variable>
+            </memory>
+            <!-- List of agent functions -->
+            <functions>
+                <function>
+                    <name>idle</name>
+                    <description>It is not the start of a month.</description>
+                    <currentState>EFLabourMarket</currentState>
+                    <nextState>EFCreditIncomeStatement</nextState>
+                    <condition>
+                        <not><time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_wages_paid</phase>
+                        </time></not>
+                    </condition>
+                </function>
+                <function>
+                    <name>equityfund_audit_dividends</name>
+                    <description>Makes a sensus on size of dividends.</description>
+                    <currentState>EFLabourMarket</currentState>
+                    <nextState>EFCreditIncomeStatement</nextState>
+                    <condition>
+                        <time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_wages_paid</phase>
+                        </time>
+                    </condition>
+                    <inputs>
+                        <input>
+                            <messageName>employment_status</messageName>
+                        </input>
+                    </inputs>
+                </function>
+            </functions>
+        </xagent>
+    </agents>
+    <messages>
+        <message>
+            <name>fired</name>
+            <description>Sent by a firm to notify an employee who is fired.</description>
+            <variables>
+                <variable>
+                    <type>int</type>
+                    <name>employee_id</name>
+                    <description>Employee ID who has been fired.</description>
+                </variable>
+            </variables>
+        </message>
+        <message>
+            <name>vacancy_stage1</name>
+            <description>Sent by a Firm to post a vacancy.</description>
+            <variables>
+                <variable>
+                    <type>int</type>
+                    <name>employer_id</name>
+                    <description>Firm agent ID who posts a new position.</description>
+                </variable>
+                <variable>
+                    <type>double</type>
+                    <name>wage</name>
+                    <description>Amount of salary to be offered.</description>
+                </variable>
+            </variables>
+        </message>
+        <message>
+            <name>job_application_stage2</name>
+            <description>Sent by an household to apply a posted vacancy.</description>
+            <variables>
+                <variable>
+                    <type>int</type>
+                    <name>employee_id</name>
+                    <description>Household agent ID who seeks employment.</description>
+                </variable>
+            </variables>
+        </message>
+        <message>
+            <name>job_application_stage1</name>
+            <description>Sent by an household to notifie jpoffice</description>
+            <variables>
+                <variable>
+                    <type>int</type>
+                    <name>employee_id</name>
+                    <description>Household agent ID who applies for a new job.</description>
+                </variable>
+                <variable>
+                    <type>double</type>
+                    <name>wage</name>
+                    <description>Current amount of wage earned by the applicant.</description>
+                </variable>
+            </variables>
+        </message>
+        <message>
+            <name>job_match_stage1</name>
+            <description>Sent by a firm informing a filled position.</description>
+            <variables>
+                <variable>
+                    <type>int</type>
+                    <name>employer_id</name>
+                    <description>Firm agent ID that has filled a post.</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>employee_id</name>
+                    <description>Household agent ID who has been offered a position.</description>
+                </variable>
+                <variable>
+                    <type>double</type>
+                    <name>wage</name>
+                    <description>Amount of salary that is offered.</description>
+                </variable>
+            </variables>
+        </message>
+        <message>
+            <name>job_change</name>
+            <description>Sent by a worker to notify a resigned position.</description>
+            <variables>
+                <variable>
+                    <type>int</type>
+                    <name>employer_id</name>
+                    <description>Firm agent ID of the position held.</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>employee_id</name>
+                    <description>Household aent ID who is changing the job.</description>
+                </variable>
+            </variables>
+        </message>
+        <message>
+            <name>vacancy_stage2</name>
+            <description>Sent by a Firm to post unfilled vacancy.</description>
+            <variables>
+                <variable>
+                    <type>int</type>
+                    <name>employer_id</name>
+                    <description>Firm agent ID who posts unfilled position.</description>
+                </variable>
+                <variable>
+                    <type>double</type>
+                    <name>wage</name>
+                    <description>Amount of salary to be offered.</description>
+                </variable>
+            </variables>
+        </message>
+        <message>
+            <name>job_match_stage2</name>
+            <description>Sent by a firm informing a filled position.</description>
+            <variables>
+                <variable>
+                    <type>int</type>
+                    <name>employer_id</name>
+                    <description>Firm agent ID that has filled a post.</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>employee_id</name>
+                    <description>Household agent ID who has been offered a position.</description>
+                </variable>
+                <variable>
+                    <type>double</type>
+                    <name>wage</name>
+                    <description>Amount of salary that is offered.</description>
+                </variable>
+            </variables>
+        </message>
+        <message>
+            <name>employment_status</name>
+            <description>Sent by a household to report his/her employment status.</description>
+            <variables>
+                <variable>
+                    <type>int</type>
+                    <name>employer_id</name>
+                    <description>The employer. O stands for unemployed case.</description>
+                </variable>
+                <variable>
+                    <type>double</type>
+                    <name>wage</name>
+                    <description>Current wage of an household.</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>nshares</name>
+                    <description>Number of shares one own.</description>
+                </variable>
+            </variables>
+        </message>
+        <message>
+            <name>firm_household_wage_payment</name>
+            <description>Posted by the firm agent.</description>
+            <variables>
+                <variable>
+                    <type>int</type>
+                    <name>firm_id</name>
+                    <description>The firm id.</description>
+                </variable>
+                <variable>
+                    <type>double</type>
+                    <name>wage</name>
+                    <description>Current wage offer by the firm.</description>
+                </variable>
+            </variables>
+        </message>
+    </messages>
+</xmodel>

@@ -1,0 +1,256 @@
+<xmodel version="2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation='http://flame.ac.uk/schema/xmml_v2.xsd'>
+    <!-- Model descriptions  -->
+    <name>ICEACE</name>
+    <version>Version 0.1.2, 26/02/2012</version>
+    <description>'Production Market. The market has regular firms as well as sepcialized construction firms.</description>
+    <environment>
+        <constants>
+            <variable>
+                <type>double</type>
+                <name>production_markup</name>
+                <description>Rate of increase in production by firms.</description>
+            </variable>
+            <variable>
+                <type>double</type>
+                <name>price_markup</name>
+                <description>Rate of increase set by firms on prices.</description>
+            </variable>
+            <variable>
+                <type>double</type>
+                <name>firm_memory_persistance</name>
+                <description>A parameter holding to what extend firms previous sale history play on final production decision.</description>
+            </variable>
+        </constants>
+        <functionFiles>
+        <!-- List of C files that hold agent functions -->
+            <file>firm_functions_production.c</file>
+        </functionFiles>
+    </environment>
+
+	<!-- List of agents -->
+    <agents>
+        <xagent>
+            <name>firm</name>
+            <description>A simple production firm agent.</description>
+            <!-- Agent memory holding a list of variables -->
+            <memory>
+                <variable>
+                    <type>double</type>
+                    <name>labour_productivity</name>
+                    <description>Productivity of a unit labour.</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>production_current</name>
+                    <description>Total number of goods produced in current month.</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>expected_sales</name>
+                    <description>An estimate of production for incoming period.</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>production_plan</name>
+                    <description>Production plan for next month.</description>
+                </variable>
+                <variable>
+                    <type>double</type>
+                    <name>unit_goods_price</name>
+                    <description>Price of a unit of goods produced by a firm.</description>
+                </variable>
+                <variable>
+                    <type>double</type>
+                    <name>unit_cost</name>
+                    <description>Unit production cost of a consumption good.</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>day_of_month_production_completed</name>
+                    <description>The day of the month amount of production is computed.</description>
+                </variable>
+                <!-- Constructor firm specific memory variables. -->
+                <variable>
+                    <type>double</type>
+                    <name>unit_house_price</name>
+                    <description>Unit price of an house.</description>
+                </variable>
+                <variable>
+                    <type>double</type>
+                    <name>labour_productivity_construction</name>
+                    <description>Productivity of a unit labour in construction sector.</description>
+                </variable>
+                <variable>
+                    <type>double</type>
+                    <name>capital_productivity_construction</name>
+                    <description>Capital productivity in construction sector.</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>physical_capital_construction</name>
+                    <description>Physical capital owned by a construction firm in units.</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>physical_capital</name>
+                    <description>Physical capital owned by a regular firm in units.</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>projects[12]</name>
+                    <description>Holds projects under construction. Indices denote number of months left for completion.</description>
+                </variable>
+            </memory>
+            <!-- List of agent functions -->
+            <functions>
+                <function>
+                    <name>idle</name>
+                    <description>It is not the end of month or the first day of the month.</description>
+                    <currentState>FirmProductionStart</currentState>
+                    <nextState>FirmLabourStart</nextState>
+                    <condition>
+                        <not><lhs><time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_to_act</phase>
+                        </time></lhs>
+                        <op>OR</op>
+                        <rhs><time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_production_completed</phase>
+                        </time></rhs></not>
+                    </condition>
+                </function>
+                <function>
+                    <name>idle</name>
+                    <description>The state serves to check the activity cases.</description>
+                    <currentState>FirmProductionStart</currentState>
+                    <nextState>FirmProductionSkip</nextState>
+                    <condition>
+                        <lhs><time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_to_act</phase>
+                        </time></lhs>
+                        <op>OR</op>
+                        <rhs><time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_production_completed</phase>
+                        </time></rhs>
+                    </condition>
+                </function>
+                <function>
+                    <name>firm_production_skip</name>
+                    <description>The firm is new entrant has initialized with an employee and an inventory.</description>
+                    <currentState>FirmProductionSkip</currentState>
+                    <nextState>FirmLabourStart</nextState>
+                    <condition>
+                        <lhs><value>a.isinsolvent</value></lhs>
+                        <op>EQ</op>
+                        <rhs><value>1</value></rhs>
+                    </condition>
+                </function>
+                <function>
+                    <name>idle</name>
+                    <description>The firm is a new entrant due to insolvency of inherited firm.</description>
+                    <currentState>FirmProductionSkip</currentState>
+                    <nextState>FirmProductionRoleCheck</nextState>
+                    <condition>
+                        <lhs><value>a.isinsolvent</value></lhs>
+                        <op>NEQ</op>
+                        <rhs><value>1</value></rhs>
+                    </condition>
+                </function>
+                <function>
+                    <name>idle</name>
+                    <description>Sets a producer role.</description>
+                    <currentState>FirmProductionRoleCheck</currentState>
+                    <nextState>FirmProductionRegular</nextState>
+                    <condition>
+                        <lhs><value>a.isconstructor</value></lhs>
+                        <op>EQ</op>
+                        <rhs><value>0</value></rhs>
+                    </condition>
+                </function>
+                <function>
+                    <name>idle</name>
+                    <description>Set the constructor role.</description>
+                    <currentState>FirmProductionRoleCheck</currentState>
+                    <nextState>FirmProductionConstructor</nextState>
+                    <condition>
+                        <lhs><value>a.isconstructor</value></lhs>
+                        <op>NEQ</op>
+                        <rhs><value>0</value></rhs>
+                    </condition>
+                </function>
+                <!-- Regular firm specific functions. -->
+                <function>
+                    <name>firm_production_produce_goods</name>
+                    <description>Firm audits number of items produced. Updates inventory accordingly.</description>
+                    <currentState>FirmProductionRegular</currentState>
+                    <nextState>FirmLabourStart</nextState>
+                    <condition>
+                        <time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_production_completed</phase>
+                        </time>
+                    </condition>
+                </function>
+                <function>
+                    <name>firm_production_set_price</name>
+                    <description>Firm sets price of goods produced.</description>
+                    <currentState>FirmProductionRegular</currentState>
+                    <nextState>FirmProductionPlanning</nextState>
+                    <condition>
+                        <time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_to_act</phase>
+                        </time>
+                    </condition>
+                </function>
+                <function>
+                    <name>firm_production_plan</name>
+                    <description>Firm determines number of items to be produced for the next period.</description>
+                    <currentState>FirmProductionPlanning</currentState>
+                    <nextState>FirmProductionLabourDemand</nextState>
+                </function>
+                <function>
+                    <name>firm_production_compute_labour_demand</name>
+                    <description>Firm determines required number of labourers for current production plan.</description>
+                    <currentState>FirmProductionLabourDemand</currentState>
+                    <nextState>FirmLabourStart</nextState>
+                </function>
+                <!-- Constructor firm specific functions. -->
+                <function>
+                    <name>firm_production_construct_houses</name>
+                    <description>Firm releases number of items produced. Updates project status accordingly.</description>
+                    <currentState>FirmProductionConstructor</currentState>
+                    <nextState>FirmLabourStart</nextState>
+                    <condition>
+                        <time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_production_completed</phase>
+                        </time>
+                    </condition>
+                </function>
+                <function>
+                    <name>firm_production_construction_plan</name>
+                    <description>Firm sets the construction project plan.</description>
+                    <currentState>FirmProductionConstructor</currentState>
+                    <nextState>FirmConstructionLabourDemand</nextState>
+                    <condition>
+                        <time>
+                            <period>monthly</period>
+                            <phase>a.day_of_month_to_act</phase>
+                        </time>
+                    </condition>
+                </function>
+                <function>
+                    <name>firm_production_construction_labour_demand</name>
+                    <description>Firm determines required number of labourers for current construction plan.</description>
+                    <currentState>FirmConstructionLabourDemand</currentState>
+                    <nextState>FirmLabourStart</nextState>
+                </function>
+            </functions>
+        </xagent>
+    </agents>
+</xmodel>
