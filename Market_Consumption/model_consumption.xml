@@ -267,8 +267,39 @@
             <functions>
                 <function>
                     <name>idle</name>
-                    <description>It is not the day of the week to sell.</description>
+                    <description>Handles if the firm is not a regular firm.</description>
                     <currentState>FirmConsumptionStart</currentState>
+                    <nextState>FirmHousingStart</nextState>
+                    <condition>
+                        <lhs>
+                            <value>a.isconstructor</value>
+                        </lhs>
+                        <op>EQ</op>
+                        <rhs>
+                            <value>1</value>
+                        </rhs>
+                    </condition>
+                </function>
+                <function>
+                    <name>idle</name>
+                    <description>Works when the firm is a constructor.</description>
+                    <currentState>FirmConsumptionStart</currentState>
+                    <nextState>FirmConsumptionMarket</nextState>
+                    <condition>
+                        <lhs>
+                            <value>a.isconstructor</value>
+                        </lhs>
+                        <op>NEQ</op>
+                        <rhs>
+                            <value>1</value>
+                        </rhs>
+                    </condition>
+                </function>
+                
+                <function>
+                    <name>idle</name>
+                    <description>It is not the day of the week to sell.</description>
+                    <currentState>FirmConsumptionMarket</currentState>
                     <nextState>FirmHousingStart</nextState>
                     <condition>
                         <not><time>
@@ -280,7 +311,7 @@
                 <function>
                     <name>firm_consumption_supply</name>
                     <description>A firm ships its goods to malls.</description>
-                    <currentState>FirmConsumptionStart</currentState>
+                    <currentState>FirmConsumptionMarket</currentState>
                     <nextState>FirmReceiveSales</nextState>
                         <condition>
                             <time>

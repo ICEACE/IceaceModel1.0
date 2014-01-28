@@ -170,6 +170,7 @@ digraph state_graph {
 	firm_FirmLabourStart [label = "FirmLabourStart"]
 	firm_FirmConsumptionPrice [label = "FirmConsumptionPrice"]
 	firm_FirmReceiveSales [label = "FirmReceiveSales"]
+	firm_FirmConsumptionMarket [label = "FirmConsumptionMarket"]
 	firm_FirmHousingStart [label = "FirmHousingStart"]
 	firm_FirmConsumptionStart [label = "FirmConsumptionStart"]
 	firm_FirmCreditPolicyChecks [label = "FirmCreditPolicyChecks"]
@@ -295,7 +296,9 @@ digraph state_graph {
 	firm_idle_FirmUpdateDeposits_FirmCreditPolicyChecks [label = "idle", shape = box,style=filled,color=antiquewhite];
 	firm_firm_update_bank_account_FirmUpdateDeposits_FirmCreditPolicyChecks [label = "firm_update_bank_account", shape = box,style=filled,color=antiquewhite];
 	firm_idle_FirmConsumptionStart_FirmHousingStart [label = "idle", shape = box,style=filled,color=aquamarine];
-	firm_firm_consumption_supply_FirmConsumptionStart_FirmReceiveSales [label = "firm_consumption_supply", shape = box,style=filled,color=aquamarine];
+	firm_idle_FirmConsumptionStart_FirmConsumptionMarket [label = "idle", shape = box,style=filled,color=aquamarine];
+	firm_idle_FirmConsumptionMarket_FirmHousingStart [label = "idle", shape = box,style=filled,color=aquamarine];
+	firm_firm_consumption_supply_FirmConsumptionMarket_FirmReceiveSales [label = "firm_consumption_supply", shape = box,style=filled,color=aquamarine];
 	firm_firm_consumption_receive_sales_FirmReceiveSales_FirmConsumptionPrice [label = "firm_consumption_receive_sales", shape = box,style=filled,color=aquamarine];
 	firm_firm_consumption_update_market_price_FirmConsumptionPrice_FirmHousingStart [label = "firm_consumption_update_market_price", shape = box,style=filled,color=aquamarine];
 	firm_idle_FirmLabourStart_FirmConsumptionStart [label = "idle", shape = box,style=filled,color=azure3];
@@ -511,10 +514,14 @@ digraph state_graph {
 	firm_idle_FirmUpdateDeposits_FirmCreditPolicyChecks -> firm_FirmCreditPolicyChecks;
 	firm_FirmUpdateDeposits -> firm_firm_update_bank_account_FirmUpdateDeposits_FirmCreditPolicyChecks [ label = "Periodicity: monthly\nPhase: 0"];
 	firm_firm_update_bank_account_FirmUpdateDeposits_FirmCreditPolicyChecks -> firm_FirmCreditPolicyChecks;
-	firm_FirmConsumptionStart -> firm_idle_FirmConsumptionStart_FirmHousingStart [ label = "not ( Periodicity: weekly\nPhase: a->day_of_week_to_act )"];
+	firm_FirmConsumptionStart -> firm_idle_FirmConsumptionStart_FirmHousingStart [ label = "a.isconstructor EQ 1"];
 	firm_idle_FirmConsumptionStart_FirmHousingStart -> firm_FirmHousingStart;
-	firm_FirmConsumptionStart -> firm_firm_consumption_supply_FirmConsumptionStart_FirmReceiveSales [ label = "Periodicity: weekly\nPhase: a->day_of_week_to_act"];
-	firm_firm_consumption_supply_FirmConsumptionStart_FirmReceiveSales -> firm_FirmReceiveSales;
+	firm_FirmConsumptionStart -> firm_idle_FirmConsumptionStart_FirmConsumptionMarket [ label = "a.isconstructor NEQ 1"];
+	firm_idle_FirmConsumptionStart_FirmConsumptionMarket -> firm_FirmConsumptionMarket;
+	firm_FirmConsumptionMarket -> firm_idle_FirmConsumptionMarket_FirmHousingStart [ label = "not ( Periodicity: weekly\nPhase: a->day_of_week_to_act )"];
+	firm_idle_FirmConsumptionMarket_FirmHousingStart -> firm_FirmHousingStart;
+	firm_FirmConsumptionMarket -> firm_firm_consumption_supply_FirmConsumptionMarket_FirmReceiveSales [ label = "Periodicity: weekly\nPhase: a->day_of_week_to_act"];
+	firm_firm_consumption_supply_FirmConsumptionMarket_FirmReceiveSales -> firm_FirmReceiveSales;
 	firm_FirmReceiveSales -> firm_firm_consumption_receive_sales_FirmReceiveSales_FirmConsumptionPrice;
 	firm_firm_consumption_receive_sales_FirmReceiveSales_FirmConsumptionPrice -> firm_FirmConsumptionPrice;
 	firm_FirmConsumptionPrice -> firm_firm_consumption_update_market_price_FirmConsumptionPrice_FirmHousingStart;
@@ -918,7 +925,7 @@ digraph state_graph {
 	household_household_housing_enter_market_HHHousingCheckWealth_HHHousingBargain -> reagency_reagency_housing_process_REAgencyHousingMarket_REAgencyHousingSummary [ label = "buy_housing" color="#00ff00" constraint=false];
 	centralbank_centralbank_set_interest_rate_CentralBankUpdateInterestRate_end -> reagency_reagency_check_interest_rate_REAgencyCreditPolicyChecks_end [ label = "interest_rate" color="#00ff00" constraint=false];
 	household_household_consumption_demand_HHConsumptionWeekly_HHConsumptionRecieveGoods -> mall_mall_consumption_shopping_MallConsumptionMarket_MallConsumptionSummary [ label = "buy" color="#00ff00" constraint=false];
-	firm_firm_consumption_supply_FirmConsumptionStart_FirmReceiveSales -> mall_mall_consumption_shopping_MallConsumptionMarket_MallConsumptionSummary [ label = "sell" color="#00ff00" constraint=false];
+	firm_firm_consumption_supply_FirmConsumptionMarket_FirmReceiveSales -> mall_mall_consumption_shopping_MallConsumptionMarket_MallConsumptionSummary [ label = "sell" color="#00ff00" constraint=false];
 	household_household_labour_employment_application_HHLabourStage1Applications_HHLabourStage1Placement -> jpoffice_jpoffice_labour_stage2_JPOLabourStage2_end [ label = "job_application_stage2" color="#00ff00" constraint=false];
 	firm_firm_labour_job_announcement_stage2_FirmLabourStage2_FirmLabourStage2End -> jpoffice_jpoffice_labour_stage2_JPOLabourStage2_end [ label = "vacancy_stage2" color="#00ff00" constraint=false];
 	household_household_labour_reemployment_application_HHLabourStage1_HHLabourStage2 -> jpoffice_jpoffice_labour_stage1_JPOLabourMarket_JPOLabourStage2 [ label = "job_application_stage1" color="#00ff00" constraint=false];
@@ -1036,8 +1043,8 @@ digraph state_graph {
 	{ rank=same; layer_38;  firm_firm_labour_job_announcement_stage2_FirmLabourStage2_FirmLabourStage2End;  firm_idle_FirmLabourStage2_FirmConsumptionStart; }
 	{ rank=same; layer_39;  jpoffice_jpoffice_labour_stage2_JPOLabourStage2_end; }
 	{ rank=same; layer_40;  firm_firm_labour_job_offer_stage2_FirmLabourStage2End_FirmConsumptionStart;  household_household_labour_employment_HHLabourStage1Placement_HHConsumptionStart; }
-	{ rank=same; layer_41;  firm_idle_FirmConsumptionStart_FirmHousingStart;  firm_firm_consumption_supply_FirmConsumptionStart_FirmReceiveSales;  household_idle_HHConsumptionStart_HHConsumptionWeekly;  household_household_consumption_compute_budget_HHConsumptionStart_HHConsumptionWeekly; }
-	{ rank=same; layer_42;  household_idle_HHConsumptionWeekly_HHHousingStart;  household_household_consumption_demand_HHConsumptionWeekly_HHConsumptionRecieveGoods; }
+	{ rank=same; layer_41;  firm_idle_FirmConsumptionStart_FirmHousingStart;  firm_idle_FirmConsumptionStart_FirmConsumptionMarket;  household_idle_HHConsumptionStart_HHConsumptionWeekly;  household_household_consumption_compute_budget_HHConsumptionStart_HHConsumptionWeekly; }
+	{ rank=same; layer_42;  firm_idle_FirmConsumptionMarket_FirmHousingStart;  firm_firm_consumption_supply_FirmConsumptionMarket_FirmReceiveSales;  household_idle_HHConsumptionWeekly_HHHousingStart;  household_household_consumption_demand_HHConsumptionWeekly_HHConsumptionRecieveGoods; }
 	{ rank=same; layer_43;  mall_mall_consumption_shopping_MallConsumptionMarket_MallConsumptionSummary; }
 	{ rank=same; layer_44;  firm_firm_consumption_receive_sales_FirmReceiveSales_FirmConsumptionPrice;  household_household_consumption_recieve_goods_HHConsumptionRecieveGoods_HHHousingStart;  mall_mall_consumption_summary_MallConsumptionSummary_end; }
 	{ rank=same; layer_45;  firm_firm_consumption_update_market_price_FirmConsumptionPrice_FirmHousingStart;  household_idle_HHHousingStart_HHLabourPayroll;  household_household_housing_market_role_HHHousingStart_HHHousingRole;  centralbank_centralbank_trace_goods_prices_CentralBankConsumption_CentralBankConsumptionPrices; }
