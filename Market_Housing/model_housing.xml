@@ -275,6 +275,11 @@
                     <name>delta_housing_value</name>
                     <description>Value change on housing value on a monthly basis.</description>
                 </variable>
+                <variable>
+                    <type>int</type>
+                    <name>mortgage_choice</name>
+                    <description>Type of mortgage household chooses.</description>
+                </variable>
             </memory>
             <!-- List of agent functions -->
             <functions>

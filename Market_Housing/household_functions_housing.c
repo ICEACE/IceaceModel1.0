@@ -126,11 +126,55 @@ int household_housing_buy()
     if (mortgage_used > 0){
         double quarterly_interest;
         double quarterly_principal;
+        double d1, d2;
+
+        /* Endogenous decision rule on which type of mortgage to take should be done here*/
+        MORTGAGE_CHOICE = MORTGAGE_CHOICE;
         
-        quarterly_interest = mortgage_used * MORTGAGES_INTEREST_RATE / 4;
-        quarterly_principal = (mortgage_used / annuity) - quarterly_interest;
+        if (MORTGAGE_CHOICE == 1) {
+            quarterly_interest = mortgage_used * MORTGAGES_INTEREST_RATE / 4;
+            quarterly_principal = (mortgage_used / annuity) - quarterly_interest;
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
+        }
+        else if (MORTGAGE_CHOICE == 2){
+            quarterly_interest = mortgage_used * MORTGAGES_INTEREST_RATE / 4;
+            quarterly_principal = (mortgage_used / 160);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
+        }
+        else if (MORTGAGE_CHOICE == 3){
+            quarterly_interest = mortgage_used * 0.02/4;
+            d1 = 0.02/4;
+            d2 = d1 * pow((1 + d1), 160);
+            annuity = 1/d1 - 1/d2;
+            quarterly_principal = (mortgage_used / annuity) - quarterly_interest;
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
+        }
+        else if (MORTGAGE_CHOICE == 4){
+            quarterly_interest = mortgage_used * 0.02/4;
+            quarterly_principal = (mortgage_used / 160);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
+        }
+        else if (MORTGAGE_CHOICE == 5){
+            quarterly_interest = mortgage_used * (MORTGAGES_INTEREST_RATE + 0.01)/4;
+            d1 = (MORTGAGES_INTEREST_RATE + 0.01)/4;
+            d2 = d1 * pow((1 + d1), 160);
+            annuity = 1/d1 - 1/d2;
+            quarterly_principal = (mortgage_used / annuity) - quarterly_interest;
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE + 0.01, MORTGAGE_CHOICE);
+        }
+        else if (MORTGAGE_CHOICE == 6){
+            quarterly_interest = mortgage_used * (MORTGAGES_INTEREST_RATE + 0.01)/4;
+            quarterly_principal = (mortgage_used / 160);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE + 0.01, MORTGAGE_CHOICE);
+        }
+        else {
+            if (WARNING_MODE) {
+                printf("Warning @household_housing_buy(): Unexpected mortgage choice = %d \n", MORTGAGE_CHOICE);
+            }
+
+        }
+
         /* Adding to mortgages array. */
-        add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal);
         MORTGAGES += mortgage_used;
         if (PRINT_DEBUG_MODE) {
             printf("Household ID = %d a new mortgage debt of %f. \n", ID, mortgage_used);
@@ -229,9 +273,10 @@ int household_housing_collect_sale_revenue()
     double new_quarterly_principal;
     double annuity;
     double d1, d2;
+    int quarters_left;
     
     /* Regular seller: */
-    if (HMARKET_ROLE == 2){
+    /*if (HMARKET_ROLE == 2){
         ind = MORTGAGES_LIST.size - 1;
         mort = MORTGAGES_LIST.array[ind];
         if (mort.principal <= sale_price){
@@ -262,7 +307,7 @@ int household_housing_collect_sale_revenue()
         }
         free_mortgage(&mort);
         return 0;
-    }
+    }*/
     
     /* Fire seller:
        Pays mortgages as long as sale revenue is enough to clear additional mortgages.
@@ -286,18 +331,61 @@ int household_housing_collect_sale_revenue()
             }
         }
         else {
+            quarters_left = mort.quarters_left;
+            rate = mort.interestrate;
+            type = mort.type;
+
             add_mortgage_payment_from_sale_message(BANK_ID, sale_price);
+
             MORTGAGES -= sale_price;
-            
             new_principle = mort.principal - sale_price;
+
             if (PRINT_DEBUG_MODE) {
                 printf("Fire Seller = %d decreases a mortgage debt from = %f to %f \n", ID, mort.principal, new_principle);
             }
-            d1 = MORTGAGES_INTEREST_RATE/4;
-            d2 = d1 * pow((1 + d1), mort.quarters_left);
-            annuity = 1/d1 - 1/d2;
-            new_quarterly_interest = new_principle * d1;
-            new_quarterly_principal = (new_principle / annuity) - new_quarterly_interest;
+
+            if (MORTGAGE_CHOICE == 1) {
+                d1 = MORTGAGES_INTEREST_RATE/4;
+                d2 = d1 * pow((1 + d1), quarters_left);
+                annuity = 1/d1 - 1/d2;
+                new_quarterly_interest = new_principle * d1;
+                new_quarterly_principal = (new_principle / annuity) - new_quarterly_interest;
+
+            }
+            else if (MORTGAGE_CHOICE == 2){
+                new_quarterly_interest = new_principle * MORTGAGES_INTEREST_RATE / 4;
+                new_quarterly_principal = new_principle / quarters_left;
+            }
+            else if (MORTGAGE_CHOICE == 3){
+                d1 = rate/4;
+                d2 = d1 * pow((1 + d1), quarters_left);
+                annuity = 1/d1 - 1/d2;
+
+                new_quarterly_interest = new_principle * d1;
+                new_quarterly_principal = (new_principle / annuity) - new_quarterly_interest;
+            }
+            else if (MORTGAGE_CHOICE == 4){
+                new_quarterly_interest = new_principle * rate/4;
+                new_quarterly_principal = new_principle / quarters_left;
+            }
+            else if (MORTGAGE_CHOICE == 5){
+                d1 = rate/4;
+                d2 = d1 * pow((1 + d1), quarters_left);
+                annuity = 1/d1 - 1/d2;
+
+                new_quarterly_interest = new_principle * d1;
+                new_quarterly_principal = (new_principle / annuity) - new_quarterly_interest;
+            }
+            else if (MORTGAGE_CHOICE == 6){
+                new_quarterly_interest = new_principle * rate/4;
+                new_quarterly_principal = new_principle / quarters_left;
+            }
+            else {
+                if (WARNING_MODE) {
+                    printf("Warning @household_housing_buy(): Unexpected mortgage choice = %d \n", MORTGAGE_CHOICE);
+                }
+            }
+
             MORTGAGES_LIST.array[ind].principal = new_principle;
             MORTGAGES_LIST.array[ind].quarterly_interest = new_quarterly_interest;
             MORTGAGES_LIST.array[ind].quarterly_principal = new_quarterly_principal;

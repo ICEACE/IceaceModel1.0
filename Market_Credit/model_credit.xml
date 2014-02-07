@@ -82,6 +82,16 @@
                         <name>quarterly_principal</name>
                         <description>Amount of principal to be paid within the current quarter.</description>
                     </variable>
+                    <variable>
+                        <type>double</type>
+                        <name>interestrate</name>
+                        <description>Interest rate of the mortgage.</description>
+                    </variable>
+                    <variable>
+                        <type>int</type>
+                        <name>type</name>
+                        <description>Type of mortgage.</description>
+                    </variable>
                 </variables>
             </dataType>
             <dataType>

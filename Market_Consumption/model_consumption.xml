@@ -172,6 +172,16 @@
                     <name>mall_budget</name>
                     <description>Consumption budget that can be spent for the week.</description>
                 </variable>
+                <variable>
+                    <type>double</type>
+                    <name>monthly_price_index</name>
+                    <description>Monthly price index of consumption goods.</description>
+                </variable>
+                <variable>
+                    <type>double</type>
+                    <name>monthly_price_index_pre</name>
+                    <description>Previous month's price index of consumption goods.</description>
+                </variable>
             </memory>
             <!-- List of agent functions -->
             <functions>
@@ -203,7 +213,7 @@
                     <name>idle</name>
                     <description>It is not the day of the week to shop.</description>
                     <currentState>HHConsumptionWeekly</currentState>
-                    <nextState>HHHousingStart</nextState>
+                    <nextState>HHConsumptionMonthly</nextState>
                     <condition>
                         <not><time>
                             <period>weekly</period>
@@ -232,7 +242,7 @@
                     <name>household_consumption_recieve_goods</name>
                     <description>A household recieves goods bought from the mall.</description>
                     <currentState>HHConsumptionRecieveGoods</currentState>
-                    <nextState>HHHousingStart</nextState>
+                    <nextState>HHConsumptionMonthly</nextState>
                     <inputs>
                         <input>
                             <messageName>bought</messageName>
@@ -242,6 +252,35 @@
                                 <op>EQ</op>
                                 <rhs><value>m.id</value></rhs>
                             </filter>
+                        </input>
+                    </inputs>
+                </function>
+                <function>
+                    <name>idle</name>
+                    <description>It is not the end of month.</description>
+                    <currentState>HHConsumptionMonthly</currentState>
+                    <nextState>HHHousingStart</nextState>
+                    <condition>
+                        <not><time>
+                            <period>monthly</period>
+                            <phase>0</phase>
+                        </time></not>
+                    </condition>
+                </function>
+                <function>
+                    <name>household_consumption_trace_cpi</name>
+                    <description>Household traces monthly cpi.</description>
+                    <currentState>HHConsumptionMonthly</currentState>
+                    <nextState>HHHousingStart</nextState>
+                    <condition>
+                        <time>
+                            <period>monthly</period>
+                            <phase>0</phase>
+                        </time>
+                    </condition>
+                    <inputs>
+                        <input>
+                            <messageName>monthly_cpi</messageName>
                         </input>
                     </inputs>
                 </function>
@@ -375,6 +414,11 @@
                     <name>weekly_price_averages[4]</name>
                     <description>Weakly price averages at the market.</description>
                 </variable>
+                <variable>
+                    <type>double</type>
+                    <name>monthly_price_index</name>
+                    <description>Monthly price index of consumption goods.</description>
+                </variable>
             </memory>
             <!-- List of agent functions -->
             <functions>
@@ -430,6 +474,11 @@
                             <phase>0</phase>
                         </time>
                     </condition>
+                    <outputs>
+                        <output>
+                            <messageName>monthly_cpi</messageName>
+                        </output>
+                    </outputs>
                 </function>
             </functions>
         </xagent>
@@ -522,6 +571,17 @@
                     <type>double</type>
                     <name>avg_price</name>
                     <description>Weakly avg price.</description>
+                </variable>
+            </variables>
+        </message>
+        <message>
+            <name>monthly_cpi</name>
+            <description>Monthly price index of consumption goods.</description>
+            <variables>
+                <variable>
+                    <type>double</type>
+                    <name>priceindex</name>
+                    <description>Monthly price index of consumption goods.</description>
                 </variable>
             </variables>
         </message>

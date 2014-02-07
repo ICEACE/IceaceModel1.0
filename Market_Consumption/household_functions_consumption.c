@@ -120,3 +120,18 @@ int household_consumption_recieve_goods()
     
 	return 0; /* Returning zero means the agent is not removed */
 }
+
+/*
+ * \fn: int household_consumption_trace_cpi()
+ * \brief: Household traces monthly cpi.
+ */
+int household_consumption_trace_cpi()
+{
+    MONTHLY_PRICE_INDEX_PRE = MONTHLY_PRICE_INDEX;
+
+    START_MONTHLY_CPI_MESSAGE_LOOP
+    MONTHLY_PRICE_INDEX = monthly_cpi_message->priceindex;
+    FINISH_MONTHLY_CPI_MESSAGE_LOOP
+    
+    return 0; /* Returning zero means the agent is not removed */
+}

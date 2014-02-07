@@ -26,7 +26,7 @@ int centralbank_trace_goods_prices()
  * \brief: The function updates monthly consumption goods prices.
  */
 int centralbank_update_price_indices(){
-    double price_avg, prices;
+    double price_avg, prices, monthly_price_change;
     int i;
     
     prices = 0;
@@ -39,6 +39,17 @@ int centralbank_update_price_indices(){
         CONSUMPTION_GOODS_PRICES[i] = CONSUMPTION_GOODS_PRICES[i+1];
     }
     CONSUMPTION_GOODS_PRICES[11] = price_avg;
+
+    if(CONSUMPTION_GOODS_PRICES[11] == 0){
+        monthly_price_change = 0;
+    }
+    else {
+        monthly_price_change = (CONSUMPTION_GOODS_PRICES[11] - CONSUMPTION_GOODS_PRICES[10]) / (CONSUMPTION_GOODS_PRICES[11]);
+    }
+    
+    MONTHLY_PRICE_INDEX = MONTHLY_PRICE_INDEX + MONTHLY_PRICE_INDEX * monthly_price_change;
+
+    add_monthly_cpi_message(MONTHLY_PRICE_INDEX);
     
 	return 0; /* Returning zero means the agent is not removed */
 }
