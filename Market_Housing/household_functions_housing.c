@@ -551,10 +551,7 @@ int household_housing_debt_writeoff()
             add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
         }
         else if (MORTGAGE_CHOICE == 2){
-            d1 = MORTGAGES_INTEREST_RATE/4;
-            d2 = d1 * pow((1 + d1), 160);
-            annuity = 1/d1 - 1/d2;
-            MORTGAGES = total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW * annuity;
+            MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / ((MORTGAGES_INTEREST_RATE / 4) + 1/160);
             quarterly_interest = MORTGAGES * MORTGAGES_INTEREST_RATE / 4;
             quarterly_principal = (MORTGAGES / 160);
             add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
@@ -569,10 +566,7 @@ int household_housing_debt_writeoff()
             add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
         }
         else if (MORTGAGE_CHOICE == 4){
-            d1 = 0.02/4;
-            d2 = d1 * pow((1 + d1), 160);
-            annuity = 1/d1 - 1/d2;
-            MORTGAGES = total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW * annuity;
+            MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / ((0.02 / 4) + 1/160);
             quarterly_interest = MORTGAGES * 0.02/4;
             quarterly_principal = (MORTGAGES / 160);
             add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
@@ -587,10 +581,7 @@ int household_housing_debt_writeoff()
             add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE + 0.01, MORTGAGE_CHOICE);
         }
         else if (MORTGAGE_CHOICE == 6){
-            d1 = (MORTGAGES_INTEREST_RATE + 0.01)/4;
-            d2 = d1 * pow((1 + d1), 160);
-            annuity = 1/d1 - 1/d2;
-            MORTGAGES = total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW * annuity;
+            MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / (((MORTGAGES_INTEREST_RATE + 0.01) / 4) + 1/160);
             quarterly_interest = MORTGAGES * (MORTGAGES_INTEREST_RATE + 0.01)/4;
             quarterly_principal = (MORTGAGES / 160);
             add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE + 0.01, MORTGAGE_CHOICE);
