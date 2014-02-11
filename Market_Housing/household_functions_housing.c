@@ -174,7 +174,9 @@ int household_housing_buy()
 
         }
 
-        /* Adding to mortgages array. */
+        /* Updating the cummulative mortgages. */
+        
+        
         MORTGAGES += mortgage_used;
         if (PRINT_DEBUG_MODE) {
             printf("Household ID = %d a new mortgage debt of %f. \n", ID, mortgage_used);
@@ -497,6 +499,7 @@ int household_housing_debt_writeoff()
     int size, ind;
     double total_income;
     double pre_mortgages, writeoff;
+    double quarterly_principal, quarterly_interest;
     
     size = MORTGAGES_LIST.size;
     if (size == 0){
@@ -519,6 +522,15 @@ int household_housing_debt_writeoff()
     init_mortgage(&mort);
     
     total_income = LABOUR_INCOME + CAPITAL_INCOME;
+    
+    /* Expected payments may have changed due to sales or new housing units. */
+    EXPECTED_HOUSING_PAYMENT = 0;
+    for (ind = 0; ind < size; ind++) {
+        quarterly_interest = MORTGAGES_LIST.array[ind].quarterly_interest;
+        quarterly_principal = MORTGAGES_LIST.array[ind].quarterly_principal;
+        EXPECTED_HOUSING_PAYMENT += quarterly_interest + quarterly_principal;
+    }
+
     
     if (EXPECTED_HOUSING_PAYMENT > HOUSEHOLD_MORTGAGE_WRITEOFF_HIGH * total_income)
     {
