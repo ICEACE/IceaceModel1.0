@@ -524,15 +524,75 @@ int household_housing_debt_writeoff()
     {
         pre_mortgages = MORTGAGES;
         double annuity, d1, d2;
-        d1 = MORTGAGES_INTEREST_RATE/4;
-        d2 = d1 * pow((1 + d1), 160);
-        annuity = 1/d1 - 1/d2;
-        
-        MORTGAGES = total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW * annuity;
+
+        for (ind = 0; ind < size; ind++) {
+            remove_mortgage(&MORTGAGES_LIST, 0);
+        }
+
+        if (MORTGAGE_CHOICE == 1) {
+            d1 = MORTGAGES_INTEREST_RATE/4;
+            d2 = d1 * pow((1 + d1), 160);
+            annuity = 1/d1 - 1/d2;
+            MORTGAGES = total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW * annuity;
+            quarterly_interest = MORTGAGES * MORTGAGES_INTEREST_RATE / 4;
+            quarterly_principal = (MORTGAGES / annuity) - quarterly_interest;
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
+        }
+        else if (MORTGAGE_CHOICE == 2){
+            d1 = MORTGAGES_INTEREST_RATE/4;
+            d2 = d1 * pow((1 + d1), 160);
+            annuity = 1/d1 - 1/d2;
+            MORTGAGES = total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW * annuity;
+            quarterly_interest = MORTGAGES * MORTGAGES_INTEREST_RATE / 4;
+            quarterly_principal = (MORTGAGES / 160);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
+        }
+        else if (MORTGAGE_CHOICE == 3){
+            d1 = 0.02/4;
+            d2 = d1 * pow((1 + d1), 160);
+            annuity = 1/d1 - 1/d2;
+            MORTGAGES = total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW * annuity;
+            quarterly_interest = MORTGAGES * 0.02/4;
+            quarterly_principal = (MORTGAGES / annuity) - quarterly_interest;
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
+        }
+        else if (MORTGAGE_CHOICE == 4){
+            d1 = 0.02/4;
+            d2 = d1 * pow((1 + d1), 160);
+            annuity = 1/d1 - 1/d2;
+            MORTGAGES = total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW * annuity;
+            quarterly_interest = MORTGAGES * 0.02/4;
+            quarterly_principal = (MORTGAGES / 160);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
+        }
+        else if (MORTGAGE_CHOICE == 5){
+            d1 = (MORTGAGES_INTEREST_RATE + 0.01)/4;
+            d2 = d1 * pow((1 + d1), 160);
+            annuity = 1/d1 - 1/d2;
+            MORTGAGES = total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW * annuity;
+            quarterly_interest = MORTGAGES * (MORTGAGES_INTEREST_RATE + 0.01)/4;
+            quarterly_principal = (MORTGAGES / annuity) - quarterly_interest;
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE + 0.01, MORTGAGE_CHOICE);
+        }
+        else if (MORTGAGE_CHOICE == 6){
+            d1 = (MORTGAGES_INTEREST_RATE + 0.01)/4;
+            d2 = d1 * pow((1 + d1), 160);
+            annuity = 1/d1 - 1/d2;
+            MORTGAGES = total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW * annuity;
+            quarterly_interest = MORTGAGES * (MORTGAGES_INTEREST_RATE + 0.01)/4;
+            quarterly_principal = (MORTGAGES / 160);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE + 0.01, MORTGAGE_CHOICE);
+        }
+        else {
+            if (WARNING_MODE) {
+                printf("Warning @household_housing_debt_writeoff(): Unexpected mortgage choice = %d \n", MORTGAGE_CHOICE);
+            }
+
+        }
         /* Quarterly_Interest + Quarterly_Prinicipal = Quarterly_Income * Writeoff_Low
          */
         writeoff = pre_mortgages - MORTGAGES;
-        
+
         if (WARNING_MODE) {
             if (writeoff < 0 || MORTGAGES < 0) {
                 printf("Warning @household_housing_debt_writeoff(): Unexpected negative values detected, Household = %d, Total income = %f, Mortgage Costs= %f, Writeoff = %f, Pre Mortgage = %f New Mortgage = %f, interest = %f. 50 percent of the mortgage cost will be written off. \n", ID, total_income, HOUSING_PAYMENT, writeoff, pre_mortgages, MORTGAGES, MORTGAGES_INTEREST_RATE);
@@ -544,7 +604,7 @@ int household_housing_debt_writeoff()
             }
 
         }
-        
+
         /* All mortgages are acquired from the same bank. */
         add_mortgage_writeoff_message(BANK_ID, writeoff);
         
@@ -564,15 +624,15 @@ int household_housing_debt_writeoff()
             printf("Household ID = %d, Debts writeoff: %d mortgages affected. Loss on Bank ID = %d amounts to %f \n", ID, size, BANK_ID, writeoff);
         }
         
-        for (ind = 0; ind < size; ind++) {remove_mortgage(&MORTGAGES_LIST, 0);}
-        
-        if (MORTGAGES > 0) {
+        EXPECTED_HOUSING_PAYMENT = quarterly_interest + quarterly_principal;
+
+        /*if (MORTGAGES > 0) {
             double quarterly_principal, quarterly_interest;
             quarterly_interest = MORTGAGES * MORTGAGES_INTEREST_RATE / 4;
             quarterly_principal = MORTGAGES / annuity - quarterly_interest;
             add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal);
             EXPECTED_HOUSING_PAYMENT = quarterly_interest + quarterly_principal;
-        }
+        }*/
     }
     
     if (DATA_COLLECTION_MODE && COLLECT_HOUSEHOLD_DATA) {
