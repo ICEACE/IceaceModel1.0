@@ -41,6 +41,21 @@
                     <description>Productivity of a unit labour.</description>
                 </variable>
                 <variable>
+                    <type>double</type>
+                    <name>capital_productivity</name>
+                    <description>Physical capital productivity.</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>capital_goods</name>
+                    <description>Physical capital owned by a firm in units.</description>
+                    <variable>
+                        <type>double</type>
+                        <name>capital_goods_price</name>
+                        <description>Unit price for capital goods.</description>
+                    </variable>
+                </variable>
+                <variable>
                     <type>int</type>
                     <name>production_current</name>
                     <description>Total number of goods produced in current month.</description>
@@ -75,26 +90,6 @@
                     <type>double</type>
                     <name>unit_house_price</name>
                     <description>Unit price of an house.</description>
-                </variable>
-                <variable>
-                    <type>double</type>
-                    <name>labour_productivity_construction</name>
-                    <description>Productivity of a unit labour in construction sector.</description>
-                </variable>
-                <variable>
-                    <type>double</type>
-                    <name>capital_productivity_construction</name>
-                    <description>Capital productivity in construction sector.</description>
-                </variable>
-                <variable>
-                    <type>int</type>
-                    <name>physical_capital_construction</name>
-                    <description>Physical capital owned by a construction firm in units.</description>
-                </variable>
-                <variable>
-                    <type>int</type>
-                    <name>physical_capital</name>
-                    <description>Physical capital owned by a regular firm in units.</description>
                 </variable>
                 <variable>
                     <type>int</type>

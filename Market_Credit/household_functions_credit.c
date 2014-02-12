@@ -82,7 +82,6 @@ int household_credit_update_mortgage_rates()
     double annuity;
     double d1, d2;
     double rate;
-    int type;
 
 
     
@@ -92,8 +91,9 @@ int household_credit_update_mortgage_rates()
         principal = mort.principal;
         quarters_left = mort.quarters_left - 1;
         rate = mort.interestrate;
-        type = mort.type;
-
+        
+        printf("Agent ID = %d, Mortgage Rate = %f\n", ID, rate);
+        
         if (MORTGAGE_CHOICE == 1) {
             d1 = MORTGAGES_INTEREST_RATE/4;
             d2 = d1 * pow((1 + d1), quarters_left);

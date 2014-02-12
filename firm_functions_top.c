@@ -56,30 +56,21 @@ int firm_init_employment()
         INVENTORY = (int) (PRODUCTION_CURRENT / 10);
         SALES = PRODUCTION_CURRENT;
         REVENUES = SALES * UNIT_GOODS_PRICE;
-        EBIT = REVENUES - LABOUR_COSTS;
-        NET_EARNINGS = EBIT - TOTAL_INTEREST_PAYMENTS;
-        LIQUIDITY = NET_EARNINGS;
-        /* Liquidity is increased to boost bank deposits */
-        //LIQUIDITY += OPERATING_COSTS;
-        PHYSICAL_CAPITAL = ceil((TOTAL_ASSETS - UNIT_GOODS_PRICE * INVENTORY - LIQUIDITY)/CAPITAL_GOODS_PRICE);
-        CAPITAL_GOODS = PHYSICAL_CAPITAL;
-        PHYSICAL_CAPITAL_CONSTRUCTION = 0;
-        CAPITAL_PRODUCTIVITY_CONSTRUCTION = 0;
+        CAPITAL_GOODS = ceil((TOTAL_ASSETS - UNIT_GOODS_PRICE * INVENTORY - LIQUIDITY)/CAPITAL_GOODS_PRICE);
+        
     } else {
-        PRODUCTION_CURRENT = (int) (NO_EMPLOYEES * LABOUR_PRODUCTIVITY_CONSTRUCTION / 12);
+        PRODUCTION_CURRENT = (int) (NO_EMPLOYEES * LABOUR_PRODUCTIVITY / 12);
         INVENTORY = PRODUCTION_CURRENT;
         SALES = 0;
         REVENUES = SALES * UNIT_HOUSE_PRICE;
-        PHYSICAL_CAPITAL = 0;
-        EBIT = REVENUES - LABOUR_COSTS;
-        NET_EARNINGS = REVENUES - TOTAL_INTEREST_PAYMENTS;
-        LIQUIDITY = NET_EARNINGS;
-        /* Liquidity is increased to boost bank deposits */
-        //LIQUIDITY += OPERATING_COSTS;
-        PHYSICAL_CAPITAL_CONSTRUCTION = ceil((TOTAL_ASSETS - UNIT_HOUSE_PRICE * INVENTORY - LIQUIDITY)/CAPITAL_GOODS_PRICE);
-        CAPITAL_GOODS = PHYSICAL_CAPITAL_CONSTRUCTION;
-        CAPITAL_PRODUCTIVITY_CONSTRUCTION = LABOUR_PRODUCTIVITY_CONSTRUCTION * NO_EMPLOYEES / (0.7 * PHYSICAL_CAPITAL_CONSTRUCTION);
+        CAPITAL_GOODS = ceil((TOTAL_ASSETS - UNIT_HOUSE_PRICE * INVENTORY - LIQUIDITY)/CAPITAL_GOODS_PRICE);
+        
+        CAPITAL_PRODUCTIVITY = LABOUR_PRODUCTIVITY * NO_EMPLOYEES / (0.7 * CAPITAL_GOODS);
     }
+    
+    EBIT = REVENUES - LABOUR_COSTS;
+    NET_EARNINGS = EBIT - TOTAL_INTEREST_PAYMENTS;
+    LIQUIDITY = NET_EARNINGS;
     
     if (PRINT_DEBUG_MODE) {
         printf("Firm %d --> Size = %d \n", ID, NO_EMPLOYEES);
@@ -165,8 +156,8 @@ int firm_iterate()
                 filename[0]=0;
                 strcpy(filename, "./outputs/data/Constructor_Firm_Quarterly_BalanceSheet.txt");
                 file1 = fopen(filename,"w");
-                fprintf(file1,"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n","IT_NO", "ID", "ISLIQUIDSHORT", "HASLOAN", "HASINVESTMENT", "LIQUIDITY_NEED", "ISINSOLVENT", "ISILLIQUID", "TOTAL_ASSETS", "LIQUIDITY", "INVENTORY", "UNIT_HOUSE_PRICE", "CAPITAL_GOODS_PRICE", "CAPITAL_GOODS", "PHYSICAL_CAPITAL_CONSTRUCTION", "DEBT", "EQUITY");
-                //fprintf(file1,"%d %d %d %d %d %f %d %d %f %f %d %f %f %d %d %f %f\n",IT_NO, ID, ISLIQUIDSHORT, HASLOAN, HASINVESTMENT, LIQUIDITY_NEED, ISINSOLVENT, ISILLIQUID, TOTAL_ASSETS, LIQUIDITY, INVENTORY, UNIT_HOUSE_PRICE, CAPITAL_GOODS_PRICE, CAPITAL_GOODS, PHYSICAL_CAPITAL_CONSTRUCTION, DEBT, EQUITY);
+                fprintf(file1,"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n","IT_NO", "ID", "ISLIQUIDSHORT", "HASLOAN", "HASINVESTMENT", "LIQUIDITY_NEED", "ISINSOLVENT", "ISILLIQUID", "TOTAL_ASSETS", "LIQUIDITY", "INVENTORY", "UNIT_HOUSE_PRICE", "CAPITAL_GOODS_PRICE", "CAPITAL_GOODS",  "DEBT", "EQUITY");
+                //fprintf(file1,"%d %d %d %d %d %f %d %d %f %f %d %f %f %d %f %f\n",IT_NO, ID, ISLIQUIDSHORT, HASLOAN, HASINVESTMENT, LIQUIDITY_NEED, ISINSOLVENT, ISILLIQUID, TOTAL_ASSETS, LIQUIDITY, INVENTORY, UNIT_HOUSE_PRICE, CAPITAL_GOODS_PRICE, CAPITAL_GOODS, DEBT, EQUITY);
                 fclose(file1);
             }
             else
@@ -202,9 +193,9 @@ int firm_iterate()
                 filename[0]=0;
                 strcpy(filename, "./outputs/data/Firm_Quarterly_BalanceSheet.txt");
                 file1 = fopen(filename,"w");
-                fprintf(file1,"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n","IT_NO", "ID", "ISLIQUIDSHORT", "HASLOAN", "HASINVESTMENT", "LIQUIDITY_NEED","ISINSOLVENT", "ISILLIQUID", "TOTAL_ASSETS", "LIQUIDITY", "INVENTORY", "UNIT_GOODS_PRICE", "CAPITAL_GOODS_PRICE", "CAPITAL_GOODS", "PHYSICAL_CAPITAL", "DEBT", "EQUITY");
+                fprintf(file1,"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n","IT_NO", "ID", "ISLIQUIDSHORT", "HASLOAN", "HASINVESTMENT", "LIQUIDITY_NEED","ISINSOLVENT", "ISILLIQUID", "TOTAL_ASSETS", "LIQUIDITY", "INVENTORY", "UNIT_GOODS_PRICE", "CAPITAL_GOODS_PRICE", "CAPITAL_GOODS", "DEBT", "EQUITY");
                 
-                //fprintf(file1,"%d %d %d %d %d %f %d %d %f %f %d %f %f %d %d %f %f\n",IT_NO, ID, ISLIQUIDSHORT, HASLOAN, HASINVESTMENT, LIQUIDITY_NEED, ISINSOLVENT, ISILLIQUID, TOTAL_ASSETS, LIQUIDITY, INVENTORY, UNIT_GOODS_PRICE, CAPITAL_GOODS_PRICE, CAPITAL_GOODS, PHYSICAL_CAPITAL, DEBT, EQUITY);
+                //fprintf(file1,"%d %d %d %d %d %f %d %d %f %f %d %f %f %d %f %f\n",IT_NO, ID, ISLIQUIDSHORT, HASLOAN, HASINVESTMENT, LIQUIDITY_NEED, ISINSOLVENT, ISILLIQUID, TOTAL_ASSETS, LIQUIDITY, INVENTORY, UNIT_GOODS_PRICE, CAPITAL_GOODS_PRICE, CAPITAL_GOODS, DEBT, EQUITY);
                 fclose(file1);
             }
             free(filename);

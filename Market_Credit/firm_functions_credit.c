@@ -428,11 +428,11 @@ int firm_credit_do_balance_sheet()
     
     if (ISCONSTRUCTOR) {
         TOTAL_ASSETS  = INVENTORY * UNIT_HOUSE_PRICE;
-        TOTAL_ASSETS += LIQUIDITY + PHYSICAL_CAPITAL_CONSTRUCTION * CAPITAL_GOODS_PRICE;
+        
     } else {
         TOTAL_ASSETS = INVENTORY * UNIT_GOODS_PRICE;
-        TOTAL_ASSETS += LIQUIDITY + CAPITAL_GOODS * CAPITAL_GOODS_PRICE;
     }
+    TOTAL_ASSETS += LIQUIDITY + CAPITAL_GOODS * CAPITAL_GOODS_PRICE;
     
     EQUITY = TOTAL_ASSETS - DEBT;
     
@@ -448,11 +448,11 @@ int firm_credit_do_balance_sheet()
         if (ISCONSTRUCTOR) {
             strcpy(filename, "./outputs/data/Constructor_Firm_Quarterly_BalanceSheet.txt");
             file1 = fopen(filename,"a");
-            fprintf(file1,"%d %d %d %d %d %f %d %d %f %f %d %f %f %d %d %f %f\n",IT_NO, ID, ISLIQUIDSHORT, HASLOAN, HASINVESTMENT, LIQUIDITY_NEED, ISINSOLVENT, ISILLIQUID, TOTAL_ASSETS, LIQUIDITY, INVENTORY, UNIT_HOUSE_PRICE, CAPITAL_GOODS_PRICE, CAPITAL_GOODS, PHYSICAL_CAPITAL_CONSTRUCTION, DEBT, EQUITY);
+            fprintf(file1,"%d %d %d %d %d %f %d %d %f %f %d %f %f %d %f %f\n",IT_NO, ID, ISLIQUIDSHORT, HASLOAN, HASINVESTMENT, LIQUIDITY_NEED, ISINSOLVENT, ISILLIQUID, TOTAL_ASSETS, LIQUIDITY, INVENTORY, UNIT_HOUSE_PRICE, CAPITAL_GOODS_PRICE, CAPITAL_GOODS, DEBT, EQUITY);
         } else {
             strcpy(filename, "./outputs/data/Firm_Quarterly_BalanceSheet.txt");
             file1 = fopen(filename,"a");
-            fprintf(file1,"%d %d %d %d %d %f %d %d %f %f %d %f %f %d %d %f %f\n",IT_NO, ID, ISLIQUIDSHORT, HASLOAN, HASINVESTMENT, LIQUIDITY_NEED, ISINSOLVENT, ISILLIQUID, TOTAL_ASSETS, LIQUIDITY, INVENTORY, UNIT_GOODS_PRICE, CAPITAL_GOODS_PRICE, CAPITAL_GOODS, PHYSICAL_CAPITAL, DEBT, EQUITY);
+            fprintf(file1,"%d %d %d %d %d %f %d %d %f %f %d %f %f %d %f %f\n",IT_NO, ID, ISLIQUIDSHORT, HASLOAN, HASINVESTMENT, LIQUIDITY_NEED, ISINSOLVENT, ISILLIQUID, TOTAL_ASSETS, LIQUIDITY, INVENTORY, UNIT_GOODS_PRICE, CAPITAL_GOODS_PRICE, CAPITAL_GOODS, DEBT, EQUITY);
         }
         fclose(file1);
         free(filename);
@@ -505,7 +505,7 @@ int firm_credit_insolvency_bankruptcy()
         /* UNIT_COST is inherited. */
     } else {
         INVENTORY = 0;
-        TOTAL_ASSETS = CAPITAL_PRODUCTIVITY_CONSTRUCTION * 1 + LIQUIDITY;
+        TOTAL_ASSETS = CAPITAL_PRODUCTIVITY * 1 + LIQUIDITY;
         /* Constructor firms keep the averega house prices, current projects, etc */
     }
     

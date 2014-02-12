@@ -275,6 +275,7 @@ int household_housing_collect_sale_revenue()
     double new_quarterly_principal;
     double annuity;
     double d1, d2;
+    double rate;
     int quarters_left;
     
     /* Regular seller: */
@@ -335,7 +336,6 @@ int household_housing_collect_sale_revenue()
         else {
             quarters_left = mort.quarters_left;
             rate = mort.interestrate;
-            type = mort.type;
 
             add_mortgage_payment_from_sale_message(BANK_ID, sale_price);
 

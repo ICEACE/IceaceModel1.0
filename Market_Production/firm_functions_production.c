@@ -164,8 +164,8 @@ int firm_production_construct_houses()
     int capital, labour, units_to_produce;
     
     
-    labour = (int)(NO_EMPLOYEES * LABOUR_PRODUCTIVITY_CONSTRUCTION);
-    capital = (int) (CAPITAL_PRODUCTIVITY_CONSTRUCTION * PHYSICAL_CAPITAL_CONSTRUCTION);
+    labour = (int)(NO_EMPLOYEES * LABOUR_PRODUCTIVITY);
+    capital = (int) (CAPITAL_PRODUCTIVITY * CAPITAL_GOODS);
     
     /* Lentoif production function: */
     units_to_produce = min_int(labour, capital);
@@ -242,7 +242,7 @@ int firm_production_construction_plan()
     }
     
     
-    maxsize = (int) (CAPITAL_PRODUCTIVITY_CONSTRUCTION * PHYSICAL_CAPITAL_CONSTRUCTION);
+    maxsize = (int) (CAPITAL_PRODUCTIVITY * CAPITAL_GOODS);
     
     
     /* Some conditions are added to the model! Needs to be double chekced.*/
@@ -270,7 +270,7 @@ int firm_production_construction_plan()
         filename = malloc(100*sizeof(char));
         filename[0]=0;
         
-        int needed = ceil(PRODUCTION_PLAN / LABOUR_PRODUCTIVITY_CONSTRUCTION);
+        int needed = ceil(PRODUCTION_PLAN / LABOUR_PRODUCTIVITY);
         if (needed < 1) {needed = 1;}
         strcpy(filename, "./outputs/data/Constructor_Firm_Monthly.txt");
         file1 = fopen(filename,"a");
@@ -293,7 +293,7 @@ int firm_production_construction_plan()
  */
 int firm_production_construction_labour_demand()
 {
-    EMPLOYEES_NEEDED = ceil(PRODUCTION_PLAN / LABOUR_PRODUCTIVITY_CONSTRUCTION);
+    EMPLOYEES_NEEDED = ceil(PRODUCTION_PLAN / LABOUR_PRODUCTIVITY);
     
     if (EMPLOYEES_NEEDED < 1) {EMPLOYEES_NEEDED = 1;}
     
