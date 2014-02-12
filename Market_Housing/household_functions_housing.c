@@ -174,9 +174,8 @@ int household_housing_buy()
 
         }
 
-        /* Updating the cummulative mortgages. */
-        
-        
+        /* Updating the cummulative mortgages and total mortgage payments. */
+        EXPECTED_HOUSING_PAYMENT += quarterly_interest + quarterly_principal;
         MORTGAGES += mortgage_used;
         if (PRINT_DEBUG_MODE) {
             printf("Household ID = %d a new mortgage debt of %f. \n", ID, mortgage_used);
@@ -323,6 +322,7 @@ int household_housing_collect_sale_revenue()
         /* pays the newest mortgage first! */
         ind = MORTGAGES_LIST.size - 1;
         mort = MORTGAGES_LIST.array[ind];
+        EXPECTED_HOUSING_PAYMENT -= mort.quarterly_interest + mort.quarterly_principal;
         
         if (mort.principal <= sale_price){
             MORTGAGES -= mort.principal;
@@ -391,6 +391,7 @@ int household_housing_collect_sale_revenue()
             MORTGAGES_LIST.array[ind].principal = new_principle;
             MORTGAGES_LIST.array[ind].quarterly_interest = new_quarterly_interest;
             MORTGAGES_LIST.array[ind].quarterly_principal = new_quarterly_principal;
+            EXPECTED_HOUSING_PAYMENT += new_quarterly_interest + new_quarterly_principal;
             sale_price = 0;
         }
     }
@@ -523,14 +524,6 @@ int household_housing_debt_writeoff()
     
     total_income = LABOUR_INCOME + CAPITAL_INCOME;
     
-    /* Expected payments may have changed due to sales or new housing units. */
-    EXPECTED_HOUSING_PAYMENT = 0;
-    for (ind = 0; ind < size; ind++) {
-        quarterly_interest = MORTGAGES_LIST.array[ind].quarterly_interest;
-        quarterly_principal = MORTGAGES_LIST.array[ind].quarterly_principal;
-        EXPECTED_HOUSING_PAYMENT += quarterly_interest + quarterly_principal;
-    }
-
     
     if (EXPECTED_HOUSING_PAYMENT > HOUSEHOLD_MORTGAGE_WRITEOFF_HIGH * total_income)
     {
