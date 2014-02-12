@@ -122,6 +122,7 @@
         <xagent>
             <name>reagency</name>
             <description>Real Estate Agency.</description>
+            <memory/>
             <functions>
                 <function>
                     <name>idle</name>
@@ -146,9 +147,11 @@
                             <phase>0</phase>
                         </time>
                     </condition>
-                    <input>
-                        <messageName>interest_rate</messageName>
-                    </input>
+                    <inputs>
+                        <input>
+                            <messageName>interest_rate</messageName>
+                        </input>
+                    </inputs>
                 </function>
             </functions>
         </xagent>
@@ -905,8 +908,6 @@
                         </input>
                     </inputs>
                 </function>
-                
-                
                 <function>
                     <name>idle</name>
                     <description>It is not time to act.</description>
@@ -928,7 +929,7 @@
                         <time>
                             <period>quarterly</period>
                             <phase>0</phase>
-                        </time><
+                        </time>
                     </condition>
                     <inputs>
                         <input>

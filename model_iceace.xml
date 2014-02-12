@@ -248,7 +248,7 @@
                         <time>
                             <period>monthly</period>
                             <phase>0</phase>
-                        </time><
+                        </time>
                     </condition>
                     <outputs>
                         <output>
@@ -631,9 +631,11 @@
                         <op>EQ</op>
                         <rhs><value>0</value></rhs>
                     </condition>
-                    <output>
-                        <messageName>gov_centralbank_init_deposit</messageName>
-                    </output>
+                    <outputs>
+                        <output>
+                            <messageName>gov_centralbank_init_deposit</messageName>
+                        </output>
+                    </outputs>
                 </function>
                 <function>
                     <name>idle</name>
