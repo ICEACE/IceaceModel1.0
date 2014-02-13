@@ -163,6 +163,11 @@
                     <description>Current wage earned.</description>
                 </variable>
                 <variable>
+                    <type>int</type>
+                    <name>ismanager</name>
+                    <description>1 for the manegers, 0 for the regular workers.</description>
+                </variable>
+                <variable>
                     <type>double</type>
                     <name>government_benefits</name>
                     <description>General benefit plus unemployment benefit recieved from the government.</description>
@@ -352,6 +357,11 @@
                     <type>int_array</type>
                     <name>employees</name>
                     <description>Holds employee ids</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>manager</name>
+                    <description>Holds id of the manager.</description>
                 </variable>
                 <variable>
                     <type>double</type>

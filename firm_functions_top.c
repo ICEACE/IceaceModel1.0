@@ -33,10 +33,14 @@ int firm_init_post_id()
  */
 int firm_init_employment()
 {
-    int new_employee;
+    int new_employee, position;
         
     START_JPOFFICE_FIRM_EMPLOYEE_MESSAGE_LOOP
     new_employee = jpoffice_firm_employee_message->employee_id;
+    position = jpoffice_firm_employee_message->position;
+    if (position > 0) {
+        MANAGER = new_employee;
+    }
     add_int(&EMPLOYEES, new_employee);
     FINISH_JPOFFICE_FIRM_EMPLOYEE_MESSAGE_LOOP
     
@@ -50,7 +54,6 @@ int firm_init_employment()
     TOTAL_ASSETS = DEBT + EQUITY;
     LOAN_LIST[0].amount = DEBT;
     
-                                                                               
     if (ISCONSTRUCTOR == 0) {
         PRODUCTION_CURRENT = (int) (NO_EMPLOYEES * LABOUR_PRODUCTIVITY);
         INVENTORY = (int) (PRODUCTION_CURRENT / 10);
@@ -59,7 +62,10 @@ int firm_init_employment()
         EBIT = REVENUES - LABOUR_COSTS;
         NET_EARNINGS = EBIT - TOTAL_INTEREST_PAYMENTS;
         LIQUIDITY = NET_EARNINGS;
-        CAPITAL_GOODS = ceil((TOTAL_ASSETS - UNIT_GOODS_PRICE * INVENTORY - LIQUIDITY)/CAPITAL_GOODS_PRICE);
+        //CAPITAL_GOODS = ceil((TOTAL_ASSETS - UNIT_GOODS_PRICE * INVENTORY - LIQUIDITY)/CAPITAL_GOODS_PRICE);
+        CAPITAL_GOODS = 0;
+        CAPITAL_PRODUCTIVITY = 0;
+        
         
     } else {
         PRODUCTION_CURRENT = (int) (NO_EMPLOYEES * LABOUR_PRODUCTIVITY / 12);
@@ -69,7 +75,8 @@ int firm_init_employment()
         EBIT = REVENUES - LABOUR_COSTS;
         NET_EARNINGS = EBIT - TOTAL_INTEREST_PAYMENTS;
         LIQUIDITY = NET_EARNINGS;
-        CAPITAL_GOODS = ceil((TOTAL_ASSETS - UNIT_HOUSE_PRICE * INVENTORY - LIQUIDITY)/CAPITAL_GOODS_PRICE);
+        //CAPITAL_GOODS = ceil((TOTAL_ASSETS - UNIT_HOUSE_PRICE * INVENTORY - LIQUIDITY)/CAPITAL_GOODS_PRICE);
+        CAPITAL_GOODS = 10;
         CAPITAL_PRODUCTIVITY = LABOUR_PRODUCTIVITY * NO_EMPLOYEES / (0.7 * CAPITAL_GOODS);
     }
     

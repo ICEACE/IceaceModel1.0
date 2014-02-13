@@ -32,15 +32,11 @@ int household_init_employment()
 {
     START_JPOFFICE_HOUSEHOLD_EMPLOYER_MESSAGE_LOOP
     MY_EMPLOYER_ID = jpoffice_household_employer_message->employer_id;
-    if (WAGE == 0) {
-        if (WARNING_MODE) {
-            if ((MY_EMPLOYER_ID > 0 && WAGE == 0) || (MY_EMPLOYER_ID == 0 && WAGE > 0)) {
-                printf("Warning @household_init_employment(): Wage and employment status doesn't match at the initialization! Household ID = %d, Wage = %f, Employer = %d, Wage is set to 5.0 \n", ID, WAGE, MY_EMPLOYER_ID);
-            }
-        }
-        WAGE = 5.0;
-    }
+    ISMANAGER = jpoffice_household_employer_message->position;
     FINISH_JPOFFICE_HOUSEHOLD_EMPLOYER_MESSAGE_LOOP
+    
+    if (MY_EMPLOYER_ID > 0) {WAGE = 5.0;}
+    else {WAGE = 0.0;}
     
     for (int i = 0; i < 3; i++) {
         if (PREVIOUS_WAGES[i] == 0) {
@@ -50,10 +46,6 @@ int household_init_employment()
         }
     }
     
-    /* Liquidity is 3 x initial awerage wage */
-    if (LIQUIDITY < 15) {
-        LIQUIDITY = 15;
-    }
     
     /*** Balancesheet Verification */
     char * filename;

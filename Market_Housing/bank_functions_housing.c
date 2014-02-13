@@ -71,8 +71,6 @@ int bank_housing_recieve_mortgages()
     double principal;
     double interest;
     
-    printf("Bank @  bank_housing_recieve_mortgages()\n");
-    
     START_MORTGAGE_PAYMENT_MESSAGE_LOOP
     /* The message is filtered via xmml. */
     principal = mortgage_payment_message->principal;

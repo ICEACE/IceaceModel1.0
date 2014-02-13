@@ -241,9 +241,7 @@ int firm_production_construction_plan()
         work_in_progress += PROJECTS[i];
     }
     
-    
     maxsize = (int) (CAPITAL_PRODUCTIVITY * CAPITAL_GOODS);
-    
     
     /* Some conditions are added to the model! Needs to be double chekced.*/
     if (maxsize <= 0){

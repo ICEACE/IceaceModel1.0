@@ -36,7 +36,7 @@ int firm_labour_fire()
        Send out fired message.
      */
     
-    int n_to_fire, i, index;
+    int n_to_fire;
     
     n_to_fire = NO_EMPLOYEES - EMPLOYEES_NEEDED;
     
@@ -45,10 +45,19 @@ int firm_labour_fire()
         n_to_fire -= 1;
     }
     
-    for (i = 0; i < n_to_fire; i++) {
-        index = EMPLOYEES.size - 1;
-        add_fired_message(EMPLOYEES.array[index]);
-        remove_int(&EMPLOYEES, index);
+    int fired = 0;
+    int employer, position, size, i;
+    i = 0;
+    size = EMPLOYEES.size;
+    while (fired < n_to_fire) {
+        i++;
+        if (i == size){ break;}
+        position = EMPLOYEES.size - 1;
+        employer = EMPLOYEES.array[position];
+        if (employer == MANAGER){continue;}
+        add_fired_message(EMPLOYEES.array[position]);
+        remove_int(&EMPLOYEES, position);
+        fired++;
     }
     
     NO_EMPLOYEES = EMPLOYEES.size;
@@ -129,8 +138,7 @@ int firm_labour_update()
     
     NO_EMPLOYEES = EMPLOYEES.size;
     VACANCIES += n_resigned;
-
- 
+    
 	return 0; /* Returning zero means the agent is not removed */
 }
 
@@ -165,11 +173,13 @@ int firm_labour_job_offer_stage2()
     /* Recieve job application messages. */
     n_hired = 0;
     
+    
     START_JOB_MATCH_STAGE2_MESSAGE_LOOP
     candidate = job_match_stage2_message->employee_id;
     add_int(&EMPLOYEES, candidate);
     n_hired++;
 	FINISH_JOB_MATCH_STAGE2_MESSAGE_LOOP
+    
     
     VACANCIES -= n_hired;
     NO_EMPLOYEES = EMPLOYEES.size;

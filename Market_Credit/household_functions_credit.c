@@ -28,6 +28,10 @@ int household_credit_check_tax_rate()
     LABOUR_TAX_RATE = labour_tax_rate_message->value;
 	FINISH_LABOUR_TAX_RATE_MESSAGE_LOOP
     
+    if (ISMANAGER) {
+        printf("HH = %d Employer = %d\n", ID, MY_EMPLOYER_ID);
+    }
+    
 	return 0; /* Returning zero means the agent is not removed */
 }
 
@@ -44,9 +48,7 @@ int household_credit_update_mortgage_rates()
     
     size = MORTGAGES_LIST.size;
     i = 0;
-    
-    printf("Household = %d, @ household_credit_update_mortgage_rates() size = %d\n", ID, size);
-    
+
     while (i < size) {
         //mort = MORTGAGES_LIST.array[i];
         //principal = mort.principal;

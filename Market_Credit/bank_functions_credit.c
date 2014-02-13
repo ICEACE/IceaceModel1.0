@@ -39,7 +39,6 @@ int bank_credit_compute_income_statement()
      The principal payment is done within balance sheet accounting.
      */
     
-    //printf("Bank ID = %d at Income Statement, pre-liquidity = %f \n", ID, LIQUIDITY);
     INTERESTS_PAID = 0;
     INTERESTS_PAID = CENTRALBANK_DEBT * INTEREST_RATE / 4;
     LIQUIDITY -= INTERESTS_PAID;
@@ -65,8 +64,6 @@ int bank_credit_compute_income_statement()
     INTERESTS_ACCRUED = 0;
     TOTAL_WRITEOFFS = 0;
     
-    //printf("Bank ID = %d at Income Statement, post-liquidity = %f \n", ID, LIQUIDITY);
-    
 	return 0; /* Returning zero means the agent is not removed */
 }
 
@@ -84,8 +81,6 @@ int bank_credit_compute_dividends()
         return 0;
     }
     /* determine if dividends retained.*/
-    
-    //printf("Bank ID = %d at Computing Dividends, pre-liquidity = %f \n", ID, LIQUIDITY);
     
     double risky_assets;
     risky_assets = LOANS + MORTGAGES;
@@ -128,8 +123,6 @@ int bank_credit_compute_dividends()
         }
     }
     
-    //printf("Bank ID = %d at Computing Dividends, post-liquidity = %f \n", ID, LIQUIDITY);
-    
     return 0; /* Returning zero means the agent is not removed */
 }
 
@@ -142,8 +135,6 @@ int bank_credit_compute_dividends()
 int bank_credit_do_balance_sheet()
 {
     double amount;
-    
-    //printf("Bank ID = %d at Balance Sheet, pre-liquidity = %f, CB Debt = %f \n", ID, LIQUIDITY, CENTRALBANK_DEBT);
     
     if (LIQUIDITY < 0) {
         amount = -1 * LIQUIDITY;

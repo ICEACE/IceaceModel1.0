@@ -83,8 +83,9 @@ int jpoffice_init_employment()
         }
         firm_id = constructor_firm_list.array[i];
         household_id = household_list.array[0];
-        add_jpoffice_household_employer_message(household_id, firm_id);
-        add_jpoffice_firm_employee_message(firm_id, household_id);
+        /* The employee is a manager. */
+        add_jpoffice_household_employer_message(household_id, firm_id, 1);
+        add_jpoffice_firm_employee_message(firm_id, household_id, 1);
         remove_int(&household_list, 0);
         nemployed++;
     }
@@ -102,8 +103,9 @@ int jpoffice_init_employment()
         }
         firm_id = regular_firm_list.array[i];
         household_id = household_list.array[0];
-        add_jpoffice_household_employer_message(household_id, firm_id);
-        add_jpoffice_firm_employee_message(firm_id, household_id);
+        /* The employee is a manager. */
+        add_jpoffice_household_employer_message(household_id, firm_id, 1);
+        add_jpoffice_firm_employee_message(firm_id, household_id, 1);
         remove_int(&household_list, 0);
         nemployed++;
     }
@@ -122,8 +124,8 @@ int jpoffice_init_employment()
                 return 0;
             }
             household_id = household_list.array[0];
-            add_jpoffice_household_employer_message(household_id, firm_id);
-            add_jpoffice_firm_employee_message(firm_id, household_id);
+            add_jpoffice_household_employer_message(household_id, firm_id,0);
+            add_jpoffice_firm_employee_message(firm_id, household_id, 0);
             remove_int(&household_list, 0);
             nemployed++;
         }
@@ -142,8 +144,8 @@ int jpoffice_init_employment()
         i = random_int(0, j);
         firm_id = regular_firm_list.array[i];
         household_id = household_list.array[0];
-        add_jpoffice_household_employer_message(household_id, firm_id);
-        add_jpoffice_firm_employee_message(firm_id, household_id);
+        add_jpoffice_household_employer_message(household_id, firm_id,0);
+        add_jpoffice_firm_employee_message(firm_id, household_id, 0);
         remove_int(&household_list, 0);
         nemployed++;
     } while (1);

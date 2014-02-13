@@ -1121,6 +1121,11 @@
                     <name>employer_id</name>
                     <description>The agent id.</description>
                 </variable>
+                <variable>
+                    <type>int</type>
+                    <name>position</name>
+                    <description>The position. 1 for managers 0 for regulars.</description>
+                </variable>
             </variables>
         </message>
         <message>
@@ -1152,6 +1157,11 @@
                     <type>int</type>
                     <name>employee_id</name>
                     <description>The agent id.</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>position</name>
+                    <description>The position. 1 for managers 0 for regulars.</description>
                 </variable>
             </variables>
         </message>

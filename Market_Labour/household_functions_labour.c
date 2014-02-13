@@ -41,6 +41,8 @@ int household_labour_reemployment_application()
  */
 int household_labour_turnover()
 {
+    if (ISMANAGER) { return 0;}
+    
     int previous_employer, new_employer;
     
     previous_employer = MY_EMPLOYER_ID;

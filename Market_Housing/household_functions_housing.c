@@ -137,14 +137,14 @@ int household_housing_buy()
         if (MORTGAGE_CHOICE == 1) {
             quarterly_interest = mortgage_used * MORTGAGES_INTEREST_RATE / 4;
             quarterly_principal = (mortgage_used / annuity) - quarterly_interest;
-            //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE);
         }
         else if (MORTGAGE_CHOICE == 2){
             quarterly_interest = mortgage_used * MORTGAGES_INTEREST_RATE / 4;
             quarterly_principal = (mortgage_used / 160);
-            //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE);
         }
         else if (MORTGAGE_CHOICE == 3){
             quarterly_interest = mortgage_used * 0.02/4;
@@ -152,14 +152,14 @@ int household_housing_buy()
             d2 = d1 * pow((1 + d1), 160);
             annuity = 1/d1 - 1/d2;
             quarterly_principal = (mortgage_used / annuity) - quarterly_interest;
-            //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, 0.02);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, 0.02);
         }
         else if (MORTGAGE_CHOICE == 4){
             quarterly_interest = mortgage_used * 0.02/4;
             quarterly_principal = (mortgage_used / 160);
-            //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, 0.02);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, 0.02);
         }
         else if (MORTGAGE_CHOICE == 5){
             used_interest_rate = MORTGAGES_INTEREST_RATE + 0.01;
@@ -168,15 +168,15 @@ int household_housing_buy()
             d2 = d1 * pow((1 + d1), 160);
             annuity = 1/d1 - 1/d2;
             quarterly_principal = (mortgage_used / annuity) - quarterly_interest;
-            //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, used_interest_rate, MORTGAGE_CHOICE);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, used_interest_rate);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, used_interest_rate, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, used_interest_rate);
         }
         else if (MORTGAGE_CHOICE == 6){
             used_interest_rate = MORTGAGES_INTEREST_RATE + 0.01;
             quarterly_interest = mortgage_used * used_interest_rate / 4;
             quarterly_principal = (mortgage_used / 160);
-            //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, used_interest_rate, MORTGAGE_CHOICE);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, used_interest_rate);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, used_interest_rate, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, used_interest_rate);
         }
         else {
             if (WARNING_MODE) {
@@ -570,15 +570,15 @@ int household_housing_debt_writeoff()
             MORTGAGES = total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW * annuity;
             quarterly_interest = MORTGAGES * MORTGAGES_INTEREST_RATE / 4;
             quarterly_principal = (MORTGAGES / annuity) - quarterly_interest;
-            //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE);
         }
         else if (MORTGAGE_CHOICE == 2){
             MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / (MORTGAGES_INTEREST_RATE / 4 + 1/160);
             quarterly_interest = MORTGAGES * MORTGAGES_INTEREST_RATE / 4;
             quarterly_principal = (MORTGAGES / 160);
-            //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE);
         }
         else if (MORTGAGE_CHOICE == 3){
             d1 = 0.02/4;
@@ -587,15 +587,15 @@ int household_housing_debt_writeoff()
             MORTGAGES = total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW * annuity;
             quarterly_interest = MORTGAGES * 0.02/4;
             quarterly_principal = (MORTGAGES / annuity) - quarterly_interest;
-            //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02);
         }
         else if (MORTGAGE_CHOICE == 4){
             MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / (0.02 / 4 + 1/160);
             quarterly_interest = MORTGAGES * 0.02/4;
             quarterly_principal = (MORTGAGES / 160);
-            //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02);
         }
         else if (MORTGAGE_CHOICE == 5){
             d1 = (MORTGAGES_INTEREST_RATE + 0.01)/4;
@@ -605,16 +605,16 @@ int household_housing_debt_writeoff()
             MORTGAGES = total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW * annuity;
             quarterly_interest = MORTGAGES * used_interest_rate / 4;
             quarterly_principal = (MORTGAGES / annuity) - quarterly_interest;
-            //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, used_interest_rate, MORTGAGE_CHOICE);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, used_interest_rate);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, used_interest_rate, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, used_interest_rate);
         }
         else if (MORTGAGE_CHOICE == 6){
             used_interest_rate = MORTGAGES_INTEREST_RATE + 0.01;
             MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / (used_interest_rate / 4 + 1/160);
             quarterly_interest = MORTGAGES * (MORTGAGES_INTEREST_RATE + 0.01)/4;
             quarterly_principal = (MORTGAGES / 160);
-            //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, used_interest_rate, MORTGAGE_CHOICE);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, used_interest_rate);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, used_interest_rate, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, used_interest_rate);
         }
         else {
             if (WARNING_MODE) {
@@ -645,7 +645,7 @@ int household_housing_debt_writeoff()
         if (DATA_COLLECTION_MODE) {
             char * filename;
             FILE * file1;
-            filename = malloc(40*sizeof(char));
+            filename = malloc(100*sizeof(char));
             filename[0]=0;
             strcpy(filename, "./outputs/data/BankruptcyInspection.txt");
             file1 = fopen(filename,"a");
