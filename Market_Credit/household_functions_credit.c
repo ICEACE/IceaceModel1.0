@@ -37,16 +37,21 @@ int household_credit_check_tax_rate()
  */
 int household_credit_update_mortgage_rates()
 {
-    int size, i;
-    mortgage mort;
-    init_mortgage(&mort);
+    int size, i, quarters_left;
+    //mortgage mort;
+    //init_mortgage(&mort);
     double principal;
     
     size = MORTGAGES_LIST.size;
     i = 0;
+    
+    printf("Household = %d, @ household_credit_update_mortgage_rates() size = %d\n", ID, size);
+    
     while (i < size) {
-        mort = MORTGAGES_LIST.array[i];
-        principal = mort.principal;
+        //mort = MORTGAGES_LIST.array[i];
+        //principal = mort.principal;
+        principal = MORTGAGES_LIST.array[i].principal;
+        quarters_left = MORTGAGES_LIST.array[i].quarters_left;
         
         if (principal < 0.1) {
             remove_mortgage(&MORTGAGES_LIST, i);
@@ -54,7 +59,7 @@ int household_credit_update_mortgage_rates()
             continue;
         }
         
-        if (mort.quarters_left == 0){
+        if (quarters_left == 0){
             if (principal >= 0.1) {
                 MORTGAGES_LIST.array[i].quarters_left = 1;
                 if (WARNING_MODE) {
@@ -67,32 +72,36 @@ int household_credit_update_mortgage_rates()
                 continue;
             }
         }
-        
         i++;
     }
     
+    size = MORTGAGES_LIST.size;;
     if (size == 0) {
-        free_mortgage(&mort);
+        //free_mortgage(&mort);
         return 0;
     }
     
-    int quarters_left;
     double new_quarterly_interest;
-    double new_quarterly_principal;
+    double new_quarterly_principal, quarterly_principal;
     double annuity;
     double d1, d2;
     double rate;
-
-
     
+    new_quarterly_interest = 0;
+    new_quarterly_principal = 0;
     EXPECTED_HOUSING_PAYMENT = 0;
+    
     for (i = 0; i < size; i++) {
-        mort = MORTGAGES_LIST.array[i];
-        principal = mort.principal;
-        quarters_left = mort.quarters_left - 1;
-        rate = mort.interestrate;
+        //mort = MORTGAGES_LIST.array[i];
+        //principal = mort.principal;
+        //quarters_left = mort.quarters_left - 1;
+        //rate = mort.interestrate;
         
-        printf("Agent ID = %d, Mortgage Rate = %f\n", ID, rate);
+        principal = MORTGAGES_LIST.array[i].principal;
+        quarters_left = MORTGAGES_LIST.array[i].quarters_left - 1;
+        rate = MORTGAGES_LIST.array[i].interestrate;
+        quarterly_principal = MORTGAGES_LIST.array[i].quarterly_principal;
+        
         
         if (MORTGAGE_CHOICE == 1) {
             d1 = MORTGAGES_INTEREST_RATE/4;
@@ -104,21 +113,21 @@ int household_credit_update_mortgage_rates()
         }
         else if (MORTGAGE_CHOICE == 2){
             new_quarterly_interest = principal * MORTGAGES_INTEREST_RATE / 4;
-            new_quarterly_principal = mort.quarterly_principal;
+            new_quarterly_principal = quarterly_principal;
         }
         else if (MORTGAGE_CHOICE == 3){
             d1 = rate/4;
             d2 = d1 * pow((1 + d1), quarters_left);
             annuity = 1/d1 - 1/d2;
-            principal = principal * (1+((MONTHLY_PRICE_INDEX-MONTHLY_PRICE_INDEX_PRE) / MONTHLY_PRICE_INDEX));
+            principal = principal * (1 + (MONTHLY_PRICE_INDEX - MONTHLY_PRICE_INDEX_PRE) / MONTHLY_PRICE_INDEX );
 
             new_quarterly_interest = principal * d1;
             new_quarterly_principal = (principal / annuity) - new_quarterly_interest;
         }
         else if (MORTGAGE_CHOICE == 4){
-            principal = principal * (1+((MONTHLY_PRICE_INDEX-MONTHLY_PRICE_INDEX_PRE) / MONTHLY_PRICE_INDEX));
+            principal = principal * (1+ (MONTHLY_PRICE_INDEX-MONTHLY_PRICE_INDEX_PRE) / MONTHLY_PRICE_INDEX);
             new_quarterly_interest = principal * rate/4;
-            new_quarterly_principal = (principal / quarters_left);
+            new_quarterly_principal = principal / quarters_left;
         }
         else if (MORTGAGE_CHOICE == 5){
             d1 = rate/4;
@@ -126,11 +135,11 @@ int household_credit_update_mortgage_rates()
             annuity = 1/d1 - 1/d2;
 
             new_quarterly_interest = principal * d1;
-            new_quarterly_principal = (principal / annuity) - new_quarterly_interest;
+            new_quarterly_principal = principal / annuity - new_quarterly_interest;
         }
         else if (MORTGAGE_CHOICE == 6){
             new_quarterly_interest = principal * rate/4;
-            new_quarterly_principal = mort.quarterly_principal;
+            new_quarterly_principal = quarterly_principal;
         }
         else {
             if (WARNING_MODE) {
@@ -146,7 +155,7 @@ int household_credit_update_mortgage_rates()
         EXPECTED_HOUSING_PAYMENT += new_quarterly_interest + new_quarterly_principal;
     }
     
-    free_mortgage(&mort);
+    //free_mortgage(&mort);
 	return 0; /* Returning zero means the agent is not removed */
 }
 

@@ -346,7 +346,7 @@ int firm_credit_illiquidity_bankrupt()
             if (DATA_COLLECTION_MODE) {
                 char * filename;
                 FILE * file1;
-                filename = malloc(40*sizeof(char));
+                filename = malloc(100*sizeof(char));
                 filename[0]=0;
                 strcpy(filename, "./outputs/data/BankruptcyInspection.txt");
                 file1 = fopen(filename,"a");
@@ -520,7 +520,7 @@ int firm_credit_insolvency_bankruptcy()
             if (DATA_COLLECTION_MODE) {
                 char * filename;
                 FILE * file1;
-                filename = malloc(40*sizeof(char));
+                filename = malloc(100*sizeof(char));
                 filename[0]=0;
                 strcpy(filename, "./outputs/data/BankruptcyInspection.txt");
                 file1 = fopen(filename,"a");

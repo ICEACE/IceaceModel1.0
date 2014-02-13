@@ -103,7 +103,6 @@ int household_housing_buy()
     double mortgage_used, liquidity_spent, annuity;
     mortgage_used = 0;
     liquidity_spent = 0;
-    
         
     START_BOUGHT_HOUSING_MESSAGE_LOOP
     /* The message is filtered via xmml. */
@@ -127,19 +126,25 @@ int household_housing_buy()
         double quarterly_interest;
         double quarterly_principal;
         double d1, d2;
+        double used_interest_rate;
 
         /* Endogenous decision rule on which type of mortgage to take should be done here*/
         MORTGAGE_CHOICE = MORTGAGE_CHOICE;
         
+        quarterly_interest = 0;
+        quarterly_principal = 0;
+        
         if (MORTGAGE_CHOICE == 1) {
             quarterly_interest = mortgage_used * MORTGAGES_INTEREST_RATE / 4;
             quarterly_principal = (mortgage_used / annuity) - quarterly_interest;
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE);
         }
         else if (MORTGAGE_CHOICE == 2){
             quarterly_interest = mortgage_used * MORTGAGES_INTEREST_RATE / 4;
             quarterly_principal = (mortgage_used / 160);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE);
         }
         else if (MORTGAGE_CHOICE == 3){
             quarterly_interest = mortgage_used * 0.02/4;
@@ -147,25 +152,31 @@ int household_housing_buy()
             d2 = d1 * pow((1 + d1), 160);
             annuity = 1/d1 - 1/d2;
             quarterly_principal = (mortgage_used / annuity) - quarterly_interest;
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, 0.02);
         }
         else if (MORTGAGE_CHOICE == 4){
             quarterly_interest = mortgage_used * 0.02/4;
             quarterly_principal = (mortgage_used / 160);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, 0.02);
         }
         else if (MORTGAGE_CHOICE == 5){
-            quarterly_interest = mortgage_used * (MORTGAGES_INTEREST_RATE + 0.01)/4;
+            used_interest_rate = MORTGAGES_INTEREST_RATE + 0.01;
+            quarterly_interest = mortgage_used * used_interest_rate/4;
             d1 = (MORTGAGES_INTEREST_RATE + 0.01)/4;
             d2 = d1 * pow((1 + d1), 160);
             annuity = 1/d1 - 1/d2;
             quarterly_principal = (mortgage_used / annuity) - quarterly_interest;
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE + 0.01, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, used_interest_rate, MORTGAGE_CHOICE);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, used_interest_rate);
         }
         else if (MORTGAGE_CHOICE == 6){
-            quarterly_interest = mortgage_used * (MORTGAGES_INTEREST_RATE + 0.01)/4;
+            used_interest_rate = MORTGAGES_INTEREST_RATE + 0.01;
+            quarterly_interest = mortgage_used * used_interest_rate / 4;
             quarterly_principal = (mortgage_used / 160);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE + 0.01, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, used_interest_rate, MORTGAGE_CHOICE);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, used_interest_rate);
         }
         else {
             if (WARNING_MODE) {
@@ -192,7 +203,9 @@ int household_housing_buy()
  */
 int household_housing_sell()
 {
-    if (HOUSING_UNITS == 0) {return 0;}
+    if (HOUSING_UNITS == 0) {
+        return 0;
+    }
     
     double price_difference, price;
     
@@ -211,7 +224,9 @@ int household_housing_sell()
  */
 int household_housing_fire_sell()
 {
-    if (HOUSING_UNITS == 0) {return 0;}
+    if (HOUSING_UNITS == 0) {
+        return 0;
+    }
     
     double price_difference, price;
     
@@ -241,7 +256,9 @@ int household_housing_collect_sale_revenue()
     sale_price = sold_housing_message->price_sold;
     FINISH_SOLD_HOUSING_MESSAGE_LOOP
     
-    if (sold == 0){ return 0; }
+    if (sold == 0){
+        return 0;
+    }
     
     /* In current implementation sold is either 0 or 1 */
     HOUSING_UNITS -= sold;
@@ -254,10 +271,6 @@ int household_housing_collect_sale_revenue()
         return 0;
     }
     
-    int ind;
-    mortgage mort;
-    init_mortgage(&mort);
-    
 //    /* The most recent mortgage is assumed to be sold. */
 //    ind = MORTGAGES_LIST.size - 1;
 //    mort = MORTGAGES_LIST.array[ind];
@@ -269,9 +282,13 @@ int household_housing_collect_sale_revenue()
 //    free_mortgage(&mort);
 //    return 0;
     
-    double new_principle;
-    double new_quarterly_interest;
-    double new_quarterly_principal;
+    //int ind;
+    //mortgage mort;
+    //init_mortgage(&mort);
+    
+    double principal, new_principle;
+    double quarterly_interest, new_quarterly_interest;
+    double quarterly_principal, new_quarterly_principal;
     double annuity;
     double d1, d2;
     double rate;
@@ -320,32 +337,40 @@ int household_housing_collect_sale_revenue()
         if (MORTGAGES_LIST.size == 0){ break;}
         
         /* pays the newest mortgage first! */
-        ind = MORTGAGES_LIST.size - 1;
-        mort = MORTGAGES_LIST.array[ind];
-        EXPECTED_HOUSING_PAYMENT -= mort.quarterly_interest + mort.quarterly_principal;
+        //ind = MORTGAGES_LIST.size - 1;
+        //mort = MORTGAGES_LIST.array[ind];
+        //EXPECTED_HOUSING_PAYMENT -= mort.quarterly_interest + mort.quarterly_principal;
         
-        if (mort.principal <= sale_price){
-            MORTGAGES -= mort.principal;
-            add_mortgage_payment_from_sale_message(BANK_ID, mort.principal);
-            remove_mortgage(&MORTGAGES_LIST, ind);
-            sale_price -= mort.principal;
+        /* oldest mortgage is removed first. */
+        quarterly_interest = MORTGAGES_LIST.array[0].quarterly_interest;
+        quarterly_principal = MORTGAGES_LIST.array[0].quarterly_principal;
+        principal = MORTGAGES_LIST.array[0].principal;
+        EXPECTED_HOUSING_PAYMENT -=  quarterly_principal + quarterly_interest;
+        
+        if (principal <= sale_price){
+            MORTGAGES -= principal;
+            add_mortgage_payment_from_sale_message(BANK_ID, principal);
+            sale_price -= principal;
             if (PRINT_DEBUG_MODE) {
-             printf("Fire Seller = %d has removed the mortgage debt = %f \n", ID, mort.principal);   
+             printf("Fire Seller = %d has removed the mortgage debt = %f \n", ID, principal);
             }
+            remove_mortgage(&MORTGAGES_LIST, 0);
         }
         else {
-            quarters_left = mort.quarters_left;
-            rate = mort.interestrate;
+            quarters_left = MORTGAGES_LIST.array[0].quarters_left;
+            rate = MORTGAGES_LIST.array[0].interestrate;
 
             add_mortgage_payment_from_sale_message(BANK_ID, sale_price);
 
             MORTGAGES -= sale_price;
-            new_principle = mort.principal - sale_price;
+            new_principle = principal - sale_price;
 
             if (PRINT_DEBUG_MODE) {
-                printf("Fire Seller = %d decreases a mortgage debt from = %f to %f \n", ID, mort.principal, new_principle);
+                printf("Fire Seller = %d decreases a mortgage debt from = %f to %f \n", ID, principal, new_principle);
             }
 
+            new_quarterly_interest = 0;
+            new_quarterly_principal = 0;
             if (MORTGAGE_CHOICE == 1) {
                 d1 = MORTGAGES_INTEREST_RATE/4;
                 d2 = d1 * pow((1 + d1), quarters_left);
@@ -388,9 +413,9 @@ int household_housing_collect_sale_revenue()
                 }
             }
 
-            MORTGAGES_LIST.array[ind].principal = new_principle;
-            MORTGAGES_LIST.array[ind].quarterly_interest = new_quarterly_interest;
-            MORTGAGES_LIST.array[ind].quarterly_principal = new_quarterly_principal;
+            MORTGAGES_LIST.array[0].principal = new_principle;
+            MORTGAGES_LIST.array[0].quarterly_interest = new_quarterly_interest;
+            MORTGAGES_LIST.array[0].quarterly_principal = new_quarterly_principal;
             EXPECTED_HOUSING_PAYMENT += new_quarterly_interest + new_quarterly_principal;
             sale_price = 0;
         }
@@ -399,7 +424,8 @@ int household_housing_collect_sale_revenue()
     if (sale_price > 0) {
         LIQUIDITY += sale_price;
     }
-    free_mortgage(&mort);
+    
+    //free_mortgage(&mort);
 	return 0;
 }
 
@@ -429,28 +455,28 @@ int household_housing_update_market_price()
  */
 int household_housing_pay_mortgages()
 {
-    int size, i;
-    
+    int size;
     size = MORTGAGES_LIST.size;
     if (size == 0){ return 0;}
     
-    mortgage mort;
-    init_mortgage(&mort);
+    //mortgage mort;
+    //init_mortgage(&mort);
     
+    int i, bankid;
     double total_interest_paid = 0;
     double total_principal_paid = 0;
     double interest_paid;
     double principal_paid, principal_left;
     
     for (i = 0; i < size; i++) {
-        mort = MORTGAGES_LIST.array[i];
-        if (mort.principal < 0.00001) { continue;}
-        interest_paid = mort.quarterly_interest / 3;
-        principal_paid = mort.quarterly_principal / 3;
-        principal_left = mort.principal - principal_paid;
+        //mort = MORTGAGES_LIST.array[i];
+        if (MORTGAGES_LIST.array[i].principal < 0.001) { continue;}
+        bankid = MORTGAGES_LIST.array[i].bank_id;
+        interest_paid = MORTGAGES_LIST.array[i].quarterly_interest / 3;
+        principal_paid = MORTGAGES_LIST.array[i].quarterly_principal / 3;
+        principal_left = MORTGAGES_LIST.array[i].principal - principal_paid;
         MORTGAGES_LIST.array[i].principal = principal_left;
-        //if ((total_interest_paid + total_principal_paid) > LIQUIDITY) {break;}
-        add_mortgage_payment_message(mort.bank_id, interest_paid, principal_paid);
+        add_mortgage_payment_message(bankid, interest_paid, principal_paid);
         total_interest_paid += interest_paid;
         total_principal_paid += principal_paid;
     }
@@ -485,7 +511,7 @@ int household_housing_pay_mortgages()
     }
     */
     
-    free_mortgage(&mort);
+    //free_mortgage(&mort);
 	return 0; /* Returning zero means the agent is not removed */
 }
 
@@ -519,8 +545,8 @@ int household_housing_debt_writeoff()
         return 0;
     }
     
-    mortgage mort;
-    init_mortgage(&mort);
+    //mortgage mort;
+    //init_mortgage(&mort);
     
     total_income = LABOUR_INCOME + CAPITAL_INCOME;
     
@@ -529,11 +555,14 @@ int household_housing_debt_writeoff()
     {
         pre_mortgages = MORTGAGES;
         double annuity, d1, d2;
+        double used_interest_rate;
 
         for (ind = 0; ind < size; ind++) {
             remove_mortgage(&MORTGAGES_LIST, 0);
         }
-
+        
+        quarterly_interest = 0;
+        quarterly_principal = 0;
         if (MORTGAGE_CHOICE == 1) {
             d1 = MORTGAGES_INTEREST_RATE/4;
             d2 = d1 * pow((1 + d1), 160);
@@ -541,13 +570,15 @@ int household_housing_debt_writeoff()
             MORTGAGES = total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW * annuity;
             quarterly_interest = MORTGAGES * MORTGAGES_INTEREST_RATE / 4;
             quarterly_principal = (MORTGAGES / annuity) - quarterly_interest;
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE);
         }
         else if (MORTGAGE_CHOICE == 2){
-            MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / ((MORTGAGES_INTEREST_RATE / 4) + 1/160);
+            MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / (MORTGAGES_INTEREST_RATE / 4 + 1/160);
             quarterly_interest = MORTGAGES * MORTGAGES_INTEREST_RATE / 4;
             quarterly_principal = (MORTGAGES / 160);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE);
         }
         else if (MORTGAGE_CHOICE == 3){
             d1 = 0.02/4;
@@ -556,28 +587,34 @@ int household_housing_debt_writeoff()
             MORTGAGES = total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW * annuity;
             quarterly_interest = MORTGAGES * 0.02/4;
             quarterly_principal = (MORTGAGES / annuity) - quarterly_interest;
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02);
         }
         else if (MORTGAGE_CHOICE == 4){
-            MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / ((0.02 / 4) + 1/160);
+            MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / (0.02 / 4 + 1/160);
             quarterly_interest = MORTGAGES * 0.02/4;
             quarterly_principal = (MORTGAGES / 160);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02);
         }
         else if (MORTGAGE_CHOICE == 5){
             d1 = (MORTGAGES_INTEREST_RATE + 0.01)/4;
             d2 = d1 * pow((1 + d1), 160);
             annuity = 1/d1 - 1/d2;
+            used_interest_rate = MORTGAGES_INTEREST_RATE + 0.01;
             MORTGAGES = total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW * annuity;
-            quarterly_interest = MORTGAGES * (MORTGAGES_INTEREST_RATE + 0.01)/4;
+            quarterly_interest = MORTGAGES * used_interest_rate / 4;
             quarterly_principal = (MORTGAGES / annuity) - quarterly_interest;
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE + 0.01, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, used_interest_rate, MORTGAGE_CHOICE);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, used_interest_rate);
         }
         else if (MORTGAGE_CHOICE == 6){
-            MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / (((MORTGAGES_INTEREST_RATE + 0.01) / 4) + 1/160);
+            used_interest_rate = MORTGAGES_INTEREST_RATE + 0.01;
+            MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / (used_interest_rate / 4 + 1/160);
             quarterly_interest = MORTGAGES * (MORTGAGES_INTEREST_RATE + 0.01)/4;
             quarterly_principal = (MORTGAGES / 160);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE + 0.01, MORTGAGE_CHOICE);
+            //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, used_interest_rate, MORTGAGE_CHOICE);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, used_interest_rate);
         }
         else {
             if (WARNING_MODE) {
@@ -588,6 +625,7 @@ int household_housing_debt_writeoff()
         /* Quarterly_Interest + Quarterly_Prinicipal = Quarterly_Income * Writeoff_Low
          */
         writeoff = pre_mortgages - MORTGAGES;
+        EXPECTED_HOUSING_PAYMENT = quarterly_interest + quarterly_principal;
 
         if (WARNING_MODE) {
             if (writeoff < 0 || MORTGAGES < 0) {
@@ -620,7 +658,6 @@ int household_housing_debt_writeoff()
             printf("Household ID = %d, Debts writeoff: %d mortgages affected. Loss on Bank ID = %d amounts to %f \n", ID, size, BANK_ID, writeoff);
         }
         
-        EXPECTED_HOUSING_PAYMENT = quarterly_interest + quarterly_principal;
 
         /*if (MORTGAGES > 0) {
             double quarterly_principal, quarterly_interest;
@@ -644,7 +681,9 @@ int household_housing_debt_writeoff()
         free(filename);
     }
     
-    free_mortgage(&mort);
+    //free_mortgage(&mort);
+    
+    
 	return 0; /* Returning zero means the agent is not removed */
 }
 

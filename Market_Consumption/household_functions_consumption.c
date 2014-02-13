@@ -28,6 +28,8 @@ int household_consumption_compute_budget()
     }
     
     MALL_BUDGET = 0;
+    
+    
 	return 0; /* Returning zero means the agent is not removed */
 }
 

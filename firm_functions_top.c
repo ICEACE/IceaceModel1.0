@@ -14,7 +14,7 @@ int firm_init_post_id()
     if (DATA_COLLECTION_MODE) {
         char * filename;
         FILE * file1;
-        filename = malloc(40*sizeof(char));
+        filename = malloc(100*sizeof(char));
         filename[0]=0;
         strcpy(filename, "./outputs/data/Firm_ID_Liquidity_Loan.txt");
         file1 = fopen(filename,"w");
@@ -56,6 +56,9 @@ int firm_init_employment()
         INVENTORY = (int) (PRODUCTION_CURRENT / 10);
         SALES = PRODUCTION_CURRENT;
         REVENUES = SALES * UNIT_GOODS_PRICE;
+        EBIT = REVENUES - LABOUR_COSTS;
+        NET_EARNINGS = EBIT - TOTAL_INTEREST_PAYMENTS;
+        LIQUIDITY = NET_EARNINGS;
         CAPITAL_GOODS = ceil((TOTAL_ASSETS - UNIT_GOODS_PRICE * INVENTORY - LIQUIDITY)/CAPITAL_GOODS_PRICE);
         
     } else {
@@ -63,14 +66,13 @@ int firm_init_employment()
         INVENTORY = PRODUCTION_CURRENT;
         SALES = 0;
         REVENUES = SALES * UNIT_HOUSE_PRICE;
+        EBIT = REVENUES - LABOUR_COSTS;
+        NET_EARNINGS = EBIT - TOTAL_INTEREST_PAYMENTS;
+        LIQUIDITY = NET_EARNINGS;
         CAPITAL_GOODS = ceil((TOTAL_ASSETS - UNIT_HOUSE_PRICE * INVENTORY - LIQUIDITY)/CAPITAL_GOODS_PRICE);
-        
         CAPITAL_PRODUCTIVITY = LABOUR_PRODUCTIVITY * NO_EMPLOYEES / (0.7 * CAPITAL_GOODS);
     }
     
-    EBIT = REVENUES - LABOUR_COSTS;
-    NET_EARNINGS = EBIT - TOTAL_INTEREST_PAYMENTS;
-    LIQUIDITY = NET_EARNINGS;
     
     if (PRINT_DEBUG_MODE) {
         printf("Firm %d --> Size = %d \n", ID, NO_EMPLOYEES);
@@ -96,7 +98,7 @@ int firm_init_balancesheet()
     if (DATA_COLLECTION_MODE) {
         char * filename;
         FILE * file1;
-        filename = malloc(40*sizeof(char));
+        filename = malloc(100*sizeof(char));
         filename[0]=0;
         strcpy(filename, "./outputs/data/Firm_ID_Liquidity_Loan.txt");
         file1 = fopen(filename,"a");
@@ -131,7 +133,6 @@ int firm_iterate()
                 strcpy(filename, "./outputs/data/Constructor_Firm_Monthly.txt");
                 file1 = fopen(filename,"w");
                 fprintf(file1,"%s %s %s %s %s %s %s %s %s %s\n","IT_NO", "ID", "WAGE_OFFER", "NO_EMPLOYEES", "EMPLOYEES_NEEDED", "SALES", "INVENTORY", "PRODUCTION_CURRENT", "PRODUCTION_PLAN", "UNIT_HOUSE_PRICE");
-                //fprintf(file1,"%d %d %f %d %d %d %d %d %f\n",IT_NO, ID, WAGE_OFFER, NO_EMPLOYEES, EMPLOYEES_NEEDED, SALES, INVENTORY, PRODUCTION_CURRENT, PRODUCTION_PLAN, UNIT_HOUSE_PRICE);
                 fclose(file1);
                 
                 
@@ -140,7 +141,6 @@ int firm_iterate()
                 strcpy(filename, "./outputs/data/Constructor_Firm_Quarterly_IncomeStatement.txt");
                 file1 = fopen(filename,"w");
                 fprintf(file1,"%s %s %s %s %s %s %s %s\n","IT_NO", "ID", "REVENUES", "OPERATING_COSTS", "LABOUR_COSTS", "TOTAL_INTEREST_PAYMENTS", "EBIT", "NET_EARNINGS");
-                //fprintf(file1,"%d %d %f %f %f %f %f %f\n", IT_NO, ID, REVENUES, OPERATING_COSTS, LABOUR_COSTS, TOTAL_INTEREST_PAYMENTS, EBIT, NET_EARNINGS);
                 fclose(file1);
                 
                 
@@ -149,7 +149,6 @@ int firm_iterate()
                 strcpy(filename, "./outputs/data/Constructor_Firm_Quarterly_Dividends.txt");
                 file1 = fopen(filename,"w");
                 fprintf(file1,"%s %s %s %s\n","IT_NO", "ID", "DIVIDENDS_PAID", "DIVIDENDS_TO_BE_PAID");
-                //fprintf(file1,"%d %d %f %f\n", IT_NO, ID, DIVIDENDS_PAID, DIVIDENDS_TO_BE_PAID);
                 fclose(file1);
                 
                 /* @\fn: firm_credit_do_balance_sheet() */
@@ -157,7 +156,6 @@ int firm_iterate()
                 strcpy(filename, "./outputs/data/Constructor_Firm_Quarterly_BalanceSheet.txt");
                 file1 = fopen(filename,"w");
                 fprintf(file1,"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n","IT_NO", "ID", "ISLIQUIDSHORT", "HASLOAN", "HASINVESTMENT", "LIQUIDITY_NEED", "ISINSOLVENT", "ISILLIQUID", "TOTAL_ASSETS", "LIQUIDITY", "INVENTORY", "UNIT_HOUSE_PRICE", "CAPITAL_GOODS_PRICE", "CAPITAL_GOODS",  "DEBT", "EQUITY");
-                //fprintf(file1,"%d %d %d %d %d %f %d %d %f %f %d %f %f %d %f %f\n",IT_NO, ID, ISLIQUIDSHORT, HASLOAN, HASINVESTMENT, LIQUIDITY_NEED, ISINSOLVENT, ISILLIQUID, TOTAL_ASSETS, LIQUIDITY, INVENTORY, UNIT_HOUSE_PRICE, CAPITAL_GOODS_PRICE, CAPITAL_GOODS, DEBT, EQUITY);
                 fclose(file1);
             }
             else
@@ -166,9 +164,7 @@ int firm_iterate()
                 filename[0]=0;
                 strcpy(filename, "./outputs/data/Firm_Monthly.txt");
                 file1 = fopen(filename,"w");
-                file1 = fopen(filename,"w");
                 fprintf(file1,"%s %s %s %s %s %s %s %s %s %s\n","IT_NO", "ID", "WAGE_OFFER", "NO_EMPLOYEES", "EMPLOYEES_NEEDED", "SALES", "INVENTORY", "PRODUCTION_CURRENT", "PRODUCTION_PLAN", "UNIT_GOODS_PRICE");
-                //fprintf(file1,"%d %d %f %d %d %d %d %d %f\n",IT_NO, ID, WAGE_OFFER, NO_EMPLOYEES, EMPLOYEES_NEEDED, SALES, INVENTORY, PRODUCTION_CURRENT, PRODUCTION_PLAN, UNIT_GOODS_PRICE);
                 fclose(file1);
                 
                 
@@ -177,7 +173,6 @@ int firm_iterate()
                 strcpy(filename, "./outputs/data/Firm_Quarterly_IncomeStatement.txt");
                 file1 = fopen(filename,"w");
                 fprintf(file1,"%s %s %s %s %s %s %s %s\n","IT_NO", "ID", "REVENUES", "OPERATING_COSTS", "LABOUR_COSTS", "TOTAL_INTEREST_PAYMENTS", "EBIT", "NET_EARNINGS");
-                //fprintf(file1,"%d %d %f %f %f %f %f %f\n", IT_NO, ID, REVENUES, OPERATING_COSTS, LABOUR_COSTS, TOTAL_INTEREST_PAYMENTS, EBIT, NET_EARNINGS);
                 fclose(file1);
                 
                 
@@ -186,7 +181,6 @@ int firm_iterate()
                 strcpy(filename, "./outputs/data/Firm_Quarterly_Dividends.txt");
                 file1 = fopen(filename,"w");
                 fprintf(file1,"%s %s %s %s\n","IT_NO", "ID", "DIVIDENDS_PAID", "DIVIDENDS_TO_BE_PAID");
-                //fprintf(file1,"%d %d %f %f\n", IT_NO, ID, DIVIDENDS_PAID, DIVIDENDS_TO_BE_PAID);
                 fclose(file1);
                 
                 /* @\fn: firm_credit_do_balance_sheet() */
@@ -194,8 +188,6 @@ int firm_iterate()
                 strcpy(filename, "./outputs/data/Firm_Quarterly_BalanceSheet.txt");
                 file1 = fopen(filename,"w");
                 fprintf(file1,"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n","IT_NO", "ID", "ISLIQUIDSHORT", "HASLOAN", "HASINVESTMENT", "LIQUIDITY_NEED","ISINSOLVENT", "ISILLIQUID", "TOTAL_ASSETS", "LIQUIDITY", "INVENTORY", "UNIT_GOODS_PRICE", "CAPITAL_GOODS_PRICE", "CAPITAL_GOODS", "DEBT", "EQUITY");
-                
-                //fprintf(file1,"%d %d %d %d %d %f %d %d %f %f %d %f %f %d %f %f\n",IT_NO, ID, ISLIQUIDSHORT, HASLOAN, HASINVESTMENT, LIQUIDITY_NEED, ISINSOLVENT, ISILLIQUID, TOTAL_ASSETS, LIQUIDITY, INVENTORY, UNIT_GOODS_PRICE, CAPITAL_GOODS_PRICE, CAPITAL_GOODS, DEBT, EQUITY);
                 fclose(file1);
             }
             free(filename);

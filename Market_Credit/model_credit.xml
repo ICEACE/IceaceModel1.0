@@ -87,11 +87,13 @@
                         <name>interestrate</name>
                         <description>Interest rate of the mortgage.</description>
                     </variable>
+                    <!--
                     <variable>
                         <type>int</type>
                         <name>mtype</name>
                         <description>Type of mortgage.</description>
                     </variable>
+                    -->
                 </variables>
             </dataType>
             <dataType>
