@@ -28,10 +28,6 @@ int household_credit_check_tax_rate()
     LABOUR_TAX_RATE = labour_tax_rate_message->value;
 	FINISH_LABOUR_TAX_RATE_MESSAGE_LOOP
     
-    if (ISMANAGER) {
-        printf("HH = %d Employer = %d\n", ID, MY_EMPLOYER_ID);
-    }
-    
 	return 0; /* Returning zero means the agent is not removed */
 }
 

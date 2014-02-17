@@ -132,6 +132,12 @@ digraph state_graph {
 	layer_63 -> layer_64 [style=invis];
 	layer_65 [shape=plaintext, label="layer 65"];
 	layer_64 -> layer_65 [style=invis];
+	layer_66 [shape=plaintext, label="layer 66"];
+	layer_65 -> layer_66 [style=invis];
+	layer_67 [shape=plaintext, label="layer 67"];
+	layer_66 -> layer_67 [style=invis];
+	layer_68 [shape=plaintext, label="layer 68"];
+	layer_67 -> layer_68 [style=invis];
 	
 	/* States */
 	firm_FirmHousingPrice [label = "FirmHousingPrice"]
@@ -201,8 +207,9 @@ digraph state_graph {
 	household_HHLabourStage2 [label = "HHLabourStage2"]
 	household_HHLabourStage1 [label = "HHLabourStage1"]
 	household_HHLabourStart [label = "HHLabourStart"]
-	household_HHConsumptionRecieveGoods [label = "HHConsumptionRecieveGoods"]
 	household_HHHousingStart [label = "HHHousingStart"]
+	household_HHConsumptionRecieveGoods [label = "HHConsumptionRecieveGoods"]
+	household_HHConsumptionMonthly [label = "HHConsumptionMonthly"]
 	household_HHConsumptionWeekly [label = "HHConsumptionWeekly"]
 	household_HHConsumptionStart [label = "HHConsumptionStart"]
 	household_HHCreditPolicyChecks [label = "HHCreditPolicyChecks"]
@@ -367,9 +374,11 @@ digraph state_graph {
 	household_household_update_bank_account_HouseholdUpdateDeposits_HHCreditPolicyChecks [label = "household_update_bank_account", shape = box,style=filled,color=antiquewhite];
 	household_idle_HHConsumptionStart_HHConsumptionWeekly [label = "idle", shape = box,style=filled,color=aquamarine];
 	household_household_consumption_compute_budget_HHConsumptionStart_HHConsumptionWeekly [label = "household_consumption_compute_budget", shape = box,style=filled,color=aquamarine];
-	household_idle_HHConsumptionWeekly_HHHousingStart [label = "idle", shape = box,style=filled,color=aquamarine];
+	household_idle_HHConsumptionWeekly_HHConsumptionMonthly [label = "idle", shape = box,style=filled,color=aquamarine];
 	household_household_consumption_demand_HHConsumptionWeekly_HHConsumptionRecieveGoods [label = "household_consumption_demand", shape = box,style=filled,color=aquamarine];
-	household_household_consumption_recieve_goods_HHConsumptionRecieveGoods_HHHousingStart [label = "household_consumption_recieve_goods", shape = box,style=filled,color=aquamarine];
+	household_household_consumption_recieve_goods_HHConsumptionRecieveGoods_HHConsumptionMonthly [label = "household_consumption_recieve_goods", shape = box,style=filled,color=aquamarine];
+	household_idle_HHConsumptionMonthly_HHHousingStart [label = "idle", shape = box,style=filled,color=aquamarine];
+	household_household_consumption_trace_cpi_HHConsumptionMonthly_HHHousingStart [label = "household_consumption_trace_cpi", shape = box,style=filled,color=aquamarine];
 	household_idle_HHLabourStart_HHConsumptionStart [label = "idle", shape = box,style=filled,color=azure3];
 	household_household_labour_check_fired_HHLabourStart_HHLabourStage1 [label = "household_labour_check_fired", shape = box,style=filled,color=azure3];
 	household_household_labour_reemployment_application_HHLabourStage1_HHLabourStage2 [label = "household_labour_reemployment_application", shape = box,style=filled,color=azure3];
@@ -658,12 +667,16 @@ digraph state_graph {
 	household_idle_HHConsumptionStart_HHConsumptionWeekly -> household_HHConsumptionWeekly;
 	household_HHConsumptionStart -> household_household_consumption_compute_budget_HHConsumptionStart_HHConsumptionWeekly [ label = "Periodicity: monthly\nPhase: a->day_of_month_to_act"];
 	household_household_consumption_compute_budget_HHConsumptionStart_HHConsumptionWeekly -> household_HHConsumptionWeekly;
-	household_HHConsumptionWeekly -> household_idle_HHConsumptionWeekly_HHHousingStart [ label = "not ( Periodicity: weekly\nPhase: a->day_of_week_to_act )"];
-	household_idle_HHConsumptionWeekly_HHHousingStart -> household_HHHousingStart;
+	household_HHConsumptionWeekly -> household_idle_HHConsumptionWeekly_HHConsumptionMonthly [ label = "not ( Periodicity: weekly\nPhase: a->day_of_week_to_act )"];
+	household_idle_HHConsumptionWeekly_HHConsumptionMonthly -> household_HHConsumptionMonthly;
 	household_HHConsumptionWeekly -> household_household_consumption_demand_HHConsumptionWeekly_HHConsumptionRecieveGoods [ label = "Periodicity: weekly\nPhase: a->day_of_week_to_act"];
 	household_household_consumption_demand_HHConsumptionWeekly_HHConsumptionRecieveGoods -> household_HHConsumptionRecieveGoods;
-	household_HHConsumptionRecieveGoods -> household_household_consumption_recieve_goods_HHConsumptionRecieveGoods_HHHousingStart;
-	household_household_consumption_recieve_goods_HHConsumptionRecieveGoods_HHHousingStart -> household_HHHousingStart;
+	household_HHConsumptionRecieveGoods -> household_household_consumption_recieve_goods_HHConsumptionRecieveGoods_HHConsumptionMonthly;
+	household_household_consumption_recieve_goods_HHConsumptionRecieveGoods_HHConsumptionMonthly -> household_HHConsumptionMonthly;
+	household_HHConsumptionMonthly -> household_idle_HHConsumptionMonthly_HHHousingStart [ label = "not ( Periodicity: monthly\nPhase: 0 )"];
+	household_idle_HHConsumptionMonthly_HHHousingStart -> household_HHHousingStart;
+	household_HHConsumptionMonthly -> household_household_consumption_trace_cpi_HHConsumptionMonthly_HHHousingStart [ label = "Periodicity: monthly\nPhase: 0"];
+	household_household_consumption_trace_cpi_HHConsumptionMonthly_HHHousingStart -> household_HHHousingStart;
 	household_HHLabourStart -> household_idle_HHLabourStart_HHConsumptionStart [ label = "not ( Periodicity: monthly\nPhase: a->day_of_month_to_act )"];
 	household_idle_HHLabourStart_HHConsumptionStart -> household_HHConsumptionStart;
 	household_HHLabourStart -> household_household_labour_check_fired_HHLabourStart_HHLabourStage1 [ label = "Periodicity: monthly\nPhase: a->day_of_month_to_act"];
@@ -986,7 +999,8 @@ digraph state_graph {
 	jpoffice_jpoffice_labour_stage2_JPOLabourStage2_end -> household_household_labour_employment_HHLabourStage1Placement_HHConsumptionStart [ label = "job_match_stage2" color="#00ff00" constraint=false];
 	jpoffice_jpoffice_labour_stage1_JPOLabourMarket_JPOLabourStage2 -> household_household_labour_turnover_HHLabourStage2_HHConsumptionStart [ label = "job_match_stage1" color="#00ff00" constraint=false];
 	firm_firm_labour_fire_FirmLabourStage1_FirmLabourStage1End -> household_household_labour_check_fired_HHLabourStart_HHLabourStage1 [ label = "fired" color="#00ff00" constraint=false];
-	mall_mall_consumption_shopping_MallConsumptionMarket_MallConsumptionSummary -> household_household_consumption_recieve_goods_HHConsumptionRecieveGoods_HHHousingStart [ label = "bought" color="#00ff00" constraint=false];
+	centralbank_centralbank_update_price_indices_CentralBankConsumptionPrices_CentralBankHousing -> household_household_consumption_trace_cpi_HHConsumptionMonthly_HHHousingStart [ label = "monthly_cpi" color="#00ff00" constraint=false];
+	mall_mall_consumption_shopping_MallConsumptionMarket_MallConsumptionSummary -> household_household_consumption_recieve_goods_HHConsumptionRecieveGoods_HHConsumptionMonthly [ label = "bought" color="#00ff00" constraint=false];
 	jpoffice_jpoffice_init_employment_JPOfficeInitEmployment_JPOfficeLoop -> household_household_init_employment_HouseholdInitEmployment_HouseholdInitBalanceSheet [ label = "jpoffice_household_employer" color="#00ff00" constraint=false];
 	reagency_reagency_housing_summary_REAgencyHousingSummary_REAgencyCreditPolicyChecks -> firm_firm_housing_update_market_price_FirmHousingPrice_FirmLabourPayWages [ label = "housing_price" color="#00ff00" constraint=false];
 	reagency_reagency_housing_process_REAgencyHousingMarket_REAgencyHousingSummary -> firm_firm_housing_collect_sale_revenues_FirmHousingSell_FirmHousingPrice [ label = "sold_housing" color="#00ff00" constraint=false];
@@ -1044,28 +1058,31 @@ digraph state_graph {
 	{ rank=same; layer_39;  jpoffice_jpoffice_labour_stage2_JPOLabourStage2_end; }
 	{ rank=same; layer_40;  firm_firm_labour_job_offer_stage2_FirmLabourStage2End_FirmConsumptionStart;  household_household_labour_employment_HHLabourStage1Placement_HHConsumptionStart; }
 	{ rank=same; layer_41;  firm_idle_FirmConsumptionStart_FirmHousingStart;  firm_idle_FirmConsumptionStart_FirmConsumptionMarket;  household_idle_HHConsumptionStart_HHConsumptionWeekly;  household_household_consumption_compute_budget_HHConsumptionStart_HHConsumptionWeekly; }
-	{ rank=same; layer_42;  firm_idle_FirmConsumptionMarket_FirmHousingStart;  firm_firm_consumption_supply_FirmConsumptionMarket_FirmReceiveSales;  household_idle_HHConsumptionWeekly_HHHousingStart;  household_household_consumption_demand_HHConsumptionWeekly_HHConsumptionRecieveGoods; }
+	{ rank=same; layer_42;  firm_idle_FirmConsumptionMarket_FirmHousingStart;  firm_firm_consumption_supply_FirmConsumptionMarket_FirmReceiveSales;  household_idle_HHConsumptionWeekly_HHConsumptionMonthly;  household_household_consumption_demand_HHConsumptionWeekly_HHConsumptionRecieveGoods; }
 	{ rank=same; layer_43;  mall_mall_consumption_shopping_MallConsumptionMarket_MallConsumptionSummary; }
-	{ rank=same; layer_44;  firm_firm_consumption_receive_sales_FirmReceiveSales_FirmConsumptionPrice;  household_household_consumption_recieve_goods_HHConsumptionRecieveGoods_HHHousingStart;  mall_mall_consumption_summary_MallConsumptionSummary_end; }
-	{ rank=same; layer_45;  firm_firm_consumption_update_market_price_FirmConsumptionPrice_FirmHousingStart;  household_idle_HHHousingStart_HHLabourPayroll;  household_household_housing_market_role_HHHousingStart_HHHousingRole;  centralbank_centralbank_trace_goods_prices_CentralBankConsumption_CentralBankConsumptionPrices; }
-	{ rank=same; layer_46;  firm_idle_FirmHousingStart_FirmLabourPayWages;  firm_idle_FirmHousingStart_FirmHousingMarket;  household_idle_HHHousingRole_HHHousingPrice;  household_household_housing_check_wealth_HHHousingRole_HHHousingCheckWealth;  household_household_housing_sell_HHHousingRole_HHHousingRevenue;  household_household_housing_fire_sell_HHHousingRole_HHHousingRevenue;  centralbank_idle_CentralBankConsumptionPrices_CentralBankHousing;  centralbank_centralbank_update_price_indices_CentralBankConsumptionPrices_CentralBankHousing; }
-	{ rank=same; layer_47;  firm_idle_FirmHousingMarket_FirmLabourPayWages;  firm_firm_housing_enter_market_FirmHousingMarket_FirmHousingSell;  household_idle_HHHousingCheckWealth_HHHousingPrice;  household_household_housing_enter_market_HHHousingCheckWealth_HHHousingBargain;  centralbank_idle_CentralBankHousing_CentralBankLabour; }
-	{ rank=same; layer_48;  reagency_reagency_housing_process_REAgencyHousingMarket_REAgencyHousingSummary; }
-	{ rank=same; layer_49;  firm_firm_housing_collect_sale_revenues_FirmHousingSell_FirmHousingPrice;  household_household_housing_collect_sale_revenue_HHHousingRevenue_HHHousingPrice;  household_household_housing_buy_HHHousingBargain_HHHousingPrice;  bank_bank_housing_deliver_mortages_BankHousingCrediting_BankHousingSales;  reagency_reagency_housing_summary_REAgencyHousingSummary_REAgencyCreditPolicyChecks; }
-	{ rank=same; layer_50;  firm_firm_housing_update_market_price_FirmHousingPrice_FirmLabourPayWages;  household_household_housing_update_market_price_HHHousingPrice_HHHousingPayments;  bank_bank_housing_recieve_mortgage_principals_BankHousingSales_BankHousingMortgages;  centralbank_centralbank_trace_housing_prices_CentralBankHousing_CentralBankLabour;  reagency_idle_REAgencyCreditPolicyChecks_end; }
-	{ rank=same; layer_51;  firm_idle_FirmLabourPayWages_FirmUpdateDeposits;  firm_firm_labour_pay_wages_FirmLabourPayWages_FirmLabourWageAdjustment;  household_household_housing_pay_mortgages_HHHousingPayments_HHHousingWriteOff;  centralbank_idle_CentralBankLabour_CentralBankPolicy; }
-	{ rank=same; layer_52;  household_household_housing_debt_writeoff_HHHousingWriteOff_HHLabourPayroll;  bank_bank_housing_recieve_mortgages_BankHousingMortgages_BankHousingWriteOff;  government_government_collect_labour_tax_GovernmentLabourTax_GovernmentLabourStatus; }
-	{ rank=same; layer_53;  household_idle_HHLabourPayroll_HouseholdUpdateDeposits;  household_household_labour_receive_wage_HHLabourPayroll_HHLabourEmploymentStatus;  bank_bank_housing_debt_writeoff_BankHousingWriteOff_BankUpdateDeposits; }
-	{ rank=same; layer_54;  household_household_labour_report_status_HHLabourEmploymentStatus_HouseholdUpdateDeposits;  bank_idle_BankUpdateDeposits_BankCreditPolicyChecks; }
-	{ rank=same; layer_55;  firm_firm_labour_trace_wages_FirmLabourWageAdjustment_FirmUpdateDeposits;  household_idle_HouseholdUpdateDeposits_HHCreditPolicyChecks;  household_household_update_bank_account_HouseholdUpdateDeposits_HHCreditPolicyChecks;  equityfund_equityfund_audit_dividends_EFLabourMarket_EFCreditIncomeStatement;  government_government_trace_unemployment_status_GovernmentLabourStatus_GovernmentFiscalPolicy;  centralbank_centralbank_trace_unemployment_status_CentralBankLabour_CentralBankPolicy; }
-	{ rank=same; layer_56;  firm_idle_FirmUpdateDeposits_FirmCreditPolicyChecks;  firm_firm_update_bank_account_FirmUpdateDeposits_FirmCreditPolicyChecks;  household_idle_HHCreditPolicyChecks_end;  equityfund_idle_EFCreditIncomeStatement_end;  equityfund_equityfund_credit_compute_income_statement_EFCreditIncomeStatement_EFCreditBalanceSheet;  government_idle_GovernmentFiscalPolicy_end;  centralbank_idle_CentralBankPolicy_end;  centralbank_centralbank_compute_income_statement_CentralBankPolicy_CentralBankGovernmentRequests; }
-	{ rank=same; layer_57;  firm_idle_FirmCreditPolicyChecks_end;  equityfund_equityfund_credit_do_balance_sheet_EFCreditBalanceSheet_EFCreditPolicyChecks;  bank_bank_update_deposits_BankUpdateDeposits_BankCreditPolicyChecks;  government_government_collect_centralbank_profit_GovernmentFiscalPolicy_GovernmentIncomeStatement; }
-	{ rank=same; layer_58;  bank_idle_BankCreditPolicyChecks_end;  government_government_compute_income_statement_GovernmentIncomeStatement_GovernmentBalanceSheet; }
-	{ rank=same; layer_59;  government_government_do_balance_sheet_GovernmentBalanceSheet_GovernmentUpdatePolicy; }
-	{ rank=same; layer_60;  government_government_update_fiscal_policy_GovernmentUpdatePolicy_end;  centralbank_centralbank_process_government_requests_CentralBankGovernmentRequests_CentralBankBalanceSheet; }
-	{ rank=same; layer_61;  equityfund_equityfund_credit_check_tax_rate_EFCreditPolicyChecks_end;  centralbank_centralbank_do_balance_sheet_CentralBankBalanceSheet_CentralBankUpdateInterestRate; }
-	{ rank=same; layer_62;  centralbank_centralbank_set_interest_rate_CentralBankUpdateInterestRate_end; }
-	{ rank=same; layer_63;  firm_firm_credit_check_interest_rate_FirmCreditPolicyChecks_FirmCreditCheckTaxRate;  household_household_credit_check_interest_rate_HHCreditPolicyChecks_HHCreditUpdateAnnuity;  bank_bank_credit_check_interest_rate_BankCreditPolicyChecks_end;  reagency_reagency_check_interest_rate_REAgencyCreditPolicyChecks_end; }
-	{ rank=same; layer_64;  firm_firm_credit_check_tax_rate_FirmCreditCheckTaxRate_end;  household_household_credit_update_mortgage_rates_HHCreditUpdateAnnuity_HHCreditCheckTaxRate; }
-	{ rank=same; layer_65;  household_household_credit_check_tax_rate_HHCreditCheckTaxRate_end; }
+	{ rank=same; layer_44;  firm_firm_consumption_receive_sales_FirmReceiveSales_FirmConsumptionPrice;  household_household_consumption_recieve_goods_HHConsumptionRecieveGoods_HHConsumptionMonthly;  mall_mall_consumption_summary_MallConsumptionSummary_end; }
+	{ rank=same; layer_45;  firm_firm_consumption_update_market_price_FirmConsumptionPrice_FirmHousingStart;  household_idle_HHConsumptionMonthly_HHHousingStart;  centralbank_centralbank_trace_goods_prices_CentralBankConsumption_CentralBankConsumptionPrices; }
+	{ rank=same; layer_46;  firm_idle_FirmHousingStart_FirmLabourPayWages;  firm_idle_FirmHousingStart_FirmHousingMarket;  centralbank_idle_CentralBankConsumptionPrices_CentralBankHousing;  centralbank_centralbank_update_price_indices_CentralBankConsumptionPrices_CentralBankHousing; }
+	{ rank=same; layer_47;  firm_idle_FirmHousingMarket_FirmLabourPayWages;  firm_firm_housing_enter_market_FirmHousingMarket_FirmHousingSell;  household_household_consumption_trace_cpi_HHConsumptionMonthly_HHHousingStart;  centralbank_idle_CentralBankHousing_CentralBankLabour; }
+	{ rank=same; layer_48;  household_idle_HHHousingStart_HHLabourPayroll;  household_household_housing_market_role_HHHousingStart_HHHousingRole; }
+	{ rank=same; layer_49;  household_idle_HHHousingRole_HHHousingPrice;  household_household_housing_check_wealth_HHHousingRole_HHHousingCheckWealth;  household_household_housing_sell_HHHousingRole_HHHousingRevenue;  household_household_housing_fire_sell_HHHousingRole_HHHousingRevenue; }
+	{ rank=same; layer_50;  household_idle_HHHousingCheckWealth_HHHousingPrice;  household_household_housing_enter_market_HHHousingCheckWealth_HHHousingBargain; }
+	{ rank=same; layer_51;  reagency_reagency_housing_process_REAgencyHousingMarket_REAgencyHousingSummary; }
+	{ rank=same; layer_52;  firm_firm_housing_collect_sale_revenues_FirmHousingSell_FirmHousingPrice;  household_household_housing_collect_sale_revenue_HHHousingRevenue_HHHousingPrice;  household_household_housing_buy_HHHousingBargain_HHHousingPrice;  bank_bank_housing_deliver_mortages_BankHousingCrediting_BankHousingSales;  reagency_reagency_housing_summary_REAgencyHousingSummary_REAgencyCreditPolicyChecks; }
+	{ rank=same; layer_53;  firm_firm_housing_update_market_price_FirmHousingPrice_FirmLabourPayWages;  household_household_housing_update_market_price_HHHousingPrice_HHHousingPayments;  bank_bank_housing_recieve_mortgage_principals_BankHousingSales_BankHousingMortgages;  centralbank_centralbank_trace_housing_prices_CentralBankHousing_CentralBankLabour;  reagency_idle_REAgencyCreditPolicyChecks_end; }
+	{ rank=same; layer_54;  firm_idle_FirmLabourPayWages_FirmUpdateDeposits;  firm_firm_labour_pay_wages_FirmLabourPayWages_FirmLabourWageAdjustment;  household_household_housing_pay_mortgages_HHHousingPayments_HHHousingWriteOff;  centralbank_idle_CentralBankLabour_CentralBankPolicy; }
+	{ rank=same; layer_55;  household_household_housing_debt_writeoff_HHHousingWriteOff_HHLabourPayroll;  bank_bank_housing_recieve_mortgages_BankHousingMortgages_BankHousingWriteOff;  government_government_collect_labour_tax_GovernmentLabourTax_GovernmentLabourStatus; }
+	{ rank=same; layer_56;  household_idle_HHLabourPayroll_HouseholdUpdateDeposits;  household_household_labour_receive_wage_HHLabourPayroll_HHLabourEmploymentStatus;  bank_bank_housing_debt_writeoff_BankHousingWriteOff_BankUpdateDeposits; }
+	{ rank=same; layer_57;  household_household_labour_report_status_HHLabourEmploymentStatus_HouseholdUpdateDeposits;  bank_idle_BankUpdateDeposits_BankCreditPolicyChecks; }
+	{ rank=same; layer_58;  firm_firm_labour_trace_wages_FirmLabourWageAdjustment_FirmUpdateDeposits;  household_idle_HouseholdUpdateDeposits_HHCreditPolicyChecks;  household_household_update_bank_account_HouseholdUpdateDeposits_HHCreditPolicyChecks;  equityfund_equityfund_audit_dividends_EFLabourMarket_EFCreditIncomeStatement;  government_government_trace_unemployment_status_GovernmentLabourStatus_GovernmentFiscalPolicy;  centralbank_centralbank_trace_unemployment_status_CentralBankLabour_CentralBankPolicy; }
+	{ rank=same; layer_59;  firm_idle_FirmUpdateDeposits_FirmCreditPolicyChecks;  firm_firm_update_bank_account_FirmUpdateDeposits_FirmCreditPolicyChecks;  household_idle_HHCreditPolicyChecks_end;  equityfund_idle_EFCreditIncomeStatement_end;  equityfund_equityfund_credit_compute_income_statement_EFCreditIncomeStatement_EFCreditBalanceSheet;  government_idle_GovernmentFiscalPolicy_end;  centralbank_idle_CentralBankPolicy_end;  centralbank_centralbank_compute_income_statement_CentralBankPolicy_CentralBankGovernmentRequests; }
+	{ rank=same; layer_60;  firm_idle_FirmCreditPolicyChecks_end;  equityfund_equityfund_credit_do_balance_sheet_EFCreditBalanceSheet_EFCreditPolicyChecks;  bank_bank_update_deposits_BankUpdateDeposits_BankCreditPolicyChecks;  government_government_collect_centralbank_profit_GovernmentFiscalPolicy_GovernmentIncomeStatement; }
+	{ rank=same; layer_61;  bank_idle_BankCreditPolicyChecks_end;  government_government_compute_income_statement_GovernmentIncomeStatement_GovernmentBalanceSheet; }
+	{ rank=same; layer_62;  government_government_do_balance_sheet_GovernmentBalanceSheet_GovernmentUpdatePolicy; }
+	{ rank=same; layer_63;  government_government_update_fiscal_policy_GovernmentUpdatePolicy_end;  centralbank_centralbank_process_government_requests_CentralBankGovernmentRequests_CentralBankBalanceSheet; }
+	{ rank=same; layer_64;  equityfund_equityfund_credit_check_tax_rate_EFCreditPolicyChecks_end;  centralbank_centralbank_do_balance_sheet_CentralBankBalanceSheet_CentralBankUpdateInterestRate; }
+	{ rank=same; layer_65;  centralbank_centralbank_set_interest_rate_CentralBankUpdateInterestRate_end; }
+	{ rank=same; layer_66;  firm_firm_credit_check_interest_rate_FirmCreditPolicyChecks_FirmCreditCheckTaxRate;  household_household_credit_check_interest_rate_HHCreditPolicyChecks_HHCreditUpdateAnnuity;  bank_bank_credit_check_interest_rate_BankCreditPolicyChecks_end;  reagency_reagency_check_interest_rate_REAgencyCreditPolicyChecks_end; }
+	{ rank=same; layer_67;  firm_firm_credit_check_tax_rate_FirmCreditCheckTaxRate_end;  household_household_credit_update_mortgage_rates_HHCreditUpdateAnnuity_HHCreditCheckTaxRate; }
+	{ rank=same; layer_68;  household_household_credit_check_tax_rate_HHCreditCheckTaxRate_end; }
 }

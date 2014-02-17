@@ -17,7 +17,11 @@ int firm_labour_workforce_needed()
     VACANCIES = EMPLOYEES_NEEDED - NO_EMPLOYEES;
     
     if (PRINT_DEBUG_MODE) {
-      printf("Firm %d is at Labour Market VACANCIES is %d\n", ID, VACANCIES);
+        printf("Firm %d is at Labour Market VACANCIES is %d\n", ID, VACANCIES);
+        for (int i = 0; i< EMPLOYEES.size; i++) {
+            printf(" %d ", EMPLOYEES.array[i]);
+        }
+        printf("\n Manageger = %d\n", MANAGER);
     }
     
     return 0; /* Returning zero means the agent is not removed */
@@ -36,31 +40,39 @@ int firm_labour_fire()
        Send out fired message.
      */
     
-    int n_to_fire;
-    
-    n_to_fire = NO_EMPLOYEES - EMPLOYEES_NEEDED;
-    
-    /* Keep at least one employee at the firm. */
-    if (n_to_fire == NO_EMPLOYEES) {
-        n_to_fire -= 1;
+    int size;
+    size = EMPLOYEES.size;
+    if (size < 2) {
+        NO_EMPLOYEES = size;
+        VACANCIES = 0;
+        return 0;
     }
     
-    int fired = 0;
-    int employer, position, size, i;
+    int employer, position, i;
+    int n_to_fire, fired;
+    
+    n_to_fire = size - EMPLOYEES_NEEDED;
+    
+    /* Keep at least one employee at the firm. */
+    if (n_to_fire >= size) {
+        n_to_fire = size - 1;
+    }
+    
     i = 0;
-    size = EMPLOYEES.size;
+    fired = 0;
     while (fired < n_to_fire) {
-        i++;
         if (i == size){ break;}
+        i++;
         position = EMPLOYEES.size - 1;
         employer = EMPLOYEES.array[position];
-        if (employer == MANAGER){continue;}
+        if (employer == MANAGER){ continue;}
         add_fired_message(EMPLOYEES.array[position]);
         remove_int(&EMPLOYEES, position);
         fired++;
+        
     }
     
-    NO_EMPLOYEES = EMPLOYEES.size;
+    NO_EMPLOYEES = size;
     VACANCIES = 0;
     
 	return 0; /* Returning zero means the agent is not removed */
