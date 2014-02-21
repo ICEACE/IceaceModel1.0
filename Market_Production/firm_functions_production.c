@@ -143,7 +143,7 @@ int firm_production_plan()
 int firm_production_compute_labour_demand()
 {
     EMPLOYEES_NEEDED = ceil(PRODUCTION_PLAN / LABOUR_PRODUCTIVITY);
-
+    
     if (EMPLOYEES_NEEDED < 1) {EMPLOYEES_NEEDED = 1;}
     
 	return 0; /* Returning zero means the agent is not removed */

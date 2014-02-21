@@ -44,6 +44,10 @@ int firm_init_employment()
     add_int(&EMPLOYEES, new_employee);
     FINISH_JPOFFICE_FIRM_EMPLOYEE_MESSAGE_LOOP
     
+    
+    CAPITAL_GOODS_PRICE = 100 * UNIT_GOODS_PRICE;
+    
+    
     NO_EMPLOYEES = EMPLOYEES.size;
     EMPLOYEES_NEEDED = NO_EMPLOYEES;
     LABOUR_COSTS = NO_EMPLOYEES * WAGE_OFFER;
@@ -54,22 +58,25 @@ int firm_init_employment()
     TOTAL_ASSETS = DEBT + EQUITY;
     LOAN_LIST[0].amount = DEBT;
     
-    if (ISCONSTRUCTOR == 0) {
-        PRODUCTION_CURRENT = (int) (NO_EMPLOYEES * LABOUR_PRODUCTIVITY);
-        INVENTORY = (int) (PRODUCTION_CURRENT / 10);
-        SALES = PRODUCTION_CURRENT;
-        REVENUES = SALES * UNIT_GOODS_PRICE;
-        CAPITAL_GOODS = ceil((TOTAL_ASSETS - UNIT_GOODS_PRICE * INVENTORY - LIQUIDITY)/CAPITAL_GOODS_PRICE);
-        /* the value is used to set a large (inf) number. */
-        CAPITAL_PRODUCTIVITY = 1000000;
+    /* The value is used to set a large (inf) number for regular firms.*/
+    CAPITAL_PRODUCTIVITY = (double) 999999;
+    
+    if (ISCONSTRUCTOR) {
         
-    } else {
         PRODUCTION_CURRENT = (int) (NO_EMPLOYEES * LABOUR_PRODUCTIVITY / 12);
         INVENTORY = PRODUCTION_CURRENT;
         SALES = 2;
         REVENUES = SALES * UNIT_HOUSE_PRICE;
         CAPITAL_GOODS = ceil((TOTAL_ASSETS - UNIT_HOUSE_PRICE * INVENTORY - LIQUIDITY)/CAPITAL_GOODS_PRICE);
         CAPITAL_PRODUCTIVITY = LABOUR_PRODUCTIVITY * NO_EMPLOYEES / (0.7 * CAPITAL_GOODS);
+        
+    } else {
+        
+        PRODUCTION_CURRENT = (int) (NO_EMPLOYEES * LABOUR_PRODUCTIVITY);
+        INVENTORY = (int) (PRODUCTION_CURRENT / 10);
+        SALES = PRODUCTION_CURRENT;
+        REVENUES = SALES * UNIT_GOODS_PRICE;
+        CAPITAL_GOODS = ceil((TOTAL_ASSETS - UNIT_GOODS_PRICE * INVENTORY - LIQUIDITY)/CAPITAL_GOODS_PRICE);
     }
     
     EBIT = REVENUES - LABOUR_COSTS;
@@ -80,7 +87,6 @@ int firm_init_employment()
         printf("Firm %d --> Size = %d \n", ID, NO_EMPLOYEES);
     }
     
-        
 	return 0; /* Returning zero means the agent is not removed */
 }
 
