@@ -23,7 +23,7 @@ source("/Users/bulent/Documents/AWorkspace/iceace/IceaceModel1.0/outputs/scripts
 
 
 # Compute GDP #
-betaval = "0.30"
+betaval = "0.40"
 source("/Users/bulent/Documents/AWorkspace/iceace/IceaceModel1.0/outputs/scripts/computeGDPs.R", echo = T)
 
 # Compute Writeoff Cases #
