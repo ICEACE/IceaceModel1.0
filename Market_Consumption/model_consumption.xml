@@ -174,13 +174,8 @@
                 </variable>
                 <variable>
                     <type>double</type>
-                    <name>monthly_price_index</name>
-                    <description>Monthly price index of consumption goods.</description>
-                </variable>
-                <variable>
-                    <type>double</type>
-                    <name>monthly_price_index_pre</name>
-                    <description>Previous month's price index of consumption goods.</description>
+                    <name>quarterly_price_change</name>
+                    <description>Quarterly price change of consumption goods.</description>
                 </variable>
             </memory>
             <!-- List of agent functions -->
@@ -280,7 +275,7 @@
                     </condition>
                     <inputs>
                         <input>
-                            <messageName>monthly_cpi</messageName>
+                            <messageName>centralbank_households_quarterly_cpi</messageName>
                         </input>
                     </inputs>
                 </function>
@@ -414,11 +409,6 @@
                     <name>weekly_price_averages[4]</name>
                     <description>Weakly price averages at the market.</description>
                 </variable>
-                <variable>
-                    <type>double</type>
-                    <name>monthly_price_index</name>
-                    <description>Monthly price index of consumption goods.</description>
-                </variable>
             </memory>
             <!-- List of agent functions -->
             <functions>
@@ -476,7 +466,7 @@
                     </condition>
                     <outputs>
                         <output>
-                            <messageName>monthly_cpi</messageName>
+                            <messageName>centralbank_households_quarterly_cpi</messageName>
                         </output>
                     </outputs>
                 </function>
@@ -575,13 +565,13 @@
             </variables>
         </message>
         <message>
-            <name>monthly_cpi</name>
-            <description>Monthly price index of consumption goods.</description>
+            <name>centralbank_households_quarterly_cpi</name>
+            <description>Quarterly price change of consumption goods.</description>
             <variables>
                 <variable>
                     <type>double</type>
-                    <name>priceindex</name>
-                    <description>Monthly price index of consumption goods.</description>
+                    <name>change</name>
+                    <description>Quarterly price change of consumption goods.</description>
                 </variable>
             </variables>
         </message>

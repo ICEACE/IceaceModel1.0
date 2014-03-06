@@ -3274,38 +3274,38 @@ m_goods_transactions_summary * get_next_goods_transactions_summary_message(m_goo
 }
 
 
-union pu_monthly_cpi 
+union pu_centralbank_households_quarterly_cpi 
 {
-    m_monthly_cpi *ptr;
+    m_centralbank_households_quarterly_cpi *ptr;
     void *ptr_anon;
 };
 
-/** \fn void add_monthly_cpi_message(double priceindex)
- * \brief Add monthly_cpi message by calling internal and processing.
- * \param priceindex Message variable.
+/** \fn void add_centralbank_households_quarterly_cpi_message(double change)
+ * \brief Add centralbank_households_quarterly_cpi message by calling internal and processing.
+ * \param change Message variable.
  */
-void add_monthly_cpi_message(double priceindex)
+void add_centralbank_households_quarterly_cpi_message(double change)
 {
     int rc;
-	m_monthly_cpi msg;
+	m_centralbank_households_quarterly_cpi msg;
     
-    msg.priceindex = priceindex;
+    msg.change = change;
     
     
-    rc = MB_AddMessage(b_monthly_cpi, &msg);
+    rc = MB_AddMessage(b_centralbank_households_quarterly_cpi, &msg);
     #ifdef ERRCHECK
     if (rc != MB_SUCCESS)
     {
-       fprintf(stderr, "ERROR: Could not add message to 'monthly_cpi' board\n");
+       fprintf(stderr, "ERROR: Could not add message to 'centralbank_households_quarterly_cpi' board\n");
        switch(rc) {
            case MB_ERR_INVALID:
-               fprintf(stderr, "\t reason: 'monthly_cpi' board has not been created?\n");
+               fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board has not been created?\n");
                break;
            case MB_ERR_MEMALLOC:
                fprintf(stderr, "\t reason: out of memory\n");
                break;
            case MB_ERR_LOCKED:
-               fprintf(stderr, "\t reason: 'monthly_cpi' board is locked\n");
+               fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board is locked\n");
                break;
            case MB_ERR_INTERNAL:
                fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
@@ -3321,10 +3321,10 @@ void add_monthly_cpi_message(double priceindex)
     #endif
 }
 
-inline static m_monthly_cpi* getInternalMessage_monthly_cpi(void)
+inline static m_centralbank_households_quarterly_cpi* getInternalMessage_centralbank_households_quarterly_cpi(void)
 {
-    static m_monthly_cpi *msg_prev = NULL;
-    union pu_monthly_cpi msg_pu;
+    static m_centralbank_households_quarterly_cpi *msg_prev = NULL;
+    union pu_centralbank_households_quarterly_cpi msg_pu;
     int rc;
     
     /* deallocate previously returned message */
@@ -3334,14 +3334,14 @@ inline static m_monthly_cpi* getInternalMessage_monthly_cpi(void)
     }
     else 
     {
-        rc = MB_Iterator_Rewind(i_monthly_cpi); 
+        rc = MB_Iterator_Rewind(i_centralbank_households_quarterly_cpi); 
         #ifdef ERRCHECK
         if (rc != MB_SUCCESS)
         {
-            fprintf(stderr, "ERROR: Could not rewind 'monthly_cpi' Iterator\n");
+            fprintf(stderr, "ERROR: Could not rewind 'centralbank_households_quarterly_cpi' Iterator\n");
             switch(rc) {
                 case MB_ERR_INVALID:
-                    fprintf(stderr, "\t reason: 'monthly_cpi' Iterator has not been created?\n");
+                    fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' Iterator has not been created?\n");
                     break;
 	            default:
                     fprintf(stderr, "\t MB_Iterator_Rewind returned error code: %d (see libmboard docs for details)\n", rc);
@@ -3355,14 +3355,14 @@ inline static m_monthly_cpi* getInternalMessage_monthly_cpi(void)
     }
     
     /* get next message from iterator */
-    rc = MB_Iterator_GetMessage(i_monthly_cpi, &(msg_pu.ptr_anon));
+    rc = MB_Iterator_GetMessage(i_centralbank_households_quarterly_cpi, &(msg_pu.ptr_anon));
     #ifdef ERRCHECK
     if (rc != MB_SUCCESS)
     {
-       fprintf(stderr, "ERROR: Could not get message from 'monthly_cpi' Iterator\n");
+       fprintf(stderr, "ERROR: Could not get message from 'centralbank_households_quarterly_cpi' Iterator\n");
        switch(rc) {
            case MB_ERR_INVALID:
-               fprintf(stderr, "\t reason: 'monthly_cpi' Iterator has not been created?\n");
+               fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' Iterator has not been created?\n");
                break;
            case MB_ERR_MEMALLOC:
                fprintf(stderr, "\t reason: out of memory\n");
@@ -3383,23 +3383,23 @@ inline static m_monthly_cpi* getInternalMessage_monthly_cpi(void)
     return msg_pu.ptr;
 }
 
-/** \fn xmachine_message_monthly_cpi * get_first_monthly_cpi_message()
- * \brief Get the first monthly_cpi message in the monthly_cpi message list.
+/** \fn xmachine_message_centralbank_households_quarterly_cpi * get_first_centralbank_households_quarterly_cpi_message()
+ * \brief Get the first centralbank_households_quarterly_cpi message in the centralbank_households_quarterly_cpi message list.
  * \return The first message in the list.
  */
-m_monthly_cpi * get_first_monthly_cpi_message()
+m_centralbank_households_quarterly_cpi * get_first_centralbank_households_quarterly_cpi_message()
 {
-	return getInternalMessage_monthly_cpi();
+	return getInternalMessage_centralbank_households_quarterly_cpi();
 }
 
-/** \fn xmachine_message_monthly_cpi * get_next_monthly_cpi_message(xmachine_message_monthly_cpi * current)
- * \brief Get the next monthly_cpi message in the monthly_cpi message list after the current message.
+/** \fn xmachine_message_centralbank_households_quarterly_cpi * get_next_centralbank_households_quarterly_cpi_message(xmachine_message_centralbank_households_quarterly_cpi * current)
+ * \brief Get the next centralbank_households_quarterly_cpi message in the centralbank_households_quarterly_cpi message list after the current message.
  * \param current The current message in the list.
  * \return The next message in the list.
  */
-m_monthly_cpi * get_next_monthly_cpi_message(m_monthly_cpi * current)
+m_centralbank_households_quarterly_cpi * get_next_centralbank_households_quarterly_cpi_message(m_centralbank_households_quarterly_cpi * current)
 {
-	return getInternalMessage_monthly_cpi();
+	return getInternalMessage_centralbank_households_quarterly_cpi();
 }
 
 

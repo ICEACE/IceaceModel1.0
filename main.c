@@ -86,8 +86,8 @@ int main(int argc, char * argv[])
 	int FLAME_sold_message_board_read;
 	int FLAME_goods_transactions_summary_message_board_write;
 	int FLAME_goods_transactions_summary_message_board_read;
-	int FLAME_monthly_cpi_message_board_write;
-	int FLAME_monthly_cpi_message_board_read;
+	int FLAME_centralbank_households_quarterly_cpi_message_board_write;
+	int FLAME_centralbank_households_quarterly_cpi_message_board_read;
 	int FLAME_fired_message_board_write;
 	int FLAME_fired_message_board_read;
 	int FLAME_vacancy_stage1_message_board_write;
@@ -1558,37 +1558,37 @@ printf("Iterations: %i\n", iteration_total);
 		   exit(rc);
 	}
 	#endif
-	FLAME_monthly_cpi_message_board_write = 0;
-	FLAME_monthly_cpi_message_board_read = 0;
+	FLAME_centralbank_households_quarterly_cpi_message_board_write = 0;
+	FLAME_centralbank_households_quarterly_cpi_message_board_read = 0;
 	/* Sending agents */
-	if(centralbank_start_state->agents != NULL) FLAME_monthly_cpi_message_board_write = 1;
+	if(centralbank_start_state->agents != NULL) FLAME_centralbank_households_quarterly_cpi_message_board_write = 1;
 	
 	/* Reading agents */
-	if(household_start_state->agents != NULL) FLAME_monthly_cpi_message_board_read = 1;
+	if(household_start_state->agents != NULL) FLAME_centralbank_households_quarterly_cpi_message_board_read = 1;
 	
 	/* Call message board library with details */
-	if(FLAME_monthly_cpi_message_board_write == 0 &&
-		FLAME_monthly_cpi_message_board_read == 0)
-			rc = MB_SetAccessMode(b_monthly_cpi, MB_MODE_IDLE);
-	if(FLAME_monthly_cpi_message_board_write == 1 &&
-		FLAME_monthly_cpi_message_board_read == 0)
-			rc = MB_SetAccessMode(b_monthly_cpi, MB_MODE_WRITEONLY);
-	if(FLAME_monthly_cpi_message_board_write == 0 &&
-		FLAME_monthly_cpi_message_board_read == 1)
-			rc = MB_SetAccessMode(b_monthly_cpi, MB_MODE_READONLY);
-	if(FLAME_monthly_cpi_message_board_write == 1 &&
-		FLAME_monthly_cpi_message_board_read == 1)
-			rc = MB_SetAccessMode(b_monthly_cpi, MB_MODE_READWRITE);
+	if(FLAME_centralbank_households_quarterly_cpi_message_board_write == 0 &&
+		FLAME_centralbank_households_quarterly_cpi_message_board_read == 0)
+			rc = MB_SetAccessMode(b_centralbank_households_quarterly_cpi, MB_MODE_IDLE);
+	if(FLAME_centralbank_households_quarterly_cpi_message_board_write == 1 &&
+		FLAME_centralbank_households_quarterly_cpi_message_board_read == 0)
+			rc = MB_SetAccessMode(b_centralbank_households_quarterly_cpi, MB_MODE_WRITEONLY);
+	if(FLAME_centralbank_households_quarterly_cpi_message_board_write == 0 &&
+		FLAME_centralbank_households_quarterly_cpi_message_board_read == 1)
+			rc = MB_SetAccessMode(b_centralbank_households_quarterly_cpi, MB_MODE_READONLY);
+	if(FLAME_centralbank_households_quarterly_cpi_message_board_write == 1 &&
+		FLAME_centralbank_households_quarterly_cpi_message_board_read == 1)
+			rc = MB_SetAccessMode(b_centralbank_households_quarterly_cpi, MB_MODE_READWRITE);
 	#ifdef ERRCHECK
 	if (rc != MB_SUCCESS)
 	{
-	   fprintf(stderr, "ERROR: Could not set access mode of 'monthly_cpi' board\n");
+	   fprintf(stderr, "ERROR: Could not set access mode of 'centralbank_households_quarterly_cpi' board\n");
 	   switch(rc) {
 		   case MB_ERR_INVALID:
-			   fprintf(stderr, "\t reason: 'monthly_cpi' board is invalid\n");
+			   fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board is invalid\n");
 			   break;
 		   case MB_ERR_LOCKED:
-			   fprintf(stderr, "\t reason: 'monthly_cpi' board is locked\n");
+			   fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board is locked\n");
 			   break;
 		   case MB_ERR_MEMALLOC:
 			   fprintf(stderr, "\t reason: out of memory\n");
@@ -4578,24 +4578,24 @@ printf("Iterations: %i\n", iteration_total);
 		}
 		
 		/* Start sync message boards that don't write */
-		if(FLAME_monthly_cpi_message_board_write == 0)
+		if(FLAME_centralbank_households_quarterly_cpi_message_board_write == 0)
 		{
-			/*printf("%d> monthly_cpi message board sync start early as no agents sending any messages of this type\n", node_number);*/
+			/*printf("%d> centralbank_households_quarterly_cpi message board sync start early as no agents sending any messages of this type\n", node_number);*/
 			
 			/* ********** sync message board here **********  */
-			if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncStart(b_monthly_cpi)\n");
-			rc = MB_SyncStart(b_monthly_cpi);
-			if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finish MB_SyncStart(b_monthly_cpi)\n");
+			if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncStart(b_centralbank_households_quarterly_cpi)\n");
+			rc = MB_SyncStart(b_centralbank_households_quarterly_cpi);
+			if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finish MB_SyncStart(b_centralbank_households_quarterly_cpi)\n");
 			#ifdef ERRCHECK
 			if (rc != MB_SUCCESS)
 			{
-			   fprintf(stderr, "ERROR: Could not start sync of 'monthly_cpi' board\n");
+			   fprintf(stderr, "ERROR: Could not start sync of 'centralbank_households_quarterly_cpi' board\n");
 			   switch(rc) {
 				   case MB_ERR_INVALID:
-					   fprintf(stderr, "\t reason: 'monthly_cpi' board is invalid\n");
+					   fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board is invalid\n");
 					   break;
 				   case MB_ERR_LOCKED:
-					   fprintf(stderr, "\t reason: 'monthly_cpi' board is locked\n");
+					   fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board is locked\n");
 					   break;
 				   case MB_ERR_MEMALLOC:
 					   fprintf(stderr, "\t reason: out of memory\n");
@@ -21872,22 +21872,22 @@ if(FLAME_goods_transactions_summary_message_board_read == 0)
 	}
 	if(FLAME_TEST_PRINT_START_AND_END_OF_MODEL_FUNCTIONS) printf("finish centralbank_update_price_indices\n");
 
-	if(FLAME_monthly_cpi_message_board_write == 1)
+	if(FLAME_centralbank_households_quarterly_cpi_message_board_write == 1)
 	{
 
-		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncStart(b_monthly_cpi)\n");
-		rc = MB_SyncStart(b_monthly_cpi);
-		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finish MB_SyncStart(b_monthly_cpi)\n");
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncStart(b_centralbank_households_quarterly_cpi)\n");
+		rc = MB_SyncStart(b_centralbank_households_quarterly_cpi);
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finish MB_SyncStart(b_centralbank_households_quarterly_cpi)\n");
 		#ifdef ERRCHECK
 		if (rc != MB_SUCCESS)
 		{
-		   fprintf(stderr, "ERROR: Could not start sync of 'monthly_cpi' board\n");
+		   fprintf(stderr, "ERROR: Could not start sync of 'centralbank_households_quarterly_cpi' board\n");
 		   switch(rc) {
 			   case MB_ERR_INVALID:
-				   fprintf(stderr, "\t reason: 'monthly_cpi' board is invalid\n");
+				   fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board is invalid\n");
 				   break;
 			   case MB_ERR_LOCKED:
-				   fprintf(stderr, "\t reason: 'monthly_cpi' board is locked\n");
+				   fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board is locked\n");
 				   break;
 			   case MB_ERR_MEMALLOC:
 				   fprintf(stderr, "\t reason: out of memory\n");
@@ -22231,18 +22231,18 @@ if(FLAME_goods_transactions_summary_message_board_read == 0)
 
 
 	/* If mb is not read then leave sync complete until last possible moment */
-	if(FLAME_monthly_cpi_message_board_read == 1)
+	if(FLAME_centralbank_households_quarterly_cpi_message_board_read == 1)
 	{
-		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncComplete(b_monthly_cpi)\n");
-		rc = MB_SyncComplete(b_monthly_cpi);
-		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finsh MB_SyncComplete(b_monthly_cpi)\n");
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncComplete(b_centralbank_households_quarterly_cpi)\n");
+		rc = MB_SyncComplete(b_centralbank_households_quarterly_cpi);
+		if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finsh MB_SyncComplete(b_centralbank_households_quarterly_cpi)\n");
 		#ifdef ERRCHECK
 		if (rc != MB_SUCCESS)
 		{
-		   fprintf(stderr, "ERROR: Could not complete sync of 'monthly_cpi' board\n");
+		   fprintf(stderr, "ERROR: Could not complete sync of 'centralbank_households_quarterly_cpi' board\n");
 		   switch(rc) {
 				case MB_ERR_INVALID:
-				   fprintf(stderr, "\t reason: 'monthly_cpi' board is invalid\n");
+				   fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board is invalid\n");
 				   break;
 			   case MB_ERR_MEMALLOC:
 				   fprintf(stderr, "\t reason: out of memory\n");
@@ -22286,17 +22286,17 @@ if(FLAME_goods_transactions_summary_message_board_read == 0)
 
 		
 		
-		rc = MB_Iterator_Create(b_monthly_cpi, &i_monthly_cpi);
+		rc = MB_Iterator_Create(b_centralbank_households_quarterly_cpi, &i_centralbank_households_quarterly_cpi);
 		#ifdef ERRCHECK
 		if (rc != MB_SUCCESS)
 		{
-		   fprintf(stderr, "ERROR: Could not create Iterator for 'monthly_cpi'\n");
+		   fprintf(stderr, "ERROR: Could not create Iterator for 'centralbank_households_quarterly_cpi'\n");
 		   switch(rc) {
 		       case MB_ERR_INVALID:
-		           fprintf(stderr, "\t reason: 'monthly_cpi' board is invalid\n");
+		           fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board is invalid\n");
 		           break;
 		       case MB_ERR_LOCKED:
-	               fprintf(stderr, "\t reason: 'monthly_cpi' board is locked\n");
+	               fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board is locked\n");
 	               break;
 	           case MB_ERR_MEMALLOC:
 	               fprintf(stderr, "\t reason: out of memory\n");
@@ -22322,14 +22322,14 @@ if(FLAME_goods_transactions_summary_message_board_read == 0)
 			i = household_consumption_trace_cpi();
 
 		
-		    rc = MB_Iterator_Delete(&i_monthly_cpi);
+		    rc = MB_Iterator_Delete(&i_centralbank_households_quarterly_cpi);
 		    #ifdef ERRCHECK
 		    if (rc != MB_SUCCESS)
 		    {
-		       fprintf(stderr, "ERROR: Could not delete 'monthly_cpi' iterator\n");
+		       fprintf(stderr, "ERROR: Could not delete 'centralbank_households_quarterly_cpi' iterator\n");
 		       switch(rc) {
 		           case MB_ERR_INVALID:
-		               fprintf(stderr, "\t reason: 'monthly_cpi' iterator is invalid\n");
+		               fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' iterator is invalid\n");
 		               break;
 		           case MB_ERR_INTERNAL:
 		               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
@@ -22367,20 +22367,20 @@ if(FLAME_goods_transactions_summary_message_board_read == 0)
 /* Clear message boards that have finished being used
  * and sync complete if doing late sync complete */
 
-if(FLAME_monthly_cpi_message_board_read == 0)
+if(FLAME_centralbank_households_quarterly_cpi_message_board_read == 0)
 {
-	/*printf("%d> monthly_cpi message board sync complete late as no agents reading any messages of this type\n", node_number);*/
+	/*printf("%d> centralbank_households_quarterly_cpi message board sync complete late as no agents reading any messages of this type\n", node_number);*/
 	
-	if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncComplete(b_monthly_cpi)\n");
-	rc = MB_SyncComplete(b_monthly_cpi);
-	if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finsh MB_SyncComplete(b_monthly_cpi)\n");
+	if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("start MB_SyncComplete(b_centralbank_households_quarterly_cpi)\n");
+	rc = MB_SyncComplete(b_centralbank_households_quarterly_cpi);
+	if(FLAME_TEST_PRINT_START_AND_END_OF_LIBMBOARD_CALLS) printf("finsh MB_SyncComplete(b_centralbank_households_quarterly_cpi)\n");
 	#ifdef ERRCHECK
 	if (rc != MB_SUCCESS)
 	{
-	   fprintf(stderr, "ERROR: Could not complete sync of 'monthly_cpi' board\n");
+	   fprintf(stderr, "ERROR: Could not complete sync of 'centralbank_households_quarterly_cpi' board\n");
 	   switch(rc) {
 			case MB_ERR_INVALID:
-			   fprintf(stderr, "\t reason: 'monthly_cpi' board is invalid\n");
+			   fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board is invalid\n");
 			   break;
 		   case MB_ERR_MEMALLOC:
 			   fprintf(stderr, "\t reason: out of memory\n");
@@ -22399,17 +22399,17 @@ if(FLAME_monthly_cpi_message_board_read == 0)
 	#endif
 }
 
-    rc = MB_Clear(b_monthly_cpi);
+    rc = MB_Clear(b_centralbank_households_quarterly_cpi);
     #ifdef ERRCHECK
     if (rc != MB_SUCCESS)
     {
-       fprintf(stderr, "ERROR: Could not clear 'monthly_cpi' board\n");
+       fprintf(stderr, "ERROR: Could not clear 'centralbank_households_quarterly_cpi' board\n");
        switch(rc) {
            case MB_ERR_INVALID:
-               fprintf(stderr, "\t reason: 'monthly_cpi' board is invalid\n");
+               fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board is invalid\n");
                break;
            case MB_ERR_LOCKED:
-               fprintf(stderr, "\t reason: 'monthly_cpi' board is locked\n");
+               fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board is locked\n");
                break;
            case MB_ERR_INTERNAL:
                fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");

@@ -276,12 +276,12 @@
 /** \def FINISH_GOODS_TRANSACTIONS_SUMMARY_MESSAGE_LOOP
  * \brief Finish of loop to process goods_transactions_summary messages. */
 #define FINISH_GOODS_TRANSACTIONS_SUMMARY_MESSAGE_LOOP }
-/** \def START_MONTHLY_CPI_MESSAGE_LOOP
- * \brief Start of loop to process monthly_cpi messages. */
-#define START_MONTHLY_CPI_MESSAGE_LOOP  for(monthly_cpi_message = get_first_monthly_cpi_message(); monthly_cpi_message != NULL; monthly_cpi_message = get_next_monthly_cpi_message(monthly_cpi_message)) {
-/** \def FINISH_MONTHLY_CPI_MESSAGE_LOOP
- * \brief Finish of loop to process monthly_cpi messages. */
-#define FINISH_MONTHLY_CPI_MESSAGE_LOOP }
+/** \def START_CENTRALBANK_HOUSEHOLDS_QUARTERLY_CPI_MESSAGE_LOOP
+ * \brief Start of loop to process centralbank_households_quarterly_cpi messages. */
+#define START_CENTRALBANK_HOUSEHOLDS_QUARTERLY_CPI_MESSAGE_LOOP  for(centralbank_households_quarterly_cpi_message = get_first_centralbank_households_quarterly_cpi_message(); centralbank_households_quarterly_cpi_message != NULL; centralbank_households_quarterly_cpi_message = get_next_centralbank_households_quarterly_cpi_message(centralbank_households_quarterly_cpi_message)) {
+/** \def FINISH_CENTRALBANK_HOUSEHOLDS_QUARTERLY_CPI_MESSAGE_LOOP
+ * \brief Finish of loop to process centralbank_households_quarterly_cpi messages. */
+#define FINISH_CENTRALBANK_HOUSEHOLDS_QUARTERLY_CPI_MESSAGE_LOOP }
 /** \def START_FIRED_MESSAGE_LOOP
  * \brief Start of loop to process fired messages. */
 #define START_FIRED_MESSAGE_LOOP  for(fired_message = get_first_fired_message(); fired_message != NULL; fired_message = get_next_fired_message(fired_message)) {
@@ -1038,8 +1038,7 @@ struct xmachine_memory_household
 	int day_of_week_to_act;	/**< X-machine memory variable day_of_week_to_act of type int. */
 	double weekly_consumption_budget;	/**< X-machine memory variable weekly_consumption_budget of type double. */
 	double mall_budget;	/**< X-machine memory variable mall_budget of type double. */
-	double monthly_price_index;	/**< X-machine memory variable monthly_price_index of type double. */
-	double monthly_price_index_pre;	/**< X-machine memory variable monthly_price_index_pre of type double. */
+	double quarterly_price_change;	/**< X-machine memory variable quarterly_price_change of type double. */
 	int my_employer_id;	/**< X-machine memory variable my_employer_id of type int. */
 	double wage;	/**< X-machine memory variable wage of type double. */
 	int ismanager;	/**< X-machine memory variable ismanager of type int. */
@@ -1248,7 +1247,6 @@ struct xmachine_memory_centralbank
 	int day_of_week_to_act;	/**< X-machine memory variable day_of_week_to_act of type int. */
 	transaction goods;	/**< X-machine memory variable goods of type transaction. */
 	double weekly_price_averages[4];	/**< X-machine memory variable weekly_price_averages of type double. */
-	double monthly_price_index;	/**< X-machine memory variable monthly_price_index of type double. */
 	int day_of_month_wages_paid;	/**< X-machine memory variable day_of_month_wages_paid of type int. */
 	double interest_rate;	/**< X-machine memory variable interest_rate of type double. */
 	double liquidity;	/**< X-machine memory variable liquidity of type double. */
@@ -1722,16 +1720,16 @@ struct m_goods_transactions_summary
 	double avg_price;	/**< Message memory variable avg_price of type double. */
 };
 
-/** \var void* FLAME_m_monthly_cpi_composite_params\n
+/** \var void* FLAME_m_centralbank_households_quarterly_cpi_composite_params\n
  * \brief Pointer to message sync agent composite params */
-void* FLAME_m_monthly_cpi_composite_params;
+void* FLAME_m_centralbank_households_quarterly_cpi_composite_params;
 
-/** \struct m_monthly_cpi
- * \brief Holds message of type monthly_cpi_message.
+/** \struct m_centralbank_households_quarterly_cpi
+ * \brief Holds message of type centralbank_households_quarterly_cpi_message.
  */
-struct m_monthly_cpi
+struct m_centralbank_households_quarterly_cpi
 {
-	double priceindex;	/**< Message memory variable priceindex of type double. */
+	double change;	/**< Message memory variable change of type double. */
 };
 
 /** \var void* FLAME_m_fired_composite_params\n
@@ -2551,10 +2549,10 @@ typedef struct m_sold m_sold;
  */
 typedef struct m_goods_transactions_summary m_goods_transactions_summary;
 
-/** \typedef m_monthly_cpi m_monthly_cpi
- * \brief Typedef for m_monthly_cpi struct.
+/** \typedef m_centralbank_households_quarterly_cpi m_centralbank_households_quarterly_cpi
+ * \brief Typedef for m_centralbank_households_quarterly_cpi struct.
  */
-typedef struct m_monthly_cpi m_monthly_cpi;
+typedef struct m_centralbank_households_quarterly_cpi m_centralbank_households_quarterly_cpi;
 
 /** \typedef m_fired m_fired
  * \brief Typedef for m_fired struct.
@@ -2822,7 +2820,7 @@ struct node_information
 	struct m_sell * sell_messages;	/**< Pointer to sell message list. */
 	struct m_sold * sold_messages;	/**< Pointer to sold message list. */
 	struct m_goods_transactions_summary * goods_transactions_summary_messages;	/**< Pointer to goods_transactions_summary message list. */
-	struct m_monthly_cpi * monthly_cpi_messages;	/**< Pointer to monthly_cpi message list. */
+	struct m_centralbank_households_quarterly_cpi * centralbank_households_quarterly_cpi_messages;	/**< Pointer to centralbank_households_quarterly_cpi message list. */
 	struct m_fired * fired_messages;	/**< Pointer to fired message list. */
 	struct m_vacancy_stage1 * vacancy_stage1_messages;	/**< Pointer to vacancy_stage1 message list. */
 	struct m_job_application_stage2 * job_application_stage2_messages;	/**< Pointer to job_application_stage2 message list. */
@@ -3044,9 +3042,9 @@ m_sold * temp_sold_message;
 /** \var m_goods_transactions_summary * temp_goods_transactions_summary_message
 * \brief Pointer to m_goods_transactions_summary to initialise linked list. */
 m_goods_transactions_summary * temp_goods_transactions_summary_message;
-/** \var m_monthly_cpi * temp_monthly_cpi_message
-* \brief Pointer to m_monthly_cpi to initialise linked list. */
-m_monthly_cpi * temp_monthly_cpi_message;
+/** \var m_centralbank_households_quarterly_cpi * temp_centralbank_households_quarterly_cpi_message
+* \brief Pointer to m_centralbank_households_quarterly_cpi to initialise linked list. */
+m_centralbank_households_quarterly_cpi * temp_centralbank_households_quarterly_cpi_message;
 /** \var m_fired * temp_fired_message
 * \brief Pointer to m_fired to initialise linked list. */
 m_fired * temp_fired_message;
@@ -3785,8 +3783,8 @@ MBt_Iterator i_sold;
 MBt_Board b_goods_transactions_summary;
 MBt_Iterator i_goods_transactions_summary;
 
-MBt_Board b_monthly_cpi;
-MBt_Iterator i_monthly_cpi;
+MBt_Board b_centralbank_households_quarterly_cpi;
+MBt_Iterator i_centralbank_households_quarterly_cpi;
 
 MBt_Board b_fired;
 MBt_Iterator i_fired;
@@ -3996,9 +3994,9 @@ m_sold * sold_message;
 /** \var m_goods_transactions_summary * goods_transactions_summary_message
 * \brief Pointer to message struct for looping through goods_transactions_summary message list */
 m_goods_transactions_summary * goods_transactions_summary_message;
-/** \var m_monthly_cpi * monthly_cpi_message
-* \brief Pointer to message struct for looping through monthly_cpi message list */
-m_monthly_cpi * monthly_cpi_message;
+/** \var m_centralbank_households_quarterly_cpi * centralbank_households_quarterly_cpi_message
+* \brief Pointer to message struct for looping through centralbank_households_quarterly_cpi message list */
+m_centralbank_households_quarterly_cpi * centralbank_households_quarterly_cpi_message;
 /** \var m_fired * fired_message
 * \brief Pointer to message struct for looping through fired message list */
 m_fired * fired_message;
@@ -4437,7 +4435,7 @@ xmachine_memory_household * init_household_agent();
 void free_household_agent(xmachine_memory_household_holder * tmp, xmachine_memory_household_state * state);
 void transition_household_agent(xmachine_memory_household_holder * tmp, xmachine_memory_household_state * from_state, xmachine_memory_household_state * to_state);
 void add_household_agent_internal(xmachine_memory_household * agent, xmachine_memory_household_state * state);
-void add_household_agent(int id, int bank_id, int it_no, int day_of_week_to_act, double weekly_consumption_budget, double mall_budget, double monthly_price_index, double monthly_price_index_pre, int my_employer_id, double wage, int ismanager, double government_benefits, int day_of_month_to_act, int day_of_month_wage_recieved, double mortgages_interest_rate, double labour_tax_rate, mortgage_array * mortgages_list, double mortgages, double housing_payment, double equity, double housing_price, int housing_units, int n_shares, double liquidity, double capital_income, double previous_wages[], double previous_benefits[], double labour_income, double total_assets, double housing_value, double expected_housing_payment, int hmarket_role, double equity_ratio, double minimum_equity_ratio, double mortgage_costs[], double delta_housing_value, int mortgage_choice);
+void add_household_agent(int id, int bank_id, int it_no, int day_of_week_to_act, double weekly_consumption_budget, double mall_budget, double quarterly_price_change, int my_employer_id, double wage, int ismanager, double government_benefits, int day_of_month_to_act, int day_of_month_wage_recieved, double mortgages_interest_rate, double labour_tax_rate, mortgage_array * mortgages_list, double mortgages, double housing_payment, double equity, double housing_price, int housing_units, int n_shares, double liquidity, double capital_income, double previous_wages[], double previous_benefits[], double labour_income, double total_assets, double housing_value, double expected_housing_payment, int hmarket_role, double equity_ratio, double minimum_equity_ratio, double mortgage_costs[], double delta_housing_value, int mortgage_choice);
 void unittest_init_household_agent();
 void unittest_free_household_agent();
 xmachine_memory_equityfund_state * init_equityfund_state();
@@ -4469,7 +4467,7 @@ xmachine_memory_centralbank * init_centralbank_agent();
 void free_centralbank_agent(xmachine_memory_centralbank_holder * tmp, xmachine_memory_centralbank_state * state);
 void transition_centralbank_agent(xmachine_memory_centralbank_holder * tmp, xmachine_memory_centralbank_state * from_state, xmachine_memory_centralbank_state * to_state);
 void add_centralbank_agent_internal(xmachine_memory_centralbank * agent, xmachine_memory_centralbank_state * state);
-void add_centralbank_agent(int id, int day_of_month_to_act, double unemployment_rate, double inflation_rate, double consumption_goods_prices[], int it_no, int day_of_week_to_act, transaction goods, double weekly_price_averages[], double monthly_price_index, int day_of_month_wages_paid, double interest_rate, double liquidity, double loans_banks, double loans_government, double fiat_money, double equity, double liquidity_banks, double liquidity_government, double liquidity_equityfund, double total_assets, double total_writeoffs, double interests_accrued, double revenues, double net_earnings, double total_costs, transaction houses);
+void add_centralbank_agent(int id, int day_of_month_to_act, double unemployment_rate, double inflation_rate, double consumption_goods_prices[], int it_no, int day_of_week_to_act, transaction goods, double weekly_price_averages[], int day_of_month_wages_paid, double interest_rate, double liquidity, double loans_banks, double loans_government, double fiat_money, double equity, double liquidity_banks, double liquidity_government, double liquidity_equityfund, double total_assets, double total_writeoffs, double interests_accrued, double revenues, double net_earnings, double total_costs, transaction houses);
 void unittest_init_centralbank_agent();
 void unittest_free_centralbank_agent();
 xmachine_memory_jpoffice_state * init_jpoffice_state();
@@ -4647,11 +4645,11 @@ m_goods_transactions_summary * get_first_goods_transactions_summary_message(void
 m_goods_transactions_summary * get_next_goods_transactions_summary_message(m_goods_transactions_summary * current);
 void freegoods_transactions_summarymessages(void);
 
-void add_monthly_cpi_message(double priceindex);
-m_monthly_cpi * add_monthly_cpi_message_internal(void);
-m_monthly_cpi * get_first_monthly_cpi_message(void);
-m_monthly_cpi * get_next_monthly_cpi_message(m_monthly_cpi * current);
-void freemonthly_cpimessages(void);
+void add_centralbank_households_quarterly_cpi_message(double change);
+m_centralbank_households_quarterly_cpi * add_centralbank_households_quarterly_cpi_message_internal(void);
+m_centralbank_households_quarterly_cpi * get_first_centralbank_households_quarterly_cpi_message(void);
+m_centralbank_households_quarterly_cpi * get_next_centralbank_households_quarterly_cpi_message(m_centralbank_households_quarterly_cpi * current);
+void freecentralbank_households_quarterly_cpimessages(void);
 
 void add_fired_message(int employee_id);
 m_fired * add_fired_message_internal(void);
@@ -5025,10 +5023,8 @@ void set_weekly_consumption_budget(double weekly_consumption_budget);
 double get_weekly_consumption_budget();
 void set_mall_budget(double mall_budget);
 double get_mall_budget();
-void set_monthly_price_index(double monthly_price_index);
-double get_monthly_price_index();
-void set_monthly_price_index_pre(double monthly_price_index_pre);
-double get_monthly_price_index_pre();
+void set_quarterly_price_change(double quarterly_price_change);
+double get_quarterly_price_change();
 void set_my_employer_id(int my_employer_id);
 int get_my_employer_id();
 void set_wage(double wage);
@@ -5186,7 +5182,7 @@ m_bought * get_next_message_bought_in_range(m_bought * current);
 m_sell * get_next_message_sell_in_range(m_sell * current);
 m_sold * get_next_message_sold_in_range(m_sold * current);
 m_goods_transactions_summary * get_next_message_goods_transactions_summary_in_range(m_goods_transactions_summary * current);
-m_monthly_cpi * get_next_message_monthly_cpi_in_range(m_monthly_cpi * current);
+m_centralbank_households_quarterly_cpi * get_next_message_centralbank_households_quarterly_cpi_in_range(m_centralbank_households_quarterly_cpi * current);
 m_fired * get_next_message_fired_in_range(m_fired * current);
 m_vacancy_stage1 * get_next_message_vacancy_stage1_in_range(m_vacancy_stage1 * current);
 m_job_application_stage2 * get_next_message_job_application_stage2_in_range(m_job_application_stage2 * current);

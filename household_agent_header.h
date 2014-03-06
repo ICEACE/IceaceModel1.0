@@ -21,12 +21,9 @@
 /** \def MALL_BUDGET
  * \brief Direct access to mall_budget of household agent memory variable. */
 #define MALL_BUDGET (current_xmachine_household->mall_budget)
-/** \def MONTHLY_PRICE_INDEX
- * \brief Direct access to monthly_price_index of household agent memory variable. */
-#define MONTHLY_PRICE_INDEX (current_xmachine_household->monthly_price_index)
-/** \def MONTHLY_PRICE_INDEX_PRE
- * \brief Direct access to monthly_price_index_pre of household agent memory variable. */
-#define MONTHLY_PRICE_INDEX_PRE (current_xmachine_household->monthly_price_index_pre)
+/** \def QUARTERLY_PRICE_CHANGE
+ * \brief Direct access to quarterly_price_change of household agent memory variable. */
+#define QUARTERLY_PRICE_CHANGE (current_xmachine_household->quarterly_price_change)
 /** \def MY_EMPLOYER_ID
  * \brief Direct access to my_employer_id of household agent memory variable. */
 #define MY_EMPLOYER_ID (current_xmachine_household->my_employer_id)

@@ -129,11 +129,11 @@ int household_consumption_recieve_goods()
  */
 int household_consumption_trace_cpi()
 {
-    MONTHLY_PRICE_INDEX_PRE = MONTHLY_PRICE_INDEX;
+    // MONTHLY_PRICE_INDEX_PRE = MONTHLY_PRICE_INDEX;
 
-    START_MONTHLY_CPI_MESSAGE_LOOP
-    MONTHLY_PRICE_INDEX = monthly_cpi_message->priceindex;
-    FINISH_MONTHLY_CPI_MESSAGE_LOOP
+    START_CENTRALBANK_HOUSEHOLDS_QUARTERLY_CPI_MESSAGE_LOOP
+    QUARTERLY_PRICE_CHANGE = centralbank_households_quarterly_cpi->change;
+    FINISH_CENTRALBANK_HOUSEHOLDS_QUARTERLY_CPI_MESSAGE_LOOP
     
     return 0; /* Returning zero means the agent is not removed */
 }

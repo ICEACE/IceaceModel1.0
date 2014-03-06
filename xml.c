@@ -1765,8 +1765,7 @@ int readAgentXML(char * location,
 	int in_delta_housing_price = 0;
 	int in_weekly_consumption_budget = 0;
 	int in_mall_budget = 0;
-	int in_monthly_price_index = 0;
-	int in_monthly_price_index_pre = 0;
+	int in_quarterly_price_change = 0;
 	int in_my_employer_id = 0;
 	int in_wage = 0;
 	int in_ismanager = 0;
@@ -2540,10 +2539,8 @@ int readAgentXML(char * location,
 			if(strcmp(buffer, "/weekly_consumption_budget") == 0) { in_weekly_consumption_budget = 0; }
 			if(strcmp(buffer, "mall_budget") == 0) { in_mall_budget = 1; }
 			if(strcmp(buffer, "/mall_budget") == 0) { in_mall_budget = 0; }
-			if(strcmp(buffer, "monthly_price_index") == 0) { in_monthly_price_index = 1; }
-			if(strcmp(buffer, "/monthly_price_index") == 0) { in_monthly_price_index = 0; }
-			if(strcmp(buffer, "monthly_price_index_pre") == 0) { in_monthly_price_index_pre = 1; }
-			if(strcmp(buffer, "/monthly_price_index_pre") == 0) { in_monthly_price_index_pre = 0; }
+			if(strcmp(buffer, "quarterly_price_change") == 0) { in_quarterly_price_change = 1; }
+			if(strcmp(buffer, "/quarterly_price_change") == 0) { in_quarterly_price_change = 0; }
 			if(strcmp(buffer, "my_employer_id") == 0) { in_my_employer_id = 1; }
 			if(strcmp(buffer, "/my_employer_id") == 0) { in_my_employer_id = 0; }
 			if(strcmp(buffer, "wage") == 0) { in_wage = 1; }
@@ -2809,8 +2806,7 @@ int readAgentXML(char * location,
 					if(in_day_of_week_to_act) { current_household_agent->day_of_week_to_act = atoi(buffer); }
 					if(in_weekly_consumption_budget) { current_household_agent->weekly_consumption_budget = atof(buffer); }
 					if(in_mall_budget) { current_household_agent->mall_budget = atof(buffer); }
-					if(in_monthly_price_index) { current_household_agent->monthly_price_index = atof(buffer); }
-					if(in_monthly_price_index_pre) { current_household_agent->monthly_price_index_pre = atof(buffer); }
+					if(in_quarterly_price_change) { current_household_agent->quarterly_price_change = atof(buffer); }
 					if(in_my_employer_id) { current_household_agent->my_employer_id = atoi(buffer); }
 					if(in_wage) { current_household_agent->wage = atof(buffer); }
 					if(in_ismanager) { current_household_agent->ismanager = atoi(buffer); }
@@ -2929,7 +2925,6 @@ int readAgentXML(char * location,
 					if(in_weekly_price_averages) { j = 0;
 						rc = read_double_static_array(buffer, index, &j, current_centralbank_agent->weekly_price_averages, 4);
 						if(rc != 0) { printf("Error: reading 'centralbank' agent variable 'weekly_price_averages' of type 'double'\n"); exit(0); } }
-					if(in_monthly_price_index) { current_centralbank_agent->monthly_price_index = atof(buffer); }
 					if(in_day_of_month_wages_paid) { current_centralbank_agent->day_of_month_wages_paid = atoi(buffer); }
 					if(in_interest_rate) { current_centralbank_agent->interest_rate = atof(buffer); }
 					if(in_liquidity) { current_centralbank_agent->liquidity = atof(buffer); }
@@ -4259,14 +4254,10 @@ void write_household_agent(FILE *file, xmachine_memory_household * current)
 	sprintf(data, "%f", current->mall_budget);
 	fputs(data, file);
 	fputs("</mall_budget>\n", file);
-		fputs("<monthly_price_index>", file);
-	sprintf(data, "%f", current->monthly_price_index);
+		fputs("<quarterly_price_change>", file);
+	sprintf(data, "%f", current->quarterly_price_change);
 	fputs(data, file);
-	fputs("</monthly_price_index>\n", file);
-		fputs("<monthly_price_index_pre>", file);
-	sprintf(data, "%f", current->monthly_price_index_pre);
-	fputs(data, file);
-	fputs("</monthly_price_index_pre>\n", file);
+	fputs("</quarterly_price_change>\n", file);
 		fputs("<my_employer_id>", file);
 	sprintf(data, "%i", current->my_employer_id);
 	fputs(data, file);
@@ -4680,10 +4671,6 @@ void write_centralbank_agent(FILE *file, xmachine_memory_centralbank * current)
 		fputs("<weekly_price_averages>", file);
 	write_double_static_array(file, current->weekly_price_averages, 4);
 	fputs("</weekly_price_averages>\n", file);
-		fputs("<monthly_price_index>", file);
-	sprintf(data, "%f", current->monthly_price_index);
-	fputs(data, file);
-	fputs("</monthly_price_index>\n", file);
 		fputs("<day_of_month_wages_paid>", file);
 	sprintf(data, "%i", current->day_of_month_wages_paid);
 	fputs(data, file);

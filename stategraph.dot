@@ -942,12 +942,12 @@ digraph state_graph {
 	goods_transactions_summary_message_end_0 [ label = "end 45" color="#00ff00" shape = parallelogram];
 	goods_transactions_summary_message_end_0 -> firm_firm_consumption_update_market_price_FirmConsumptionPrice_FirmHousingStart [ color="#00ff00" label = "" ];
 	goods_transactions_summary_message_end_0 -> centralbank_centralbank_trace_goods_prices_CentralBankConsumption_CentralBankConsumptionPrices [ color="#00ff00" label = "" ];
-	monthly_cpi_message [ label = "monthly_cpi" color="#00ff00" shape = parallelogram];
-	monthly_cpi_message -> monthly_cpi_message_start_0 [ color="#00ff00" ];
-	monthly_cpi_message_start_0 [ label = "start 46" color="#00ff00" shape = parallelogram];
-	monthly_cpi_message_start_0 -> monthly_cpi_message_end_0 [ color="#00ff00" ];
-	monthly_cpi_message_end_0 [ label = "end 47" color="#00ff00" shape = parallelogram];
-	monthly_cpi_message_end_0 -> household_household_consumption_trace_cpi_HHConsumptionMonthly_HHHousingStart [ color="#00ff00" label = "" ];
+	centralbank_households_quarterly_cpi_message [ label = "centralbank_households_quarterly_cpi" color="#00ff00" shape = parallelogram];
+	centralbank_households_quarterly_cpi_message -> centralbank_households_quarterly_cpi_message_start_0 [ color="#00ff00" ];
+	centralbank_households_quarterly_cpi_message_start_0 [ label = "start 46" color="#00ff00" shape = parallelogram];
+	centralbank_households_quarterly_cpi_message_start_0 -> centralbank_households_quarterly_cpi_message_end_0 [ color="#00ff00" ];
+	centralbank_households_quarterly_cpi_message_end_0 [ label = "end 47" color="#00ff00" shape = parallelogram];
+	centralbank_households_quarterly_cpi_message_end_0 -> household_household_consumption_trace_cpi_HHConsumptionMonthly_HHHousingStart [ color="#00ff00" label = "" ];
 	fired_message [ label = "fired" color="#00ff00" shape = parallelogram];
 	fired_message -> fired_message_start_0 [ color="#00ff00" ];
 	fired_message_start_0 [ label = "start 32" color="#00ff00" shape = parallelogram];
@@ -1703,7 +1703,7 @@ digraph state_graph {
 	government_government_do_balance_sheet_GovernmentBalanceSheet_GovernmentUpdatePolicy -> gov_centralbank_update_deposit_message [ color="#00ff00" ];
 	government_government_update_fiscal_policy_GovernmentUpdatePolicy_end -> capital_tax_rate_message [ color="#00ff00" ];
 	government_government_update_fiscal_policy_GovernmentUpdatePolicy_end -> labour_tax_rate_message [ color="#00ff00" ];
-	centralbank_centralbank_update_price_indices_CentralBankConsumptionPrices_CentralBankHousing -> monthly_cpi_message [ color="#00ff00" ];
+	centralbank_centralbank_update_price_indices_CentralBankConsumptionPrices_CentralBankHousing -> centralbank_households_quarterly_cpi_message [ color="#00ff00" ];
 	centralbank_centralbank_compute_income_statement_CentralBankPolicy_CentralBankGovernmentRequests -> centralbank_government_profit_message [ color="#00ff00" ];
 	centralbank_centralbank_set_interest_rate_CentralBankUpdateInterestRate_end -> interest_rate_message [ color="#00ff00" ];
 	jpoffice_jpoffice_init_employment_JPOfficeInitEmployment_JPOfficeLoop -> jpoffice_household_employer_message [ color="#00ff00" ];
@@ -1858,9 +1858,9 @@ digraph state_graph {
 	{ rank=same; layer_45_a; }
 	{ rank=same; layer_46;  firm_idle_FirmHousingStart_FirmLabourPayWages;  firm_idle_FirmHousingStart_FirmHousingMarket;  centralbank_idle_CentralBankConsumptionPrices_CentralBankHousing;  centralbank_centralbank_update_price_indices_CentralBankConsumptionPrices_CentralBankHousing; }
 	{ rank=same; layer_46_b; }
-	{ rank=same; layer_46_a; monthly_cpi_message_start_0; }
+	{ rank=same; layer_46_a; centralbank_households_quarterly_cpi_message_start_0; }
 	{ rank=same; layer_47;  firm_idle_FirmHousingMarket_FirmLabourPayWages;  firm_firm_housing_enter_market_FirmHousingMarket_FirmHousingSell;  household_household_consumption_trace_cpi_HHConsumptionMonthly_HHHousingStart;  centralbank_idle_CentralBankHousing_CentralBankLabour; }
-	{ rank=same; layer_47_b; monthly_cpi_message_end_0; }
+	{ rank=same; layer_47_b; centralbank_households_quarterly_cpi_message_end_0; }
 	{ rank=same; layer_47_a; }
 	{ rank=same; layer_48;  household_idle_HHHousingStart_HHLabourPayroll;  household_household_housing_market_role_HHHousingStart_HHHousingRole; }
 	{ rank=same; layer_48_b; }

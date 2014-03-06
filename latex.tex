@@ -367,9 +367,7 @@
 \midrule
 \url{double} \url{mall_budget} \index{\url{mall_budget}} & \parbox{10cm}{Consumption budget that can be spent for the week.} \\
 \midrule
-\url{double} \url{monthly_price_index} \index{\url{monthly_price_index}} & \parbox{10cm}{Monthly price index of consumption goods.} \\
-\midrule
-\url{double} \url{monthly_price_index_pre} \index{\url{monthly_price_index_pre}} & \parbox{10cm}{Previous month's price index of consumption goods.} \\
+\url{double} \url{quarterly_price_change} \index{\url{quarterly_price_change}} & \parbox{10cm}{Quarterly price change of consumption goods.} \\
 \midrule
 \url{int} \url{my_employer_id} \index{\url{my_employer_id}} & \parbox{10cm}{Employer ID of an household. A 0 means unemployed.} \\
 \midrule
@@ -959,8 +957,6 @@
 \midrule
 \url{double} \url{weekly_price_averages} \index{\url{weekly_price_averages}} & \parbox{10cm}{Weakly price averages at the market.} \\
 \midrule
-\url{double} \url{monthly_price_index} \index{\url{monthly_price_index}} & \parbox{10cm}{Monthly price index of consumption goods.} \\
-\midrule
 \url{int} \url{day_of_month_wages_paid} \index{\url{day_of_month_wages_paid}} & \parbox{10cm}{The day of the month wages paid.} \\
 \midrule
 \url{double} \url{interest_rate} \index{\url{interest_rate}} & \parbox{10cm}{Rate of interest set by central bank.} \\
@@ -1372,8 +1368,8 @@ See Table \ref{Table: Messages}.\begin{landscape}
     \url{int} \url{quantity} \index{\url{quantity}} & \parbox{10cm}{Number of goods sold out.}\\
     \url{double} \url{avg_price} \index{\url{avg_price}} & \parbox{10cm}{Weakly avg price.}\\
 \midrule
-\url{monthly_cpi} & \parbox{10cm}{Monthly price index of consumption goods.}\\
-    \url{double} \url{priceindex} \index{\url{priceindex}} & \parbox{10cm}{Monthly price index of consumption goods.}\\
+\url{centralbank_households_quarterly_cpi} & \parbox{10cm}{Quarterly price change of consumption goods.}\\
+    \url{double} \url{change} \index{\url{change}} & \parbox{10cm}{Quarterly price change of consumption goods.}\\
 \midrule
 \url{fired} & \parbox{10cm}{Sent by a firm to notify an employee who is fired.}\\
     \url{int} \url{employee_id} \index{\url{employee_id}} & \parbox{10cm}{Employee ID who has been fired.}\\

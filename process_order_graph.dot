@@ -790,15 +790,15 @@ digraph communication_graph {
 	goods_transactions_summary_message_sync_end_0 -> centralbank_centralbank_trace_goods_prices_CentralBankConsumption_CentralBankConsumptionPrices [ color="#00ff00" constraint=false ];
 	goods_transactions_summary_message_sync_start_0 -> mall_mall_consumption_summary_MallConsumptionSummary_end [ color="#00ff00", constraint=false, style=dashed ];
 	{ rank=same; firm_firm_consumption_update_market_price_FirmConsumptionPrice_FirmHousingStart; goods_transactions_summary_message_sync_end_0; }
-	monthly_cpi_message [ label = "monthly_cpi" color="#00ff00" shape = parallelogram];
-	monthly_cpi_message_sync_start_0 [ label = "start" color="#00ff00" shape = parallelogram];
-	monthly_cpi_message_sync_start_0 -> monthly_cpi_message [ color="#00ff00" label="monthly_cpi_47"];
-	{ rank=same; centralbank_centralbank_update_price_indices_CentralBankConsumptionPrices_CentralBankHousing; monthly_cpi_message_sync_start_0; }
-	monthly_cpi_message_sync_end_0 [ label = "end" color="#00ff00" shape = parallelogram];
-	monthly_cpi_message_sync_end_0 -> monthly_cpi_message_sync_start_0 [ color="#00ff00" ];
-	monthly_cpi_message_sync_end_0 -> household_household_consumption_trace_cpi_HHConsumptionMonthly_HHHousingStart [ color="#00ff00" constraint=false ];
-	monthly_cpi_message_sync_start_0 -> centralbank_centralbank_update_price_indices_CentralBankConsumptionPrices_CentralBankHousing [ color="#00ff00", constraint=false, style=dashed ];
-	{ rank=same; household_household_consumption_trace_cpi_HHConsumptionMonthly_HHHousingStart; monthly_cpi_message_sync_end_0; }
+	centralbank_households_quarterly_cpi_message [ label = "centralbank_households_quarterly_cpi" color="#00ff00" shape = parallelogram];
+	centralbank_households_quarterly_cpi_message_sync_start_0 [ label = "start" color="#00ff00" shape = parallelogram];
+	centralbank_households_quarterly_cpi_message_sync_start_0 -> centralbank_households_quarterly_cpi_message [ color="#00ff00" label="centralbank_households_quarterly_cpi_47"];
+	{ rank=same; centralbank_centralbank_update_price_indices_CentralBankConsumptionPrices_CentralBankHousing; centralbank_households_quarterly_cpi_message_sync_start_0; }
+	centralbank_households_quarterly_cpi_message_sync_end_0 [ label = "end" color="#00ff00" shape = parallelogram];
+	centralbank_households_quarterly_cpi_message_sync_end_0 -> centralbank_households_quarterly_cpi_message_sync_start_0 [ color="#00ff00" ];
+	centralbank_households_quarterly_cpi_message_sync_end_0 -> household_household_consumption_trace_cpi_HHConsumptionMonthly_HHHousingStart [ color="#00ff00" constraint=false ];
+	centralbank_households_quarterly_cpi_message_sync_start_0 -> centralbank_centralbank_update_price_indices_CentralBankConsumptionPrices_CentralBankHousing [ color="#00ff00", constraint=false, style=dashed ];
+	{ rank=same; household_household_consumption_trace_cpi_HHConsumptionMonthly_HHHousingStart; centralbank_households_quarterly_cpi_message_sync_end_0; }
 	fired_message [ label = "fired" color="#00ff00" shape = parallelogram];
 	fired_message_sync_start_0 [ label = "start" color="#00ff00" shape = parallelogram];
 	fired_message_sync_start_0 -> fired_message [ color="#00ff00" label="fired_33"];
@@ -1263,7 +1263,7 @@ digraph communication_graph {
 	government_government_do_balance_sheet_GovernmentBalanceSheet_GovernmentUpdatePolicy -> gov_centralbank_update_deposit_message [ color="#00ff00" constraint=false ];
 	government_government_update_fiscal_policy_GovernmentUpdatePolicy_end -> capital_tax_rate_message [ color="#00ff00" constraint=false ];
 	government_government_update_fiscal_policy_GovernmentUpdatePolicy_end -> labour_tax_rate_message [ color="#00ff00" constraint=false ];
-	centralbank_centralbank_update_price_indices_CentralBankConsumptionPrices_CentralBankHousing -> monthly_cpi_message [ color="#00ff00" constraint=false ];
+	centralbank_centralbank_update_price_indices_CentralBankConsumptionPrices_CentralBankHousing -> centralbank_households_quarterly_cpi_message [ color="#00ff00" constraint=false ];
 	centralbank_centralbank_compute_income_statement_CentralBankPolicy_CentralBankGovernmentRequests -> centralbank_government_profit_message [ color="#00ff00" constraint=false ];
 	centralbank_centralbank_set_interest_rate_CentralBankUpdateInterestRate_end -> interest_rate_message [ color="#00ff00" constraint=false ];
 	jpoffice_jpoffice_init_employment_JPOfficeInitEmployment_JPOfficeLoop -> jpoffice_household_employer_message [ color="#00ff00" constraint=false ];

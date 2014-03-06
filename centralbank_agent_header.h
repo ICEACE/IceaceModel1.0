@@ -30,9 +30,6 @@
 /** \def WEEKLY_PRICE_AVERAGES
  * \brief Direct access to weekly_price_averages of centralbank agent memory variable. */
 #define WEEKLY_PRICE_AVERAGES (current_xmachine_centralbank->weekly_price_averages)
-/** \def MONTHLY_PRICE_INDEX
- * \brief Direct access to monthly_price_index of centralbank agent memory variable. */
-#define MONTHLY_PRICE_INDEX (current_xmachine_centralbank->monthly_price_index)
 /** \def DAY_OF_MONTH_WAGES_PAID
  * \brief Direct access to day_of_month_wages_paid of centralbank agent memory variable. */
 #define DAY_OF_MONTH_WAGES_PAID (current_xmachine_centralbank->day_of_month_wages_paid)

@@ -967,17 +967,17 @@ void unittest_household_consumption_trace_cpi_HHConsumptionMonthly_HHHousingStar
 	int rc;
 	
 	
-	rc = MB_Iterator_Create(b_monthly_cpi, &i_monthly_cpi);
+	rc = MB_Iterator_Create(b_centralbank_households_quarterly_cpi, &i_centralbank_households_quarterly_cpi);
 	#ifdef ERRCHECK
 	if (rc != MB_SUCCESS)
 	{
-	   fprintf(stderr, "ERROR: Could not create Iterator for 'monthly_cpi'\n");
+	   fprintf(stderr, "ERROR: Could not create Iterator for 'centralbank_households_quarterly_cpi'\n");
 	   switch(rc) {
 	       case MB_ERR_INVALID:
-	           fprintf(stderr, "\t reason: 'monthly_cpi' board is invalid\n");
+	           fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board is invalid\n");
 	           break;
 	       case MB_ERR_LOCKED:
-               fprintf(stderr, "\t reason: 'monthly_cpi' board is locked\n");
+               fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board is locked\n");
                break;
            case MB_ERR_MEMALLOC:
                fprintf(stderr, "\t reason: out of memory\n");
@@ -3999,17 +3999,17 @@ void free_messages()
 	    }
 	    #endif
 	
-	    rc = MB_Clear(b_monthly_cpi);
+	    rc = MB_Clear(b_centralbank_households_quarterly_cpi);
 	    #ifdef ERRCHECK
 	    if (rc != MB_SUCCESS)
 	    {
-	       fprintf(stderr, "ERROR: Could not clear 'monthly_cpi' board\n");
+	       fprintf(stderr, "ERROR: Could not clear 'centralbank_households_quarterly_cpi' board\n");
 	       switch(rc) {
 	           case MB_ERR_INVALID:
-	               fprintf(stderr, "\t reason: 'monthly_cpi' board is invalid\n");
+	               fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board is invalid\n");
 	               break;
 	           case MB_ERR_LOCKED:
-	               fprintf(stderr, "\t reason: 'monthly_cpi' board is locked\n");
+	               fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board is locked\n");
 	               break;
 	           case MB_ERR_INTERNAL:
 	               fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
@@ -5834,13 +5834,13 @@ int rc;
 	    #endif
 	
 	/* Initialise message sync composite params as NULL */
-	FLAME_m_monthly_cpi_composite_params = NULL;
+	FLAME_m_centralbank_households_quarterly_cpi_composite_params = NULL;
 
-	    rc = MB_Create(&b_monthly_cpi, sizeof(m_monthly_cpi));
+	    rc = MB_Create(&b_centralbank_households_quarterly_cpi, sizeof(m_centralbank_households_quarterly_cpi));
 	    #ifdef ERRCHECK
 	    if (rc != MB_SUCCESS)
 	    {
-	       fprintf(stderr, "ERROR: Could not create 'monthly_cpi' board\n");
+	       fprintf(stderr, "ERROR: Could not create 'centralbank_households_quarterly_cpi' board\n");
 	       switch(rc) {
 	           case MB_ERR_INVALID:
 	               fprintf(stderr, "\t reason: Invalid message size\n");
@@ -8776,8 +8776,7 @@ xmachine_memory_household * init_household_agent()
 	current->day_of_week_to_act = 0;
 	current->weekly_consumption_budget = 0.0;
 	current->mall_budget = 0.0;
-	current->monthly_price_index = 0.0;
-	current->monthly_price_index_pre = 0.0;
+	current->quarterly_price_change = 0.0;
 	current->my_employer_id = 0;
 	current->wage = 0.0;
 	current->ismanager = 0;
@@ -8835,8 +8834,7 @@ void unittest_init_household_agent()
 		current_xmachine_household->day_of_week_to_act = 0;
 		current_xmachine_household->weekly_consumption_budget = 0.0;
 		current_xmachine_household->mall_budget = 0.0;
-		current_xmachine_household->monthly_price_index = 0.0;
-		current_xmachine_household->monthly_price_index_pre = 0.0;
+		current_xmachine_household->quarterly_price_change = 0.0;
 		current_xmachine_household->my_employer_id = 0;
 		current_xmachine_household->wage = 0.0;
 		current_xmachine_household->ismanager = 0;
@@ -9206,7 +9204,7 @@ void add_household_agent_internal(xmachine_memory_household * agent, xmachine_me
 
 }
 
-/** \fn void add_household_agent(int id, int bank_id, int it_no, int day_of_week_to_act, double weekly_consumption_budget, double mall_budget, double monthly_price_index, double monthly_price_index_pre, int my_employer_id, double wage, int ismanager, double government_benefits, int day_of_month_to_act, int day_of_month_wage_recieved, double mortgages_interest_rate, double labour_tax_rate, mortgage_array * mortgages_list, double mortgages, double housing_payment, double equity, double housing_price, int housing_units, int n_shares, double liquidity, double capital_income, double previous_wages[], double previous_benefits[], double labour_income, double total_assets, double housing_value, double expected_housing_payment, int hmarket_role, double equity_ratio, double minimum_equity_ratio, double mortgage_costs[], double delta_housing_value, int mortgage_choice)
+/** \fn void add_household_agent(int id, int bank_id, int it_no, int day_of_week_to_act, double weekly_consumption_budget, double mall_budget, double quarterly_price_change, int my_employer_id, double wage, int ismanager, double government_benefits, int day_of_month_to_act, int day_of_month_wage_recieved, double mortgages_interest_rate, double labour_tax_rate, mortgage_array * mortgages_list, double mortgages, double housing_payment, double equity, double housing_price, int housing_units, int n_shares, double liquidity, double capital_income, double previous_wages[], double previous_benefits[], double labour_income, double total_assets, double housing_value, double expected_housing_payment, int hmarket_role, double equity_ratio, double minimum_equity_ratio, double mortgage_costs[], double delta_housing_value, int mortgage_choice)
  * \brief Add household X-machine to the current being used X-machine list.
  * \param id Variable for the X-machine memory.
  * \param bank_id Variable for the X-machine memory.
@@ -9214,8 +9212,7 @@ void add_household_agent_internal(xmachine_memory_household * agent, xmachine_me
  * \param day_of_week_to_act Variable for the X-machine memory.
  * \param weekly_consumption_budget Variable for the X-machine memory.
  * \param mall_budget Variable for the X-machine memory.
- * \param monthly_price_index Variable for the X-machine memory.
- * \param monthly_price_index_pre Variable for the X-machine memory.
+ * \param quarterly_price_change Variable for the X-machine memory.
  * \param my_employer_id Variable for the X-machine memory.
  * \param wage Variable for the X-machine memory.
  * \param ismanager Variable for the X-machine memory.
@@ -9246,7 +9243,7 @@ void add_household_agent_internal(xmachine_memory_household * agent, xmachine_me
  * \param delta_housing_value Variable for the X-machine memory.
  * \param mortgage_choice Variable for the X-machine memory.
  */
-void add_household_agent(int id, int bank_id, int it_no, int day_of_week_to_act, double weekly_consumption_budget, double mall_budget, double monthly_price_index, double monthly_price_index_pre, int my_employer_id, double wage, int ismanager, double government_benefits, int day_of_month_to_act, int day_of_month_wage_recieved, double mortgages_interest_rate, double labour_tax_rate, mortgage_array * mortgages_list, double mortgages, double housing_payment, double equity, double housing_price, int housing_units, int n_shares, double liquidity, double capital_income, double previous_wages[], double previous_benefits[], double labour_income, double total_assets, double housing_value, double expected_housing_payment, int hmarket_role, double equity_ratio, double minimum_equity_ratio, double mortgage_costs[], double delta_housing_value, int mortgage_choice)
+void add_household_agent(int id, int bank_id, int it_no, int day_of_week_to_act, double weekly_consumption_budget, double mall_budget, double quarterly_price_change, int my_employer_id, double wage, int ismanager, double government_benefits, int day_of_month_to_act, int day_of_month_wage_recieved, double mortgages_interest_rate, double labour_tax_rate, mortgage_array * mortgages_list, double mortgages, double housing_payment, double equity, double housing_price, int housing_units, int n_shares, double liquidity, double capital_income, double previous_wages[], double previous_benefits[], double labour_income, double total_assets, double housing_value, double expected_housing_payment, int hmarket_role, double equity_ratio, double minimum_equity_ratio, double mortgage_costs[], double delta_housing_value, int mortgage_choice)
 {
 	xmachine_memory_household * current;
 
@@ -9261,8 +9258,7 @@ void add_household_agent(int id, int bank_id, int it_no, int day_of_week_to_act,
 	current->day_of_week_to_act = day_of_week_to_act;
 	current->weekly_consumption_budget = weekly_consumption_budget;
 	current->mall_budget = mall_budget;
-	current->monthly_price_index = monthly_price_index;
-	current->monthly_price_index_pre = monthly_price_index_pre;
+	current->quarterly_price_change = quarterly_price_change;
 	current->my_employer_id = my_employer_id;
 	current->wage = wage;
 	current->ismanager = ismanager;
@@ -10235,7 +10231,6 @@ xmachine_memory_centralbank * init_centralbank_agent()
 	current->day_of_week_to_act = 0;
 	init_transaction(&current->goods);
 	init_double_static_array(current->weekly_price_averages, 4);
-	current->monthly_price_index = 0.0;
 	current->day_of_month_wages_paid = 0;
 	current->interest_rate = 0.0;
 	current->liquidity = 0.0;
@@ -10285,7 +10280,6 @@ void unittest_init_centralbank_agent()
 		current_xmachine_centralbank->day_of_week_to_act = 0;
 		init_transaction(&current_xmachine_centralbank->goods);
 		init_double_static_array(current_xmachine_centralbank->weekly_price_averages, 4);
-		current_xmachine_centralbank->monthly_price_index = 0.0;
 		current_xmachine_centralbank->day_of_month_wages_paid = 0;
 		current_xmachine_centralbank->interest_rate = 0.0;
 		current_xmachine_centralbank->liquidity = 0.0;
@@ -10473,7 +10467,7 @@ void add_centralbank_agent_internal(xmachine_memory_centralbank * agent, xmachin
 
 }
 
-/** \fn void add_centralbank_agent(int id, int day_of_month_to_act, double unemployment_rate, double inflation_rate, double consumption_goods_prices[], int it_no, int day_of_week_to_act, transaction * goods, double weekly_price_averages[], double monthly_price_index, int day_of_month_wages_paid, double interest_rate, double liquidity, double loans_banks, double loans_government, double fiat_money, double equity, double liquidity_banks, double liquidity_government, double liquidity_equityfund, double total_assets, double total_writeoffs, double interests_accrued, double revenues, double net_earnings, double total_costs, transaction * houses)
+/** \fn void add_centralbank_agent(int id, int day_of_month_to_act, double unemployment_rate, double inflation_rate, double consumption_goods_prices[], int it_no, int day_of_week_to_act, transaction * goods, double weekly_price_averages[], int day_of_month_wages_paid, double interest_rate, double liquidity, double loans_banks, double loans_government, double fiat_money, double equity, double liquidity_banks, double liquidity_government, double liquidity_equityfund, double total_assets, double total_writeoffs, double interests_accrued, double revenues, double net_earnings, double total_costs, transaction * houses)
  * \brief Add centralbank X-machine to the current being used X-machine list.
  * \param id Variable for the X-machine memory.
  * \param day_of_month_to_act Variable for the X-machine memory.
@@ -10484,7 +10478,6 @@ void add_centralbank_agent_internal(xmachine_memory_centralbank * agent, xmachin
  * \param day_of_week_to_act Variable for the X-machine memory.
  * \param goods Variable for the X-machine memory.
  * \param weekly_price_averages Variable for the X-machine memory.
- * \param monthly_price_index Variable for the X-machine memory.
  * \param day_of_month_wages_paid Variable for the X-machine memory.
  * \param interest_rate Variable for the X-machine memory.
  * \param liquidity Variable for the X-machine memory.
@@ -10503,7 +10496,7 @@ void add_centralbank_agent_internal(xmachine_memory_centralbank * agent, xmachin
  * \param total_costs Variable for the X-machine memory.
  * \param houses Variable for the X-machine memory.
  */
-void add_centralbank_agent(int id, int day_of_month_to_act, double unemployment_rate, double inflation_rate, double consumption_goods_prices[], int it_no, int day_of_week_to_act, transaction goods, double weekly_price_averages[], double monthly_price_index, int day_of_month_wages_paid, double interest_rate, double liquidity, double loans_banks, double loans_government, double fiat_money, double equity, double liquidity_banks, double liquidity_government, double liquidity_equityfund, double total_assets, double total_writeoffs, double interests_accrued, double revenues, double net_earnings, double total_costs, transaction houses)
+void add_centralbank_agent(int id, int day_of_month_to_act, double unemployment_rate, double inflation_rate, double consumption_goods_prices[], int it_no, int day_of_week_to_act, transaction goods, double weekly_price_averages[], int day_of_month_wages_paid, double interest_rate, double liquidity, double loans_banks, double loans_government, double fiat_money, double equity, double liquidity_banks, double liquidity_government, double liquidity_equityfund, double total_assets, double total_writeoffs, double interests_accrued, double revenues, double net_earnings, double total_costs, transaction houses)
 {
 	xmachine_memory_centralbank * current;
 
@@ -10521,7 +10514,6 @@ void add_centralbank_agent(int id, int day_of_month_to_act, double unemployment_
 	current->day_of_week_to_act = day_of_week_to_act;
 	copy_transaction(&goods, &current->goods);
 	memcpy(current->weekly_price_averages, weekly_price_averages, 4*sizeof(double));
-	current->monthly_price_index = monthly_price_index;
 	current->day_of_month_wages_paid = day_of_month_wages_paid;
 	current->interest_rate = interest_rate;
 	current->liquidity = liquidity;
@@ -12320,46 +12312,22 @@ double get_mall_budget()
     return (double)0;
 }
 
-/** \fn void set_monthly_price_index(double monthly_price_index)
- * \brief Set monthly_price_index memory variable for current X-machine.
- * \param monthly_price_index New value for variable.
+/** \fn void set_quarterly_price_change(double quarterly_price_change)
+ * \brief Set quarterly_price_change memory variable for current X-machine.
+ * \param quarterly_price_change New value for variable.
  */
-void set_monthly_price_index(double monthly_price_index)
+void set_quarterly_price_change(double quarterly_price_change)
 {
-	if(current_xmachine->xmachine_household) (*current_xmachine->xmachine_household).monthly_price_index = monthly_price_index;
-	if(current_xmachine->xmachine_centralbank) (*current_xmachine->xmachine_centralbank).monthly_price_index = monthly_price_index;
+	if(current_xmachine->xmachine_household) (*current_xmachine->xmachine_household).quarterly_price_change = quarterly_price_change;
 }
 
-/** \fn double get_monthly_price_index()
- * \brief Get monthly_price_index memory variable from current X-machine.
+/** \fn double get_quarterly_price_change()
+ * \brief Get quarterly_price_change memory variable from current X-machine.
  * \return Value for variable.
  */
-double get_monthly_price_index()
+double get_quarterly_price_change()
 {
-	if(current_xmachine->xmachine_household) return (*current_xmachine->xmachine_household).monthly_price_index;
-	if(current_xmachine->xmachine_centralbank) return (*current_xmachine->xmachine_centralbank).monthly_price_index;
-
-    // suppress compiler warning by returning dummy value /
-    // this statement should rightfully NEVER be reached /
-    return (double)0;
-}
-
-/** \fn void set_monthly_price_index_pre(double monthly_price_index_pre)
- * \brief Set monthly_price_index_pre memory variable for current X-machine.
- * \param monthly_price_index_pre New value for variable.
- */
-void set_monthly_price_index_pre(double monthly_price_index_pre)
-{
-	if(current_xmachine->xmachine_household) (*current_xmachine->xmachine_household).monthly_price_index_pre = monthly_price_index_pre;
-}
-
-/** \fn double get_monthly_price_index_pre()
- * \brief Get monthly_price_index_pre memory variable from current X-machine.
- * \return Value for variable.
- */
-double get_monthly_price_index_pre()
-{
-	if(current_xmachine->xmachine_household) return (*current_xmachine->xmachine_household).monthly_price_index_pre;
+	if(current_xmachine->xmachine_household) return (*current_xmachine->xmachine_household).quarterly_price_change;
 
     // suppress compiler warning by returning dummy value /
     // this statement should rightfully NEVER be reached /
@@ -13877,7 +13845,7 @@ void add_node(int node_id, double minx, double maxx, double miny, double maxy, d
 	current->sell_messages = NULL;
 	current->sold_messages = NULL;
 	current->goods_transactions_summary_messages = NULL;
-	current->monthly_cpi_messages = NULL;
+	current->centralbank_households_quarterly_cpi_messages = NULL;
 	current->fired_messages = NULL;
 	current->vacancy_stage1_messages = NULL;
 	current->job_application_stage2_messages = NULL;
@@ -14609,17 +14577,17 @@ void clean_up(int code)
     }
     #endif
 
-	rc = MB_Delete(&b_monthly_cpi);
+	rc = MB_Delete(&b_centralbank_households_quarterly_cpi);
 	#ifdef ERRCHECK
     if (rc != MB_SUCCESS)
     {
-       fprintf(stderr, "ERROR: Could not delete 'monthly_cpi' board\n");
+       fprintf(stderr, "ERROR: Could not delete 'centralbank_households_quarterly_cpi' board\n");
        switch(rc) {
            case MB_ERR_INVALID:
-               fprintf(stderr, "\t reason: 'monthly_cpi' board has not been created?\n");
+               fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board has not been created?\n");
                break;
            case MB_ERR_LOCKED:
-               fprintf(stderr, "\t reason: 'monthly_cpi' board is locked\n");
+               fprintf(stderr, "\t reason: 'centralbank_households_quarterly_cpi' board is locked\n");
                break;
            case MB_ERR_INTERNAL:
                fprintf(stderr, "\t reason: internal error. Recompile libmoard in debug mode for more info \n");
