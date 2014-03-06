@@ -1,0 +1,25 @@
+<model_run>
+<codetype>serial</codetype>
+<nodes>0</nodes>
+<!-- <time> unit: milliseconds -->
+<!-- <time> timer resolution: unspecified)-->
+<!-- <time> timer overhead: ~0.00e+000 ms)-->
+<iteration><no>1</no><time>41578</time></iteration>
+<iteration><no>2</no><time>6</time></iteration>
+<iteration><no>3</no><time>3</time></iteration>
+<iteration><no>4</no><time>5</time></iteration>
+<iteration><no>5</no><time>9786</time></iteration>
+<iteration><no>6</no><time>5</time></iteration>
+<iteration><no>7</no><time>6</time></iteration>
+<iteration><no>8</no><time>5</time></iteration>
+<iteration><no>9</no><time>6</time></iteration>
+<iteration><no>10</no><time>8979</time></iteration>
+<iteration><no>11</no><time>13</time></iteration>
+<iteration><no>12</no><time>6</time></iteration>
+<iteration><no>13</no><time>8</time></iteration>
+<iteration><no>14</no><time>8</time></iteration>
+<iteration><no>15</no><time>10340</time></iteration>
+<iteration><no>16</no><time>6</time></iteration>
+<iteration><no>17</no><time>4</time></iteration>
+<iteration><no>18</no><time>4</time></iteration>
+<iteration><no>19</no><time>5</time></iteration>
