@@ -2,8 +2,8 @@
     xsi:noNamespaceSchemaLocation='http://flame.ac.uk/schema/xmml_v2.xsd'>
     <!-- Model descriptions  -->
     <name>ICEACE</name>
-    <version>Version 1.0.0, 10/10/2013</version>
-    <description>'ICEACE - Labour Market, Production Market, Consumption Market, Credit Market and Housing Market </description>
+    <version>Version 1.0.0, 06/03/2014</version>
+    <description>'ICEACE - Labour Market, Production Market, Consumption Market, Credit Market and Housing Market with different mortgage types</description>
     <models>
         <model>
             <file>Market_Consumption/model_consumption.xml</file>
