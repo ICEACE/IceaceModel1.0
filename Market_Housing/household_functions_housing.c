@@ -638,7 +638,7 @@ int household_housing_debt_writeoff()
             d2 = d1 * pow((1 + d1), 160);
             annuity = 1/d1 - 1/d2;
             /* The new principal is gotten by adjusting the principal of a new annuity with respect to the current inflation. */
-            MORTGAGES = total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW * annuity / (1 + (annuity * QUARTERLY_PRICE_CHANGE);
+            MORTGAGES = total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW * annuity / (1 + (annuity * QUARTERLY_PRICE_CHANGE));
             quarterly_interest = MORTGAGES * 0.02/4 + MORTGAGES * QUARTERLY_PRICE_CHANGE;
             quarterly_principal = (MORTGAGES / annuity) - (MORTGAGES * 0.02/4);
             add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);

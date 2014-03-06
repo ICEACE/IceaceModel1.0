@@ -132,7 +132,7 @@ int household_consumption_trace_cpi()
     // MONTHLY_PRICE_INDEX_PRE = MONTHLY_PRICE_INDEX;
 
     START_CENTRALBANK_HOUSEHOLDS_QUARTERLY_CPI_MESSAGE_LOOP
-    QUARTERLY_PRICE_CHANGE = centralbank_households_quarterly_cpi->change;
+    QUARTERLY_PRICE_CHANGE = centralbank_households_quarterly_cpi_message->change;
     FINISH_CENTRALBANK_HOUSEHOLDS_QUARTERLY_CPI_MESSAGE_LOOP
     
     return 0; /* Returning zero means the agent is not removed */

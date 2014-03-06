@@ -48,7 +48,7 @@ int centralbank_update_price_indices(){
     }
     
     // MONTHLY_PRICE_INDEX = MONTHLY_PRICE_INDEX + MONTHLY_PRICE_INDEX * monthly_price_change;
-
+    
     add_centralbank_households_quarterly_cpi_message(quarterly_price_change);
     
 	return 0; /* Returning zero means the agent is not removed */
