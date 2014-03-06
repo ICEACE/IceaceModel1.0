@@ -1,0 +1,2 @@
+IT_NO ID MY_EMPLOYER_ID WAGE unemployment_benefit general_benefit
+20 1241 6 5.050000 0.000000 1.500000

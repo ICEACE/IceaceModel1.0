@@ -44,7 +44,7 @@ int centralbank_update_price_indices(){
         monthly_price_change = 0;
     }
     else {
-        monthly_price_change = (CONSUMPTION_GOODS_PRICES[11] - CONSUMPTION_GOODS_PRICES[10]) / CONSUMPTION_GOODS_PRICES[11];
+        monthly_price_change = (CONSUMPTION_GOODS_PRICES[11] - CONSUMPTION_GOODS_PRICES[10]) / CONSUMPTION_GOODS_PRICES[10];
     }
     
     MONTHLY_PRICE_INDEX = MONTHLY_PRICE_INDEX + MONTHLY_PRICE_INDEX * monthly_price_change;

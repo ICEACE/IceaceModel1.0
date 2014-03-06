@@ -117,13 +117,13 @@ int household_credit_update_mortgage_rates()
             d1 = rate/4;
             d2 = d1 * pow((1 + d1), quarters_left);
             annuity = 1/d1 - 1/d2;
-            principal = principal * (1 + (MONTHLY_PRICE_INDEX - MONTHLY_PRICE_INDEX_PRE) / MONTHLY_PRICE_INDEX );
+            principal = principal * (1 + (MONTHLY_PRICE_INDEX - MONTHLY_PRICE_INDEX_PRE) / MONTHLY_PRICE_INDEX_PRE );
 
             new_quarterly_interest = principal * d1;
             new_quarterly_principal = (principal / annuity) - new_quarterly_interest;
         }
         else if (MORTGAGE_CHOICE == 4){
-            principal = principal * (1+ (MONTHLY_PRICE_INDEX-MONTHLY_PRICE_INDEX_PRE) / MONTHLY_PRICE_INDEX);
+            principal = principal * (1+ (MONTHLY_PRICE_INDEX-MONTHLY_PRICE_INDEX_PRE) / MONTHLY_PRICE_INDEX_PRE);
             new_quarterly_interest = principal * rate/4;
             new_quarterly_principal = principal / quarters_left;
         }
@@ -138,6 +138,15 @@ int household_credit_update_mortgage_rates()
         else if (MORTGAGE_CHOICE == 6){
             new_quarterly_interest = principal * rate/4;
             new_quarterly_principal = quarterly_principal;
+        }
+        /* MORTGAGE_CHOICE 7 is a mortgage where indexation is paid right away */
+        else if (MORTGAGE_CHOICE == 7){
+            d1 = rate/4;
+            d2 = d1 * pow((1 + d1), quarters_left);
+            annuity = 1/d1 - 1/d2;
+            /* Interest payement includes index adjustment */
+            new_quarterly_interest = principal * rate/4 + principal * ((MONTHLY_PRICE_INDEX-MONTHLY_PRICE_INDEX_PRE) / MONTHLY_PRICE_INDEX_PRE);
+            new_quarterly_principal = (principal / annuity) - (principal * rate/4);
         }
         else {
             if (WARNING_MODE) {
