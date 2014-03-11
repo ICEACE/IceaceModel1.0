@@ -32,8 +32,8 @@ plot_time_series_mean_file(nCFirms, nQuarters, CFirmBalance$EQUITY, "Quarters", 
 plot_time_series_mean_file(nFirms, nQuarters, FirmBalance$CAPITAL_GOODS, "Quarters", "Capital Goods (mean)", "Firms", "FirmsCapitalGoods.png", isgrid = TRUE, ispoint = TRUE)
 plot_time_series_mean_file(nCFirms, nQuarters, CFirmBalance$CAPITAL_GOODS, "Quarters", "Capital Goods (mean)", "Constructor Firms", "CFirmsCapitalGoods.png", isgrid = TRUE, ispoint = TRUE)
 
-plot_time_series_mean_file(nFirms, nQuarters, FirmBalance$PHYSICAL_CAPITAL, "Quarters", "Physical Capital (mean)", "Firms", "FirmsPhysicalCapital.png", isgrid = TRUE, ispoint = TRUE)
-plot_time_series_mean_file(nCFirms, nQuarters, CFirmBalance$PHYSICAL_CAPITAL_CONSTRUCTION, "Quarters", "Construction Physical Capital (mean)", "Constructor Firms", "CFirmsPhysicalCapital.png", isgrid = TRUE, ispoint = TRUE)
+#plot_time_series_mean_file(nFirms, nQuarters, FirmBalance$PHYSICAL_CAPITAL, "Quarters", "Physical Capital (mean)", "Firms", "FirmsPhysicalCapital.png", isgrid = TRUE, ispoint = TRUE)
+#plot_time_series_mean_file(nCFirms, nQuarters, CFirmBalance$PHYSICAL_CAPITAL_CONSTRUCTION, "Quarters", "Construction Physical Capital (mean)", "Constructor Firms", "CFirmsPhysicalCapital.png", isgrid = TRUE, ispoint = TRUE)
 
 
 plot_time_series_mean_file_v2(nQuarters, FirmDividends$IT_NO, FirmDividends$DIVIDENDS_PAID, "Quarters", "Dividends Paid (mean)", "Firms", "FirmsDividendsPaid.png", ispoint = TRUE, cycle = 60)
