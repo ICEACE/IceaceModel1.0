@@ -252,7 +252,7 @@ int reagency_housing_process()
         }
         else {
             if (WARNING_MODE) {
-                printf("Warning @household_housing_debt_writeoff(): Unexpected mortgage choice = %d \n", MORTGAGE_CHOICE);
+                printf("Warning @household_housing_debt_writeoff(): Unexpected mortgage choice = %d \n", mortgage_choice);
             }
 
         }
