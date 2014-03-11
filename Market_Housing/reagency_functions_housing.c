@@ -50,7 +50,7 @@ int reagency_housing_process()
 	FINISH_SELL_HOUSING_MESSAGE_LOOP
     
     /* Queue the households */
-    int bank;
+    int bank, mortgage_choice;
     double cash, income, mortgage;
     START_BUY_HOUSING_MESSAGE_LOOP
     id = buy_housing_message->buyer_id;
@@ -58,7 +58,8 @@ int reagency_housing_process()
     cash = buy_housing_message->liquidity;
     income = buy_housing_message->quarterly_income;
     mortgage = buy_housing_message->quarterly_mortgage_paid;
-    add_hbuyer(&buyers_list,id,bank,cash,income, mortgage);
+    mortgage_choice = buy_housing_message->mortgage_choice;
+    add_hbuyer(&buyers_list,id,bank,cash,income,mortgage,mortgage_choice);
 	FINISH_BUY_HOUSING_MESSAGE_LOOP
     
     /* Queue the banks */
@@ -206,10 +207,11 @@ int reagency_housing_process()
             }
             continue;
         }
-        /* Here we can implement an endogenous mortgage choice of households if needed */
-        int mortgage_choice = 1;
+        /* Here mortgage choice of household could be adopted according to crediting conditions in an endogenous manner.*/
+
         
         /* Check credibility of the household */
+        mortgage_choice = buyers_list.array[0].choice;
         income = buyers_list.array[0].quarterly_income;
         mortgage = buyers_list.array[0].quarterly_mortgage_paid;
         double new_mortgage_cost = 0; // = mortgage_request / annuity;

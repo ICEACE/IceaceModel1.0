@@ -85,6 +85,11 @@
                         <name>quarterly_mortgage_paid</name>
                         <description>Quarterly mortgage payments being done by an household.</description>
                     </variable>
+                    <variable>
+                        <type>int</type>
+                        <name>choice</name>
+                        <description>Mortgage choice of households while joining to housing market as a buyer.</description>
+                    </variable>
                 </variables>
             </dataType>
             <dataType>
@@ -762,6 +767,11 @@
                     <type>double</type>
                     <name>quarterly_mortgage_paid</name>
                     <description>Quarterly mortgage payments being done by an household.</description>
+                </variable>
+                <variable>
+                    <type>int</type>
+                    <name>mortgage_choice</name>
+                    <description>Mortgage choice of households while joining to housing market as a buyer.</description>
                 </variable>
             </variables>
         </message>
