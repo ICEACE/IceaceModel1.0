@@ -207,42 +207,43 @@ int reagency_housing_process()
             continue;
         }
         /* Here we can implement an endogenous mortgage choice of households if needed */
-        MORTGAGE_CHOICE = MORTGAGE_CHOICE;
+        int mortgage_choice = 1;
+        
         /* Check credibility of the household */
         income = buyers_list.array[0].quarterly_income;
         mortgage = buyers_list.array[0].quarterly_mortgage_paid;
         double new_mortgage_cost = 0; // = mortgage_request / annuity;
 
-        if (MORTGAGE_CHOICE == 1) {
+        if (mortgage_choice == 1) {
             d1 = MORTGAGES_INTEREST_RATE/4;
             d2 = d1 * pow((1 + d1), 160);
             annuity = 1/d1 - 1/d2;
             new_mortgage_cost = mortgage_request / annuity;
         }
-        else if (MORTGAGE_CHOICE == 2){
+        else if (mortgage_choice == 2){
             new_mortgage_cost = (mortgage_request / 160) + (mortgage_request*MORTGAGES_INTEREST_RATE/4);
         }
-        else if (MORTGAGE_CHOICE == 3){
+        else if (mortgage_choice == 3){
             /* Should we incorporate an expectation of inflation, we could use the inflation target of CB, 0.02? */
             d1 = 0.02/4;
             d2 = d1 * pow((1 + d1), 160);
             annuity = 1/d1 - 1/d2;
             new_mortgage_cost = mortgage_request / annuity;
         }
-        else if (MORTGAGE_CHOICE == 4){
+        else if (mortgage_choice == 4){
             /* Should we incorporate an expectation of inflation, we could use the inflation target of CB, 0.02? */
             new_mortgage_cost = (mortgage_request / 160) + (mortgage_request*0.02/4);
         }
-        else if (MORTGAGE_CHOICE == 5){
+        else if (mortgage_choice == 5){
             d1 = (MORTGAGES_INTEREST_RATE + 0.01)/4;
             d2 = d1 * pow((1 + d1), 160);
             annuity = 1/d1 - 1/d2;
             new_mortgage_cost = mortgage_request / annuity;
         }
-        else if (MORTGAGE_CHOICE == 6){
+        else if (mortgage_choice == 6){
             new_mortgage_cost = (mortgage_request / 160) + (mortgage_request*(MORTGAGES_INTEREST_RATE+0.01)/4);
         }
-        else if (MORTGAGE_CHOICE == 7){
+        else if (mortgage_choice == 7){
             /* Should we incorporate an expectation of inflation, we could use the inflation target of CB, 0.02? */
             d1 = 0.02/4;
             d2 = d1 * pow((1 + d1), 160);
