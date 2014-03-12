@@ -88,7 +88,7 @@ int household_iterate()
         if (IT_NO == 0) {
             char * filename;
             FILE * file1;
-            filename = malloc(80*sizeof(char));
+            filename = malloc(100*sizeof(char));
             
             /* Writing the column names. Make sure that an household with that ID does exist. */
             if (ID == 542)  {

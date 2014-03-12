@@ -133,7 +133,7 @@ int firm_iterate()
             
             char * filename;
             FILE * file1;
-            filename = malloc(100*sizeof(char));
+            filename = malloc(140*sizeof(char));
             
             if (ISCONSTRUCTOR) {
                 /* @\fn: firm_production_construction_plan() */
