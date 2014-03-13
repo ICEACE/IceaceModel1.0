@@ -51,7 +51,7 @@ int bank_credit_compute_income_statement()
     if (DATA_COLLECTION_MODE) {
         char * filename;
         FILE * file1;
-        filename = malloc(40*sizeof(char));
+        filename = malloc(100*sizeof(char));
         filename[0]=0;
         strcpy(filename, "./outputs/data/Bank_IncomeStatement.txt");
         
@@ -173,7 +173,7 @@ int bank_credit_do_balance_sheet()
     if (DATA_COLLECTION_MODE) {
         char * filename;
         FILE * file1;
-        filename = malloc(40*sizeof(char));
+        filename = malloc(100*sizeof(char));
         filename[0]=0;
         strcpy(filename, "./outputs/data/Bank_BalanceSheet.txt");
         
@@ -293,7 +293,7 @@ int bank_credit_recieve_loan_writeoffs()
     if (DATA_COLLECTION_MODE) {
         char * filename;
         FILE * file1;
-        filename = malloc(40*sizeof(char));
+        filename = malloc(100*sizeof(char));
         filename[0]=0;
         strcpy(filename, "./outputs/data/BankruptcyInspection.txt");
         file1 = fopen(filename,"a");

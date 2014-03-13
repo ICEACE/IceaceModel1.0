@@ -434,7 +434,7 @@ int mall_consumption_summary()
     if (DATA_COLLECTION_MODE) {
         char * filename;
         FILE * file1;
-        filename = malloc(40*sizeof(char));
+        filename = malloc(100*sizeof(char));
         filename[0]=0;
         strcpy(filename, "./outputs/data/Mall_snapshot.txt");
         

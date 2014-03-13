@@ -201,7 +201,7 @@ int household_credit_do_balance_sheet()
     if (DATA_COLLECTION_MODE && COLLECT_HOUSEHOLD_DATA) {
         char * filename;
         FILE * file1;
-        filename = malloc(40*sizeof(char));
+        filename = malloc(100*sizeof(char));
         filename[0]=0;
         strcpy(filename, "./outputs/data/Household_Quarterly.txt");
         
@@ -249,7 +249,7 @@ int household_credit_collect_benefits()
     if (DATA_COLLECTION_MODE && COLLECT_HOUSEHOLD_DATA) {
         char * filename;
         FILE * file1;
-        filename = malloc(40*sizeof(char));
+        filename = malloc(100*sizeof(char));
         filename[0]=0;
         strcpy(filename, "./outputs/data/Household_Monthly_LastDay.txt");
         file1 = fopen(filename,"a");

@@ -190,7 +190,7 @@ int centralbank_do_balance_sheet()
     if (DATA_COLLECTION_MODE) {
         char * filename;
         FILE * file1;
-        filename = malloc(40*sizeof(char));
+        filename = malloc(100*sizeof(char));
         filename[0]=0;
         strcpy(filename, "./outputs/data/CentralBank_snapshot.txt");
         
