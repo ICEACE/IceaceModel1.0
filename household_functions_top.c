@@ -73,14 +73,14 @@ int household_init_balancesheet()
      */
     add_household_bank_init_mortgages_message(BANK_ID, MORTGAGES);
     add_household_bank_init_deposit_message(BANK_ID, LIQUIDITY);
-    
+
     if (MORTGAGE_CHOICE == 3 || MORTGAGE_CHOICE == 4 || MORTGAGE_CHOICE == 7){
-        for (i = 0; i < MORTGAGES_LIST.size ; i++) { 
+        for (int i = 0; i < MORTGAGES_LIST.size ; i++) { 
         MORTGAGES_LIST.array[i].interestrate = 0.02;
         }
     }
     else if (MORTGAGE_CHOICE == 5 || MORTGAGE_CHOICE == 6) {
-        for (i = 0; i < MORTGAGES_LIST.size; i++) { 
+        for (int i = 0; i < MORTGAGES_LIST.size; i++) { 
         MORTGAGES_LIST.array[i].interestrate += 0.01;
         }
     }
