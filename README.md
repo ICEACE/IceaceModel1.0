@@ -5,7 +5,7 @@ A Multi-agent Implementation of ICEACE Model in FLAME.
 
 Software License
 ================
-FLAME implementation of ICEACE project is developed by Bulent Ozel (bulent.ozel@gmail.com). Other contributors are Einar Jon Erlingsson and Marco Raberto.
+FLAME implementation of ICEACE project is developed and maintained by Bulent Ozel (bulent.ozel@gmail.com). Other contributors are Einar Jon Erlingsson and Marco Raberto.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
 
