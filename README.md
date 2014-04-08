@@ -36,10 +36,10 @@ It serves as the major multi-agent platform for the implementation of ICEACE mod
 Repository Files
 ================
 
-This root folder holds model description (model_vn.n.n.xml file) and agent functions.
+This root folder holds model description (model_iceace file) and top level agent functions.
 It needs to parsed with xparser and compiled afterwards in order to run the model on a local machine.
 
-model_vn.n.n.xml: model descriptions.
+model_aname.xml: Top level model descriptions.
 
 agentname_functions_context.c : Describes an agent behaviour within a context, i.e., market.
 
