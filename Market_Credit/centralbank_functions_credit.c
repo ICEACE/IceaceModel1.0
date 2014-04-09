@@ -19,8 +19,8 @@ int centralbank_set_interest_rate()
     
     // Taylors Rule:
     rcb = inflation;
-    rcb += (inflation - INFLATION_TARGET) * 0.5;
-    rcb -=  UNEMPLOYMENT_RATE * 0.5;
+    rcb += (inflation - INFLATION_TARGET) * 0.6;
+    rcb -=  UNEMPLOYMENT_RATE * 0.4;
     
     
     /* This is added temporarily for experimentation. */
