@@ -118,14 +118,14 @@ int household_credit_update_mortgage_rates()
             d1 = rate/4;
             d2 = d1 * pow((1 + d1), quarters_left);
             annuity = 1/d1 - 1/d2;
-            principal_change = principal * (1 + QUARTERLY_PRICE_CHANGE);
+            principal_change = principal * QUARTERLY_PRICE_CHANGE;
             principal += principal_change;
             new_quarterly_interest = principal * d1;
             new_quarterly_principal = (principal / annuity) - new_quarterly_interest;
             add_mortgage_update_message(BANK_ID, principal_change);
         }
         else if (MORTGAGE_CHOICE == 4){
-            principal_change = principal * (1 + QUARTERLY_PRICE_CHANGE);
+            principal_change = principal * QUARTERLY_PRICE_CHANGE;
             principal += principal_change;
             new_quarterly_interest = principal * rate/4;
             new_quarterly_principal = principal / quarters_left;
