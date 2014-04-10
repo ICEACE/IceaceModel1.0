@@ -122,14 +122,12 @@ int household_credit_update_mortgage_rates()
             principal += principal_change;
             new_quarterly_interest = principal * d1;
             new_quarterly_principal = (principal / annuity) - new_quarterly_interest;
-            add_mortgage_update_message(BANK_ID, principal_change);
         }
         else if (MORTGAGE_CHOICE == 4){
             principal_change = principal * QUARTERLY_PRICE_CHANGE;
             principal += principal_change;
             new_quarterly_interest = principal * rate/4;
             new_quarterly_principal = principal / quarters_left;
-            add_mortgage_update_message(BANK_ID, principal_change);
         }
         else if (MORTGAGE_CHOICE == 5){
             d1 = rate/4;
@@ -265,4 +263,24 @@ int household_credit_collect_benefits()
 	return 0; /* Returning zero means the agent is not removed */
 }
 
+/*
+ * \fn: int household_credit_mortgage_update()
+ * \brief: Update mortgage principal of mortgage type 3 and 4 due to inflation
+ */
+int household_credit_mortgage_update()
+{
+    double principal_change = 0;
+    double principal;
+    int size = MORTGAGES_LIST.size; 
+
+    for (int i = 0; i < size; i++) {
+        
+        if (MORTGAGE_CHOICE == 3 || MORTGAGE_CHOICE == 4){
+            principal = MORTGAGES_LIST.array[i].principal;
+            principal_change = principal * QUARTERLY_PRICE_CHANGE;
+            add_mortgage_update_message(BANK_ID, principal_change);
+        }
+    }    
+    return 0; /* Returning zero means the agent is not removed */
+}
 

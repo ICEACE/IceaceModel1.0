@@ -1267,13 +1267,24 @@
                     <name>idle</name>
                     <description>It is the start of a quarter.</description>
                     <currentState>HHCreditStart</currentState>
-                    <nextState>HHCreditIsCapitalist</nextState>
+                    <nextState>HHMorgtageUpdate</nextState>
                     <condition>
                         <time>
                             <period>quarterly</period>
                             <phase>1</phase>
                         </time>
                     </condition>
+                </function>
+                <function>
+                    <name>household_credit_mortgage_update</name>
+                    <description>Update mortgages due to inflation.</description>
+                    <currentState>HHMorgtageUpdate</currentState>
+                    <nextState>HHCreditIsCapitalist</nextState>
+                    <outputs>
+                        <output>
+                            <messageName>mortgage_update</messageName>
+                        </output>
+                    </outputs>
                 </function>
                 <function>
                     <name>idle</name>
@@ -1307,8 +1318,7 @@
                     <description>Computing the balance sheet.</description>
                     <currentState>HHCreditBalanceSheet</currentState>
                     <nextState>HHCreditMonthly</nextState>
-                </function>
-    
+                </function>    
                 <function>
                     <name>idle</name>
                     <description>It is not the end of the month.</description>
@@ -1340,9 +1350,7 @@
                             <messageName>unemployment_benefit</messageName>
                         </input>
                     </inputs>
-                </function>
-                
-                
+                </function>               
                 <function>
                     <name>idle</name>
                     <description>It is not the end of a quarter.</description>
@@ -1377,11 +1385,6 @@
                     <description>Households updates annuity, principal and interest payment amounts.</description>
                     <currentState>HHCreditUpdateAnnuity</currentState>
                     <nextState>HHCreditCheckTaxRate</nextState>
-                    <outputs>
-                        <output>
-                            <messageName>mortgage_update</messageName>
-                        </output>
-                    </outputs>
                 </function>
                 <function>
                     <name>household_credit_check_tax_rate</name>
