@@ -501,6 +501,39 @@ plot_time_series_banks <- function(niter, idvector, bank_1, bank_2, memoryvector
         dev.off()
 }
 
+plot_time_series_banks2 <- function(niter, idvector, banksIds, memoryvector, xlabel, ylabel, title, fname, isgrid = FALSE, ltype = "l"){
+        times <- (1:niter)
+        bmin <- min(memoryvector)
+        bmax <- max(memoryvector)
+        valrange <- (1:niter)
+        valrange[1] <- bmin
+        valrange[-1] <- bmax
+        
+		colors <- c("red", "blue", "green","black", "yellow")
+
+        png(fname, width = 1500, height = 800, pointsize=16)
+        plot(valrange~times, type="n", xlab = xlabel, ylab=ylabel, main = title)
+ 		
+ 	    for (i in (1:length(banksIds))) {
+	        if (isgrid){
+    	    	abline(v = times, h = banksIds[i], col = "lightgray", lty = "dotted", lwd = 2)
+			}
+			if (i == 1)
+			{
+				legs <- paste("Bank ID = ", as.character(banksIds[i]),  sep ='')
+			}
+			else
+			{
+				legs <- c(legs, paste("Bank ID = ", as.character(banksIds[i]),  sep =''))
+			}
+			
+	        lines(memoryvector[idvector == banksIds[i]]~times, type=ltype, col=colors[i], lwd=3)
+        }
+
+        legend("topleft", legs, lty = rep(1,each=length(banksIds)), lwd = rep(3,each=length(banksIds)), col = colors[1:length(banksIds)])
+        dev.off()
+}
+
 get_single_occurances <- function(dataf){
 	npoints <- length(dataf[["IT"]])
 	L <- (1:npoints)
