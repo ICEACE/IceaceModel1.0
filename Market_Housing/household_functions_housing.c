@@ -158,9 +158,9 @@ int household_housing_buy()
             //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, 0.02);
         }
         else if (MORTGAGE_CHOICE == 4){
-            quarterly_interest = mortgage_used * 0.02/4;
+            quarterly_interest = mortgage_used * (MORTGAGES_INTEREST_RATE-0.015)/4;
             quarterly_principal = (mortgage_used / 160);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, (MORTGAGES_INTEREST_RATE-0.015), MORTGAGE_CHOICE);
             //add_mortgage(&MORTGAGES_LIST, BANK_ID, mortgage_used, 160, quarterly_interest, quarterly_principal, 0.02);
         }
         else if (MORTGAGE_CHOICE == 5){
@@ -423,8 +423,8 @@ int household_housing_collect_sale_revenue()
                 d2 = d1 * pow((1 + d1), quarters_left);
                 annuity = 1/d1 - 1/d2;
 
-                new_quarterly_interest = (new_principle * (MORTGAGES_INTEREST_RATE-0.015)/4) + new_principle * QUARTERLY_PRICE_CHANGE;
-                new_quarterly_principal = (new_principle / annuity) - (new_principle * (MORTGAGES_INTEREST_RATE-0.015)/4);
+                new_quarterly_interest = (new_principle * rate/4) + new_principle * QUARTERLY_PRICE_CHANGE;
+                new_quarterly_principal = (new_principle / annuity) - (new_principle * rate/4);
             }
             else {
                 if (WARNING_MODE) {
@@ -610,10 +610,10 @@ int household_housing_debt_writeoff()
             //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02);
         }
         else if (MORTGAGE_CHOICE == 4){
-            MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / (0.02 / 4 + 1/160);
-            quarterly_interest = MORTGAGES * 0.02/4;
+            MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / ((MORTGAGES_INTEREST_RATE-0.015) / 4 + 1/160);
+            quarterly_interest = MORTGAGES * (MORTGAGES_INTEREST_RATE-0.015)/4;
             quarterly_principal = (MORTGAGES / 160);
-            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02, MORTGAGE_CHOICE);
+            add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, (MORTGAGES_INTEREST_RATE-0.015), MORTGAGE_CHOICE);
             //add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, 0.02);
         }
         else if (MORTGAGE_CHOICE == 5){
@@ -641,8 +641,8 @@ int household_housing_debt_writeoff()
             annuity = 1/d1 - 1/d2;
             /* The new principal is gotten by adjusting the principal of a new annuity with respect to the current inflation. */
             MORTGAGES = total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW * annuity / (1 + (annuity * QUARTERLY_PRICE_CHANGE));
-            quarterly_interest = MORTGAGES * 0.02/4 + MORTGAGES * QUARTERLY_PRICE_CHANGE;
-            quarterly_principal = (MORTGAGES / annuity) - (MORTGAGES * 0.02/4);
+            quarterly_interest = MORTGAGES * (MORTGAGES_INTEREST_RATE-0.015)/4 + MORTGAGES * QUARTERLY_PRICE_CHANGE;
+            quarterly_principal = (MORTGAGES / annuity) - (MORTGAGES * (MORTGAGES_INTEREST_RATE-0.015)/4);
             add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, 160, quarterly_interest, quarterly_principal, (MORTGAGES_INTEREST_RATE-0.015), MORTGAGE_CHOICE);
         }
         else {

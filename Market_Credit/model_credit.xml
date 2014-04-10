@@ -1366,6 +1366,11 @@
                     <description>Households updates annuity, principal and interest payment amounts.</description>
                     <currentState>HHCreditUpdateAnnuity</currentState>
                     <nextState>HHCreditCheckTaxRate</nextState>
+                    <outputs>
+                        <output>
+                            <messageName>mortgage_update</messageName>
+                        </output>
+                    </outputs>
                 </function>
                 <function>
                     <name>household_credit_check_tax_rate</name>
@@ -2161,6 +2166,22 @@
                     <type>double</type>
                     <name>amount</name>
                     <description>Amount of debt paid back.</description>
+                </variable>
+            </variables>
+        </message>
+        <message>
+            <name>mortgage_update</name>
+            <description>Mortgage update to account for inflation adjustment.</description>
+            <variables>
+                <variable>
+                    <type>int</type>
+                    <name>bank_id</name>
+                    <description>Agent ID of the bank to receive.</description>
+                </variable>
+                <variable>
+                    <type>double</type>
+                    <name>amount</name>
+                    <description>Amount of mortgage update.</description>
                 </variable>
             </variables>
         </message>

@@ -70,7 +70,16 @@ int bank_housing_recieve_mortgages()
 {
     double principal;
     double interest;
+    double mortgage_update_amount = 0;
     
+    START_MORTGAGE_UPDATE_MESSAGE_LOOP
+    /* The message is filtered via xmml. */
+    mortgage_update_amount = mortgage_update_message->amount;
+    INTERESTS_ACCRUED += mortgage_update_amount;
+    MORTGAGES += mortgage_update_amount;
+    FINISH_MORTGAGE_UPDATE_MESSAGE_LOOP
+    
+
     START_MORTGAGE_PAYMENT_MESSAGE_LOOP
     /* The message is filtered via xmml. */
     principal = mortgage_payment_message->principal;

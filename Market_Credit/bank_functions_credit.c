@@ -38,12 +38,13 @@ int bank_credit_compute_income_statement()
     /* No payment on principal amount of debt is considered here!
      The principal payment is done within balance sheet accounting.
      */
+     double mortgage_update_amount = 0;
     
     INTERESTS_PAID = 0;
     INTERESTS_PAID = CENTRALBANK_DEBT * INTEREST_RATE / 4;
     LIQUIDITY -= INTERESTS_PAID;
     add_bank_centralbank_interest_payment_message(ID, INTERESTS_PAID);
-    
+
     REVENUES = INTERESTS_ACCRUED;
     TOTAL_COSTS = TOTAL_WRITEOFFS + INTERESTS_PAID;
     NET_EARNINGS = REVENUES - TOTAL_COSTS;
