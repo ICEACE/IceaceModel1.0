@@ -773,6 +773,17 @@
                             <phase>1</phase>
                         </time>
                     </condition>
+                    <inputs>
+                        <input>
+                            <messageName>mortgage_update</messageName>
+                            <filter>
+                                <!-- checks self id. -->
+                                <lhs><value>a.id</value></lhs>
+                                <op>EQ</op>
+                                <rhs><value>m.bank_id</value></rhs>
+                            </filter>
+                        </input>
+                    </inputs>
                     <outputs>
                         <output>
                             <messageName>bank_centralbank_interest_payment</messageName>

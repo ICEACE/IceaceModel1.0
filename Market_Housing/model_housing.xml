@@ -576,15 +576,6 @@
                                 <rhs><value>m.bank_id</value></rhs>
                             </filter>
                         </input>
-                        <input>
-                            <messageName>mortgage_update</messageName>
-                            <filter>
-                                <!-- checks self id. -->
-                                <lhs><value>a.id</value></lhs>
-                                <op>EQ</op>
-                                <rhs><value>m.bank_id</value></rhs>
-                            </filter>
-                        </input>
                     </inputs>
                 </function>
                 <function>

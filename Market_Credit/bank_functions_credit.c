@@ -38,7 +38,14 @@ int bank_credit_compute_income_statement()
     /* No payment on principal amount of debt is considered here!
      The principal payment is done within balance sheet accounting.
      */
-     double mortgage_update_amount = 0;
+    double mortgage_update_amount = 0;
+
+    START_MORTGAGE_UPDATE_MESSAGE_LOOP
+    /* The message is filtered via xmml. */
+    mortgage_update_amount = mortgage_update_message->amount;
+    INTERESTS_ACCRUED += mortgage_update_amount;
+    MORTGAGES += mortgage_update_amount;
+    FINISH_MORTGAGE_UPDATE_MESSAGE_LOOP
     
     INTERESTS_PAID = 0;
     INTERESTS_PAID = CENTRALBANK_DEBT * INTEREST_RATE / 4;
