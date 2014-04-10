@@ -227,7 +227,7 @@ int reagency_housing_process()
         }
         else if (mortgage_choice == 3){
             /* Should we incorporate an expectation of inflation, we could use the inflation target of CB, 0.02? */
-            d1 = (MORTGAGES_INTEREST_RATE-0.015)/4;
+            d1 = (0.02)/4;
             d2 = d1 * pow((1 + d1), 160);
             annuity = 1/d1 - 1/d2;
             new_mortgage_cost = mortgage_request / annuity;
@@ -247,7 +247,7 @@ int reagency_housing_process()
         }
         else if (mortgage_choice == 7){
             /* Should we incorporate an expectation of inflation, we could use the inflation target of CB, 0.02? */
-            d1 = (MORTGAGES_INTEREST_RATE-0.015)/4;
+            d1 = (0.02)/4;
             d2 = d1 * pow((1 + d1), 160);
             annuity = 1/d1 - 1/d2;
             new_mortgage_cost = mortgage_request / annuity;
