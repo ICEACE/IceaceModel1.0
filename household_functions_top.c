@@ -74,73 +74,114 @@ int household_init_balancesheet()
     double d1, d2, annuity;
     double total_income = LABOUR_INCOME + CAPITAL_INCOME;
     double mortgage_cost_income_ratio = 0.15;
+    double used_interest_rate = 0;
 
     if (MORTGAGE_CHOICE == 1) {
-        d1 = MORTGAGES_LIST.array[0].interestrate/4;
-        d2 = d1 * pow((1 + d1), 160);
-        annuity = 1/d1 - 1/d2;
-        MORTGAGES = total_income * mortgage_cost_income_ratio * annuity;
-        //MORTGAGES = TOTAL_ASSETS / 3;
+        if(MORTGAGE_SET_BY_HOUSEHOLD_LEVERAGE) {
+            MORTGAGES = TOTAL_ASSETS * HOUSEHOLD_STARTUP_LEVERAGE;
+        } else {
+            d1 = MORTGAGES_LIST.array[0].interestrate/4;
+            d2 = d1 * pow((1 + d1), LOANTERM);
+            annuity = 1/d1 - 1/d2;
+            MORTGAGES = total_income * mortgage_cost_income_ratio * annuity;    
+        }
+               
         for (int i = 0; i < MORTGAGES_LIST.size ; i++) { 
             MORTGAGES_LIST.array[i].principal = MORTGAGES / MORTGAGES_LIST.size;
         }
     }
     else if (MORTGAGE_CHOICE == 2){
-        MORTGAGES = (total_income * mortgage_cost_income_ratio) / (MORTGAGES_LIST.array[0].interestrate / 4 + 1/160);
-        //MORTGAGES = TOTAL_ASSETS / 3;
+        if(MORTGAGE_SET_BY_HOUSEHOLD_LEVERAGE) {
+            MORTGAGES = TOTAL_ASSETS * HOUSEHOLD_STARTUP_LEVERAGE;
+        } else {
+            MORTGAGES = (total_income * mortgage_cost_income_ratio) / (MORTGAGES_LIST.array[0].interestrate / 4 + 1/LOANTERM);
+        }
+
         for (int i = 0; i < MORTGAGES_LIST.size ; i++) { 
             MORTGAGES_LIST.array[i].principal = MORTGAGES / MORTGAGES_LIST.size;
         }
     }
     else if (MORTGAGE_CHOICE == 3){
-        //d1 = (MORTGAGES_INTEREST_RATE-0.01)/4;
-        d1 = 0.02/4;
-        d2 = d1 * pow((1 + d1), 160);
-        annuity = 1/d1 - 1/d2;
-        MORTGAGES = total_income * mortgage_cost_income_ratio * annuity;
-        //MORTGAGES = TOTAL_ASSETS / 3;
+        if(USE_FIXED_RATE) {
+            used_interest_rate = FIXED_RATE;
+        } else {
+            used_interest_rate = MORTGAGES_LIST.array[0].interestrate - IIM_RATE_DISCOUNT;
+        }
+        if(MORTGAGE_SET_BY_HOUSEHOLD_LEVERAGE) {
+            MORTGAGES = TOTAL_ASSETS * HOUSEHOLD_STARTUP_LEVERAGE;
+        } else {
+            d1 = used_interest_rate/4;
+            d2 = d1 * pow((1 + d1), LOANTERM);
+            annuity = 1/d1 - 1/d2;
+            MORTGAGES = total_income * mortgage_cost_income_ratio * annuity;
+        }
         for (int i = 0; i < MORTGAGES_LIST.size ; i++) { 
             MORTGAGES_LIST.array[i].principal = MORTGAGES / MORTGAGES_LIST.size;
-            MORTGAGES_LIST.array[i].interestrate = 0.02; //(MORTGAGES_INTEREST_RATE-0.01);
+            MORTGAGES_LIST.array[i].interestrate = used_interest_rate;
         }
     }
     else if (MORTGAGE_CHOICE == 4){
-        MORTGAGES = (total_income * mortgage_cost_income_ratio) / (0.02 / 4 + 1/160);
-        //MORTGAGES = TOTAL_ASSETS / 3;
+        if(USE_FIXED_RATE) {
+            used_interest_rate =  FIXED_RATE;
+        } else {
+            used_interest_rate = MORTGAGES_LIST.array[0].interestrate - IIM_RATE_DISCOUNT;
+        }
+        if(MORTGAGE_SET_BY_HOUSEHOLD_LEVERAGE) {
+            MORTGAGES = TOTAL_ASSETS * HOUSEHOLD_STARTUP_LEVERAGE;
+        } else {
+            MORTGAGES = (total_income * mortgage_cost_income_ratio) / (used_interest_rate / 4 + 1/LOANTERM);
+        }
+    
         for (int i = 0; i < MORTGAGES_LIST.size ; i++) { 
             MORTGAGES_LIST.array[i].principal = MORTGAGES / MORTGAGES_LIST.size;
-            MORTGAGES_LIST.array[i].interestrate = 0.02; //(MORTGAGES_INTEREST_RATE-0.01)/4;
+            MORTGAGES_LIST.array[i].interestrate = used_interest_rate;
         }
     }
     else if (MORTGAGE_CHOICE == 5){
-        d1 = (MORTGAGES_LIST.array[0].interestrate + 0.01)/4;
-        d2 = d1 * pow((1 + d1), 160);
-        annuity = 1/d1 - 1/d2;
-        MORTGAGES = total_income * mortgage_cost_income_ratio * annuity;
-        //MORTGAGES = TOTAL_ASSETS / 3;
+        if(MORTGAGE_SET_BY_HOUSEHOLD_LEVERAGE) {
+            MORTGAGES = TOTAL_ASSETS * HOUSEHOLD_STARTUP_LEVERAGE;
+        } else {
+            d1 = (MORTGAGES_LIST.array[0].interestrate + 0.01)/4;
+            d2 = d1 * pow((1 + d1), LOANTERM);
+            annuity = 1/d1 - 1/d2;
+            MORTGAGES = total_income * mortgage_cost_income_ratio * annuity;
+        }
+
         for (int i = 0; i < MORTGAGES_LIST.size ; i++) { 
             MORTGAGES_LIST.array[i].principal = MORTGAGES / MORTGAGES_LIST.size;
             MORTGAGES_LIST.array[i].interestrate += 0.01;
         }
     }
     else if (MORTGAGE_CHOICE == 6){
-        MORTGAGES = (total_income * mortgage_cost_income_ratio) / ((MORTGAGES_LIST.array[0].interestrate + 0.01) / 4 + 1/160);
-        //MORTGAGES = TOTAL_ASSETS / 3;
+        if(MORTGAGE_SET_BY_HOUSEHOLD_LEVERAGE) {
+            MORTGAGES = TOTAL_ASSETS * HOUSEHOLD_STARTUP_LEVERAGE;
+        } else {
+            MORTGAGES = (total_income * mortgage_cost_income_ratio) / ((MORTGAGES_LIST.array[0].interestrate + 0.01) / 4 + 1/LOANTERM);
+        }
+        
         for (int i = 0; i < MORTGAGES_LIST.size ; i++) { 
             MORTGAGES_LIST.array[i].principal = MORTGAGES / MORTGAGES_LIST.size;
             MORTGAGES_LIST.array[i].interestrate += 0.01;
         }
     }
     else if (MORTGAGE_CHOICE == 7){
-        //d1 = (MORTGAGES_INTEREST_RATE-0.01)/4;
-        d1 = 0.02/4;
-        d2 = d1 * pow((1 + d1), 160);
-        annuity = 1/d1 - 1/d2;
-        MORTGAGES = total_income * mortgage_cost_income_ratio * annuity / (1 + (annuity * 0.02/4));
-        //MORTGAGES = TOTAL_ASSETS / 3;
+        if(USE_FIXED_RATE) {
+            used_interest_rate =  FIXED_RATE;
+        } else {
+            used_interest_rate = MORTGAGES_LIST.array[0].interestrate - IIM_RATE_DISCOUNT;
+        }
+        if(MORTGAGE_SET_BY_HOUSEHOLD_LEVERAGE) {
+            MORTGAGES = TOTAL_ASSETS * HOUSEHOLD_STARTUP_LEVERAGE;
+        } else {
+            d1 = used_interest_rate/4;
+            d2 = d1 * pow((1 + d1), LOANTERM);
+            annuity = 1/d1 - 1/d2;
+            MORTGAGES = total_income * mortgage_cost_income_ratio * annuity / (1 + (annuity * (pow(1+EXPECTED_INFLATION_RATE, 1/4)-1)));
+        }
+        
         for (int i = 0; i < MORTGAGES_LIST.size ; i++) { 
             MORTGAGES_LIST.array[i].principal = MORTGAGES / MORTGAGES_LIST.size;
-            MORTGAGES_LIST.array[i].interestrate = 0.02; //(MORTGAGES_INTEREST_RATE-0.01);
+            MORTGAGES_LIST.array[i].interestrate = used_interest_rate; //(MORTGAGES_INTEREST_RATE-0.01);
         }
     }
     else {

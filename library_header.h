@@ -5,6 +5,11 @@
 
 #define DAY iteration_loop
 #define MONTH 20
+/*#define LOANTERM 160
+#define IIMRATEDISCOUNT 0.015
+#define EXPECTEDINFLATION 0.02
+#define USEFIXEDRATE true
+#define FIXEDRATE 0.02*/
 
 int random_int(int min,int max);
 double max(double a, double b);

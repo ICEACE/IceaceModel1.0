@@ -58,6 +58,36 @@
                 <name>collect_firm_data</name>
                 <description>Flag, 0 or 1. To record firm simulation data, it needs to be set to 1.</description>
             </variable>
+            <variable>
+                <type>int</type>
+                <name>loanterm</name>
+                <description>Loan term in quarters. 40 years = 160 quarters.</description>
+            </variable>
+            <variable>
+                <type>double</type>
+                <name>iim_rate_discount</name>
+                <description>Positive values will be subtracted from MORTGAGES_INTEREST_RATE in the case of inflation indexed mortgages.</description>
+            </variable>
+            <variable>
+                <type>double</type>
+                <name>expected_inflation_rate</name>
+                <description>Expected yearly inflation rate, use with mortgage choice 7.</description>
+            </variable>
+            <variable>
+                <type>double</type>
+                <name>fixed_rate</name>
+                <description>Yearly fixed rate for inflation indexed mortgages.</description>
+            </variable>
+            <variable>
+                <type>int</type>
+                <name>use_fixed_rate</name>
+                <description>Flag, 0 or 1. To use fixed rate in inflation indexed mortgages, it needs to be set to 1.</description>
+            </variable>
+            <variable>
+                <type>int</type>
+                <name>mortgage_set_by_household_leverage</name>
+                <description>Flag, 0 or 1. To use variable household_startup_leverage to set the mortgage level, it needs to be set to 1.</description>
+            </variable>
         </constants>
         <functionFiles>
         <!-- List of C files that hold agent functions -->
