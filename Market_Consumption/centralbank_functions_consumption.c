@@ -27,6 +27,7 @@ int centralbank_trace_goods_prices()
  */
 int centralbank_update_price_indices(){
     double price_avg, prices, quarterly_price_change;
+    double price_housing = 0;
     int i;
     
     prices = 0;
@@ -34,11 +35,12 @@ int centralbank_update_price_indices(){
         prices += WEEKLY_PRICE_AVERAGES[i];
     }
     price_avg = prices / 4;
+    price_housing = HOUSES.avg_price;
     
     for(i = 0; i < 11; i++){
         CONSUMPTION_GOODS_PRICES[i] = CONSUMPTION_GOODS_PRICES[i+1];
     }
-    CONSUMPTION_GOODS_PRICES[11] = price_avg;
+    CONSUMPTION_GOODS_PRICES[11] = 0.85 * price_avg + 0.15 * price_housing;
 
     if(CONSUMPTION_GOODS_PRICES[8] == 0){
         quarterly_price_change = 0;
