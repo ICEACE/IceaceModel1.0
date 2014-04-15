@@ -215,42 +215,58 @@ int reagency_housing_process()
         income = buyers_list.array[0].quarterly_income;
         mortgage = buyers_list.array[0].quarterly_mortgage_paid;
         double new_mortgage_cost = 0; // = mortgage_request / annuity;
+        double used_interest_rate = 0;
 
         if (mortgage_choice == 1) {
             d1 = MORTGAGES_INTEREST_RATE/4;
-            d2 = d1 * pow((1 + d1), 160);
+            d2 = d1 * pow((1 + d1), LOANTERM);
             annuity = 1/d1 - 1/d2;
             new_mortgage_cost = mortgage_request / annuity;
         }
         else if (mortgage_choice == 2){
-            new_mortgage_cost = (mortgage_request / 160) + (mortgage_request*MORTGAGES_INTEREST_RATE/4);
+            new_mortgage_cost = (mortgage_request / LOANTERM) + (mortgage_request*MORTGAGES_INTEREST_RATE/4);
         }
         else if (mortgage_choice == 3){
             /* Should we incorporate an expectation of inflation, we could use the inflation target of CB, 0.02? */
-            d1 = (0.02)/4;
-            d2 = d1 * pow((1 + d1), 160);
+            if (USE_FIXED_RATE) {
+                used_interest_rate = FIXED_RATE;
+            } else {
+                used_interest_rate = MORTGAGES_INTEREST_RATE - IIM_RATE_DISCOUNT; 
+            }
+            d1 = used_interest_rate/4;
+            d2 = d1 * pow((1 + d1), LOANTERM);
             annuity = 1/d1 - 1/d2;
             new_mortgage_cost = mortgage_request / annuity;
         }
         else if (mortgage_choice == 4){
+            if (USE_FIXED_RATE) {
+                used_interest_rate = FIXED_RATE;
+            } else {
+                used_interest_rate = MORTGAGES_INTEREST_RATE - IIM_RATE_DISCOUNT; 
+            }
             /* Should we incorporate an expectation of inflation, we could use the inflation target of CB, 0.02? */
-            new_mortgage_cost = (mortgage_request / 160) + (mortgage_request*0.02/4);
+            new_mortgage_cost = (mortgage_request / LOANTERM) + (mortgage_request*used_interest_rate/4);
         }
         else if (mortgage_choice == 5){
             d1 = (MORTGAGES_INTEREST_RATE + 0.01)/4;
-            d2 = d1 * pow((1 + d1), 160);
+            d2 = d1 * pow((1 + d1), LOANTERM);
             annuity = 1/d1 - 1/d2;
             new_mortgage_cost = mortgage_request / annuity;
         }
         else if (mortgage_choice == 6){
-            new_mortgage_cost = (mortgage_request / 160) + (mortgage_request*(MORTGAGES_INTEREST_RATE+0.01)/4);
+            new_mortgage_cost = (mortgage_request / LOANTERM) + (mortgage_request*(MORTGAGES_INTEREST_RATE+0.01)/4);
         }
         else if (mortgage_choice == 7){
+            if (USE_FIXED_RATE) {
+                used_interest_rate = FIXED_RATE;
+            } else {
+                used_interest_rate = MORTGAGES_INTEREST_RATE - IIM_RATE_DISCOUNT; 
+            }
             /* Should we incorporate an expectation of inflation, we could use the inflation target of CB, 0.02? */
-            d1 = (0.02)/4;
-            d2 = d1 * pow((1 + d1), 160);
+            d1 = used_interest_rate/4;
+            d2 = d1 * pow((1 + d1), LOANTERM);
             annuity = 1/d1 - 1/d2;
-            new_mortgage_cost = mortgage_request / annuity;
+            new_mortgage_cost = mortgage_request / annuity + mortgage_request * (pow(1+EXPECTED_INFLATION_RATE,1/4)-1);
         }
         else {
             if (WARNING_MODE) {
