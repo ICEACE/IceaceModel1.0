@@ -1,5 +1,6 @@
 #include "header.h"
 #include "household_agent_header.h"
+#include "library_header.h"
 
 
 /*
@@ -75,30 +76,35 @@ int household_init_balancesheet()
     double total_income = LABOUR_INCOME + CAPITAL_INCOME;
     double mortgage_cost_income_ratio = 0.15;
     double used_interest_rate = 0;
+    int rand_loanterm;
+
+    rand_loanterm = random_int(15,40);
 
     if (MORTGAGE_CHOICE == 1) {
         if(MORTGAGE_SET_BY_HOUSEHOLD_LEVERAGE) {
             MORTGAGES = TOTAL_ASSETS * HOUSEHOLD_STARTUP_LEVERAGE;
         } else {
             d1 = MORTGAGES_LIST.array[0].interestrate/4;
-            d2 = d1 * pow((1 + d1), LOANTERM);
+            d2 = d1 * pow((1 + d1), rand_loanterm);
             annuity = 1/d1 - 1/d2;
             MORTGAGES = total_income * mortgage_cost_income_ratio * annuity;    
         }
                
         for (int i = 0; i < MORTGAGES_LIST.size ; i++) { 
             MORTGAGES_LIST.array[i].principal = MORTGAGES / MORTGAGES_LIST.size;
+            MORTGAGES_LIST.array[i].quarters_left = rand_loanterm;
         }
     }
     else if (MORTGAGE_CHOICE == 2){
         if(MORTGAGE_SET_BY_HOUSEHOLD_LEVERAGE) {
             MORTGAGES = TOTAL_ASSETS * HOUSEHOLD_STARTUP_LEVERAGE;
         } else {
-            MORTGAGES = (total_income * mortgage_cost_income_ratio) / (MORTGAGES_LIST.array[0].interestrate / 4 + 1/LOANTERM);
+            MORTGAGES = (total_income * mortgage_cost_income_ratio) / (MORTGAGES_LIST.array[0].interestrate / 4 + 1/rand_loanterm);
         }
 
         for (int i = 0; i < MORTGAGES_LIST.size ; i++) { 
             MORTGAGES_LIST.array[i].principal = MORTGAGES / MORTGAGES_LIST.size;
+            MORTGAGES_LIST.array[i].quarters_left = rand_loanterm;
         }
     }
     else if (MORTGAGE_CHOICE == 3){
@@ -111,13 +117,14 @@ int household_init_balancesheet()
             MORTGAGES = TOTAL_ASSETS * HOUSEHOLD_STARTUP_LEVERAGE;
         } else {
             d1 = used_interest_rate/4;
-            d2 = d1 * pow((1 + d1), LOANTERM);
+            d2 = d1 * pow((1 + d1), rand_loanterm);
             annuity = 1/d1 - 1/d2;
             MORTGAGES = total_income * mortgage_cost_income_ratio * annuity;
         }
         for (int i = 0; i < MORTGAGES_LIST.size ; i++) { 
             MORTGAGES_LIST.array[i].principal = MORTGAGES / MORTGAGES_LIST.size;
             MORTGAGES_LIST.array[i].interestrate = used_interest_rate;
+            MORTGAGES_LIST.array[i].quarters_left = rand_loanterm;
         }
     }
     else if (MORTGAGE_CHOICE == 4){
@@ -129,12 +136,13 @@ int household_init_balancesheet()
         if(MORTGAGE_SET_BY_HOUSEHOLD_LEVERAGE) {
             MORTGAGES = TOTAL_ASSETS * HOUSEHOLD_STARTUP_LEVERAGE;
         } else {
-            MORTGAGES = (total_income * mortgage_cost_income_ratio) / (used_interest_rate / 4 + 1/LOANTERM);
+            MORTGAGES = (total_income * mortgage_cost_income_ratio) / (used_interest_rate / 4 + 1/rand_loanterm);
         }
     
         for (int i = 0; i < MORTGAGES_LIST.size ; i++) { 
             MORTGAGES_LIST.array[i].principal = MORTGAGES / MORTGAGES_LIST.size;
             MORTGAGES_LIST.array[i].interestrate = used_interest_rate;
+            MORTGAGES_LIST.array[i].quarters_left = rand_loanterm;
         }
     }
     else if (MORTGAGE_CHOICE == 5){
@@ -142,7 +150,7 @@ int household_init_balancesheet()
             MORTGAGES = TOTAL_ASSETS * HOUSEHOLD_STARTUP_LEVERAGE;
         } else {
             d1 = (MORTGAGES_LIST.array[0].interestrate + 0.01)/4;
-            d2 = d1 * pow((1 + d1), LOANTERM);
+            d2 = d1 * pow((1 + d1), rand_loanterm);
             annuity = 1/d1 - 1/d2;
             MORTGAGES = total_income * mortgage_cost_income_ratio * annuity;
         }
@@ -150,18 +158,20 @@ int household_init_balancesheet()
         for (int i = 0; i < MORTGAGES_LIST.size ; i++) { 
             MORTGAGES_LIST.array[i].principal = MORTGAGES / MORTGAGES_LIST.size;
             MORTGAGES_LIST.array[i].interestrate += 0.01;
+            MORTGAGES_LIST.array[i].quarters_left = rand_loanterm;
         }
     }
     else if (MORTGAGE_CHOICE == 6){
         if(MORTGAGE_SET_BY_HOUSEHOLD_LEVERAGE) {
             MORTGAGES = TOTAL_ASSETS * HOUSEHOLD_STARTUP_LEVERAGE;
         } else {
-            MORTGAGES = (total_income * mortgage_cost_income_ratio) / ((MORTGAGES_LIST.array[0].interestrate + 0.01) / 4 + 1/LOANTERM);
+            MORTGAGES = (total_income * mortgage_cost_income_ratio) / ((MORTGAGES_LIST.array[0].interestrate + 0.01) / 4 + 1/rand_loanterm);
         }
         
         for (int i = 0; i < MORTGAGES_LIST.size ; i++) { 
             MORTGAGES_LIST.array[i].principal = MORTGAGES / MORTGAGES_LIST.size;
             MORTGAGES_LIST.array[i].interestrate += 0.01;
+            MORTGAGES_LIST.array[i].quarters_left = rand_loanterm;
         }
     }
     else if (MORTGAGE_CHOICE == 7){
@@ -174,7 +184,7 @@ int household_init_balancesheet()
             MORTGAGES = TOTAL_ASSETS * HOUSEHOLD_STARTUP_LEVERAGE;
         } else {
             d1 = used_interest_rate/4;
-            d2 = d1 * pow((1 + d1), LOANTERM);
+            d2 = d1 * pow((1 + d1), rand_loanterm);
             annuity = 1/d1 - 1/d2;
             MORTGAGES = total_income * mortgage_cost_income_ratio * annuity / (1 + (annuity * (pow(1+EXPECTED_INFLATION_RATE, 1/4)-1)));
         }
@@ -182,6 +192,7 @@ int household_init_balancesheet()
         for (int i = 0; i < MORTGAGES_LIST.size ; i++) { 
             MORTGAGES_LIST.array[i].principal = MORTGAGES / MORTGAGES_LIST.size;
             MORTGAGES_LIST.array[i].interestrate = used_interest_rate; //(MORTGAGES_INTEREST_RATE-0.01);
+            MORTGAGES_LIST.array[i].quarters_left = rand_loanterm;
         }
     }
     else {
