@@ -2071,18 +2071,18 @@ p932
 (lp933
 VEQ
 p934
-assbasg123
+assbasg52
 (lp935
-VAgent initilialization.
+Vidle
 p936
 asVcurrentstate
 p937
 (lp938
 Vstart
 p939
-asg52
+asg123
 (lp940
-Vidle
+VAgent initilialization.
 p941
 assba(ipoplib
 MultiDict
@@ -2139,18 +2139,18 @@ assbasg932
 (lp964
 VNEQ
 p965
-assbasg123
+assbasg52
 (lp966
-VProceeding with regular agent loop.
+Vidle
 p967
 asVcurrentstate
 p968
 (lp969
 Vstart
 p970
-asg52
+asg123
 (lp971
-Vidle
+VProceeding with regular agent loop.
 p972
 assba(ipoplib
 MultiDict
@@ -2192,18 +2192,18 @@ p989
 (lp990
 VFirmInitEmployment
 p991
-asg123
+asg52
 (lp992
-VFirm posts its Id for employment initilialization.
+Vfirm_init_post_id
 p993
 asVcurrentstate
 p994
 (lp995
 VFirmInitPostId
 p996
-asg52
+asg123
 (lp997
-Vfirm_init_post_id
+VFirm posts its Id for employment initilialization.
 p998
 assba(ipoplib
 MultiDict
@@ -2291,18 +2291,18 @@ p1036
 (lp1037
 VFirmInitBalanceSheet
 p1038
-asg123
+asg52
 (lp1039
-VFirm recieves its list of employees.
+Vfirm_init_employment
 p1040
 asVcurrentstate
 p1041
 (lp1042
 VFirmInitEmployment
 p1043
-asg52
+asg123
 (lp1044
-Vfirm_init_employment
+VFirm recieves its list of employees.
 p1045
 assba(ipoplib
 MultiDict
@@ -2355,18 +2355,18 @@ p1066
 (lp1067
 VFirmLoop
 p1068
-asg123
+asg52
 (lp1069
-VSynchronizing the mortgage debt and deposit with respective banks.
+Vfirm_init_balancesheet
 p1070
 asVcurrentstate
 p1071
 (lp1072
 VFirmInitBalanceSheet
 p1073
-asg52
+asg123
 (lp1074
-Vfirm_init_balancesheet
+VSynchronizing the mortgage debt and deposit with respective banks.
 p1075
 assba(ipoplib
 MultiDict
@@ -2381,18 +2381,18 @@ p1079
 (lp1080
 VFirmCreditStart
 p1081
-asg123
+asg52
 (lp1082
-VResumes with its regular iteration loop.
+Vfirm_iterate
 p1083
 asVcurrentstate
 p1084
 (lp1085
 VFirmLoop
 p1086
-asg52
+asg123
 (lp1087
-Vfirm_iterate
+VResumes with its regular iteration loop.
 p1088
 assba(ipoplib
 MultiDict
@@ -2448,18 +2448,18 @@ asg696
 (lp1112
 Vmonthly
 p1113
-assbassbassbasg123
+assbassbassbasg52
 (lp1114
-VSkip the bank account updates.
+Vidle
 p1115
 asVcurrentstate
 p1116
 (lp1117
 VFirmUpdateDeposits
 p1118
-asg52
+asg123
 (lp1119
-Vidle
+VSkip the bank account updates.
 p1120
 assba(ipoplib
 MultiDict
@@ -2756,18 +2756,18 @@ assbasg932
 (lp1251
 VEQ
 p1252
-assbasg123
+assbasg52
 (lp1253
-VAgent initilialization.
+Vidle
 p1254
 asVcurrentstate
 p1255
 (lp1256
 Vstart
 p1257
-asg52
+asg123
 (lp1258
-Vidle
+VAgent initilialization.
 p1259
 assba(ipoplib
 MultiDict
@@ -2824,18 +2824,18 @@ assbasg932
 (lp1282
 VNEQ
 p1283
-assbasg123
+assbasg52
 (lp1284
-VProceeding with regular agent loop.
+Vidle
 p1285
 asVcurrentstate
 p1286
 (lp1287
 Vstart
 p1288
-asg52
+asg123
 (lp1289
-Vidle
+VProceeding with regular agent loop.
 p1290
 assba(ipoplib
 MultiDict
@@ -2875,18 +2875,18 @@ p1305
 (lp1306
 VHouseholdInitEmployment
 p1307
-asg123
+asg52
 (lp1308
-VHousehold posts its Id for employment initilialization.
+Vhousehold_init_post_id
 p1309
 asVcurrentstate
 p1310
 (lp1311
 VHouseholdInitPostId
 p1312
-asg52
+asg123
 (lp1313
-Vhousehold_init_post_id
+VHousehold posts its Id for employment initilialization.
 p1314
 assba(ipoplib
 MultiDict
@@ -2971,18 +2971,18 @@ p1349
 (lp1350
 VHouseholdInitBalanceSheet
 p1351
-asg123
+asg52
 (lp1352
-VHousehold recieves agent Id of his employer.
+Vhousehold_init_employment
 p1353
 asVcurrentstate
 p1354
 (lp1355
 VHouseholdInitEmployment
 p1356
-asg52
+asg123
 (lp1357
-Vhousehold_init_employment
+VHousehold recieves agent Id of his employer.
 p1358
 assba(ipoplib
 MultiDict
@@ -3035,18 +3035,18 @@ p1379
 (lp1380
 VHouseholdLoop
 p1381
-asg123
+asg52
 (lp1382
-VSynchronizing the mortgage debt and deposit with respective banks.
+Vhousehold_init_balancesheet
 p1383
 asVcurrentstate
 p1384
 (lp1385
 VHouseholdInitBalanceSheet
 p1386
-asg52
+asg123
 (lp1387
-Vhousehold_init_balancesheet
+VSynchronizing the mortgage debt and deposit with respective banks.
 p1388
 assba(ipoplib
 MultiDict
@@ -3061,18 +3061,18 @@ p1392
 (lp1393
 VHHCreditStart
 p1394
-asg123
+asg52
 (lp1395
-VResumes its regular iteration.
+Vhousehold_iterate
 p1396
 asVcurrentstate
 p1397
 (lp1398
 VHouseholdLoop
 p1399
-asg52
+asg123
 (lp1400
-Vhousehold_iterate
+VResumes its regular iteration.
 p1401
 assba(ipoplib
 MultiDict
@@ -3125,18 +3125,18 @@ asg696
 (lp1422
 Vmonthly
 p1423
-assbassbassbasg123
+assbassbassbasg52
 (lp1424
-VSkip the bank account updates.
+Vidle
 p1425
 asVcurrentstate
 p1426
 (lp1427
 VHouseholdUpdateDeposits
 p1428
-asg52
+asg123
 (lp1429
-Vidle
+VSkip the bank account updates.
 p1430
 assba(ipoplib
 MultiDict
@@ -3465,18 +3465,18 @@ assbasg932
 (lp1575
 VNEQ
 p1576
-assbasg123
+assbasg52
 (lp1577
-VProceeding with regular agent loop.
+Vidle
 p1578
 asVcurrentstate
 p1579
 (lp1580
 Vstart
 p1581
-asg52
+asg123
 (lp1582
-Vidle
+VProceeding with regular agent loop.
 p1583
 assba(ipoplib
 MultiDict
@@ -3491,18 +3491,18 @@ p1587
 (lp1588
 VEquityFundCredit
 p1589
-asg123
+asg52
 (lp1590
-VNotifies its id.
+Vequityfund_iterate
 p1591
 asVcurrentstate
 p1592
 (lp1593
 VEquityFundLoop
 p1594
-asg52
+asg123
 (lp1595
-Vequityfund_iterate
+VNotifies its id.
 p1596
 assbassbasg1157
 (lp1597
@@ -3639,18 +3639,18 @@ assbasg932
 (lp1654
 VEQ
 p1655
-assbasg123
+assbasg52
 (lp1656
-VAgent initilialization.
+Vidle
 p1657
 asVcurrentstate
 p1658
 (lp1659
 Vstart
 p1660
-asg52
+asg123
 (lp1661
-Vidle
+VAgent initilialization.
 p1662
 assba(ipoplib
 MultiDict
@@ -3707,18 +3707,18 @@ assbasg932
 (lp1685
 VNEQ
 p1686
-assbasg123
+assbasg52
 (lp1687
-VProceeding with regular agent loop.
+Vidle
 p1688
 asVcurrentstate
 p1689
 (lp1690
 Vstart
 p1691
-asg52
+asg123
 (lp1692
-Vidle
+VProceeding with regular agent loop.
 p1693
 assba(ipoplib
 MultiDict
@@ -3803,18 +3803,18 @@ p1728
 (lp1729
 VBankInitMortgages
 p1730
-asg123
+asg52
 (lp1731
-VGathers loans from firms.
+Vbank_init_loans
 p1732
 asVcurrentstate
 p1733
 (lp1734
 VBankInitLoans
 p1735
-asg52
+asg123
 (lp1736
-Vbank_init_loans
+VGathers loans from firms.
 p1737
 assba(ipoplib
 MultiDict
@@ -3899,18 +3899,18 @@ p1772
 (lp1773
 VBankInitDeposits
 p1774
-asg123
+asg52
 (lp1775
-VGather mortgages from households.
+Vbank_init_mortgages
 p1776
 asVcurrentstate
 p1777
 (lp1778
 VBankInitMortgages
 p1779
-asg52
+asg123
 (lp1780
-Vbank_init_mortgages
+VGather mortgages from households.
 p1781
 assba(ipoplib
 MultiDict
@@ -4053,18 +4053,18 @@ p1842
 (lp1843
 VBankInitBalanceSheet
 p1844
-asg123
+asg52
 (lp1845
-VGather deposits from firms and households.
+Vbank_init_deposits
 p1846
 asVcurrentstate
 p1847
 (lp1848
 VBankInitDeposits
 p1849
-asg52
+asg123
 (lp1850
-Vbank_init_deposits
+VGather deposits from firms and households.
 p1851
 assba(ipoplib
 MultiDict
@@ -4117,18 +4117,18 @@ p1872
 (lp1873
 VBankLoop
 p1874
-asg123
+asg52
 (lp1875
-VBank initializes total assets, equity, debt to central bank and liquidity.
+Vbank_init_balancesheet
 p1876
 asVcurrentstate
 p1877
 (lp1878
 VBankInitBalanceSheet
 p1879
-asg52
+asg123
 (lp1880
-Vbank_init_balancesheet
+VBank initializes total assets, equity, debt to central bank and liquidity.
 p1881
 assba(ipoplib
 MultiDict
@@ -4143,18 +4143,18 @@ p1885
 (lp1886
 VBankCreditStart
 p1887
-asg123
+asg52
 (lp1888
-VBank resumes its iterative functions.
+Vbank_iterate
 p1889
 asVcurrentstate
 p1890
 (lp1891
 VBankLoop
 p1892
-asg52
+asg123
 (lp1893
-Vbank_iterate
+VBank resumes its iterative functions.
 p1894
 assba(ipoplib
 MultiDict
@@ -4207,18 +4207,18 @@ asg696
 (lp1915
 Vmonthly
 p1916
-assbassbassbasg123
+assbassbassbasg52
 (lp1917
-VSkip the bank account updates.
+Vidle
 p1918
 asVcurrentstate
 p1919
 (lp1920
 VBankUpdateDeposits
 p1921
-asg52
+asg123
 (lp1922
-Vidle
+VSkip the bank account updates.
 p1923
 assba(ipoplib
 MultiDict
@@ -4670,18 +4670,18 @@ assbasg932
 (lp2123
 VNEQ
 p2124
-assbasg123
+assbasg52
 (lp2125
-VProceeding with regular agent loop.
+Vidle
 p2126
 asVcurrentstate
 p2127
 (lp2128
 Vstart
 p2129
-asg52
+asg123
 (lp2130
-Vidle
+VProceeding with regular agent loop.
 p2131
 assba(ipoplib
 MultiDict
@@ -4696,18 +4696,18 @@ p2135
 (lp2136
 VGovernmentCredit
 p2137
-asg123
+asg52
 (lp2138
-VRegular loop start point.
+Vgovernment_iterate
 p2139
 asVcurrentstate
 p2140
 (lp2141
 VGovernmentLoop
 p2142
-asg52
+asg123
 (lp2143
-Vgovernment_iterate
+VRegular loop start point.
 p2144
 assbassbasg1157
 (lp2145
@@ -4844,18 +4844,18 @@ assbasg932
 (lp2202
 VEQ
 p2203
-assbasg123
+assbasg52
 (lp2204
-VAgent initilialization.
+Vidle
 p2205
 asVcurrentstate
 p2206
 (lp2207
 Vstart
 p2208
-asg52
+asg123
 (lp2209
-Vidle
+VAgent initilialization.
 p2210
 assba(ipoplib
 MultiDict
@@ -4912,18 +4912,18 @@ assbasg932
 (lp2233
 VNEQ
 p2234
-assbasg123
+assbasg52
 (lp2235
-VProceeding with regular agent loop.
+Vidle
 p2236
 asVcurrentstate
 p2237
 (lp2238
 Vstart
 p2239
-asg52
+asg123
 (lp2240
-Vidle
+VProceeding with regular agent loop.
 p2241
 assba(ipoplib
 MultiDict
@@ -5002,18 +5002,18 @@ p2274
 (lp2275
 VCentralBankLoop
 p2276
-asg123
+asg52
 (lp2277
-VSynchronizing the bank debts.
+Vcentralbank_init_balancesheet
 p2278
 asVcurrentstate
 p2279
 (lp2280
 VCentralBankInitBalanceSheet
 p2281
-asg52
+asg123
 (lp2282
-Vcentralbank_init_balancesheet
+VSynchronizing the bank debts.
 p2283
 assba(ipoplib
 MultiDict
@@ -5028,18 +5028,18 @@ p2287
 (lp2288
 VCentralBankCredit
 p2289
-asg123
+asg52
 (lp2290
-VResumes its regular iteration.
+Vcentralbank_iterate
 p2291
 asVcurrentstate
 p2292
 (lp2293
 VCentralBankLoop
 p2294
-asg52
+asg123
 (lp2295
-Vcentralbank_iterate
+VResumes its regular iteration.
 p2296
 assbassbasg1157
 (lp2297
@@ -5256,18 +5256,18 @@ assbasg932
 (lp2390
 VEQ
 p2391
-assbasg123
+assbasg52
 (lp2392
-VAgent initilialization.
+Vidle
 p2393
 asVcurrentstate
 p2394
 (lp2395
 Vstart
 p2396
-asg52
+asg123
 (lp2397
-Vidle
+VAgent initilialization.
 p2398
 assba(ipoplib
 MultiDict
@@ -5324,18 +5324,18 @@ assbasg932
 (lp2421
 VNEQ
 p2422
-assbasg123
+assbasg52
 (lp2423
-VProceeding with regular agent loop.
+Vidle
 p2424
 asVcurrentstate
 p2425
 (lp2426
 Vstart
 p2427
-asg52
+asg123
 (lp2428
-Vidle
+VProceeding with regular agent loop.
 p2429
 assba(ipoplib
 MultiDict
@@ -5491,18 +5491,18 @@ p2499
 (lp2500
 VJPOLabourMarket
 p2501
-asg123
+asg52
 (lp2502
-VNotifies its id.
+Vjpoffice_iterate
 p2503
 asVcurrentstate
 p2504
 (lp2505
 VJPOfficeLoop
 p2506
-asg52
+asg123
 (lp2507
-Vjpoffice_iterate
+VNotifies its id.
 p2508
 assbassbasg1157
 (lp2509
@@ -5597,18 +5597,18 @@ p2547
 (lp2548
 VMallConsumptionMarket
 p2549
-asg123
+asg52
 (lp2550
-VNotifies its id.
+Vmall_init
 p2551
 asVcurrentstate
 p2552
 (lp2553
 Vstart
 p2554
-asg52
+asg123
 (lp2555
-Vmall_init
+VNotifies its id.
 p2556
 assbassbasg1157
 (lp2557
@@ -5703,18 +5703,18 @@ p2595
 (lp2596
 VREAgencyHousingMarket
 p2597
-asg123
+asg52
 (lp2598
-VNotifies its id.
+Vreagency_init
 p2599
 asVcurrentstate
 p2600
 (lp2601
 Vstart
 p2602
-asg52
+asg123
 (lp2603
-Vreagency_init
+VNotifies its id.
 p2604
 assbassbasg1157
 (lp2605
@@ -8103,10 +8103,9 @@ g2796
 (lp3239
 g2782
 ag2785
-asg2799
+asg2793
 (lp3240
-g2786
-aS'total_assets'
+S'wage'
 p3241
 asg2801
 (lp3242
@@ -8121,26 +8120,27 @@ g2783
 ag2784
 asg2794
 (lp3246
-S'wage'
-p3247
+g3241
 asg2980
-(lp3248
+(lp3247
 g2782
 ag2785
 ag2786
 asg2788
-(lp3249
+(lp3248
 g2781
 ag2787
 aS'mortgages_interest_rate'
-p3250
-asg2793
-(lp3251
-g3247
+p3249
 asg3003
-(lp3252
+(lp3250
 g2782
 ag2785
+asg2799
+(lp3251
+g2786
+aS'total_assets'
+p3252
 asg2797
 (lp3253
 g3243
@@ -8151,7 +8151,7 @@ p3255
 asg2789
 (lp3256
 g2787
-ag3250
+ag3249
 assg2732
 I1
 sg2733
@@ -10970,21 +10970,21 @@ p3866
 asg3306
 (lp3867
 g3304
-asg3299
-(lp3868
-g3298
 asg1187
-(lp3869
+(lp3868
 g2790
 asg3314
-(lp3870
+(lp3869
 g3298
 asg3307
-(lp3871
+(lp3870
 g3304
 asg3338
-(lp3872
+(lp3871
 g2781
+asg3299
+(lp3872
+g3298
 asg3312
 (lp3873
 S'unit_goods_price'
@@ -13896,7 +13896,7 @@ sg4260
 F0.3
 sg2165
 I0
-sg4264
+sg4262
 F0.0
 sg4247
 F5.0
@@ -13912,7 +13912,7 @@ sg4258
 F0.0
 sg4251
 F0.0
-sg4262
+sg4264
 F0.0
 sg2156
 I0
@@ -15026,10 +15026,10 @@ g756
 ag765
 asbsg4641
 F0.04
-sg2625
-I1
 sg2616
 I0
+sg2625
+I1
 ssg2678
 g4636
 sg2744
@@ -16103,7 +16103,7 @@ g2730
 (dp4927
 g4711
 (lp4928
-g3241
+g3252
 aS'deposits'
 p4929
 ag2786
@@ -16114,7 +16114,7 @@ ag2787
 ag2782
 asg4786
 (lp4931
-g3241
+g3252
 assg2732
 I1
 sg2733
@@ -16299,21 +16299,21 @@ p4975
 sg4946
 VInverse of price. It is used to decrease computation time at the mall.
 p4976
-ssg4967
+ssg4965
 (dp4977
 g4945
 Vint
 p4978
 sg4946
-VNumber of items available for sale.
+VId of the firm agent.
 p4979
-ssg4965
+ssg4967
 (dp4980
 g4945
 Vint
 p4981
 sg4946
-VId of the firm agent.
+VNumber of items available for sale.
 p4982
 sssg2693
 VSeller data.
@@ -19333,18 +19333,18 @@ p6154
 (lp6155
 VEQ
 p6156
-assbasg5347
+assbasg5276
 (lp6157
-VAgent initilialization.
+Vidle
 p6158
 asVcurrentstate
 p6159
 (lp6160
 Vstart
 p6161
-asg5276
+asg5347
 (lp6162
-Vidle
+VAgent initilialization.
 p6163
 assba(ipoplib
 MultiDict
@@ -19401,18 +19401,18 @@ assbasg6154
 (lp6186
 VNEQ
 p6187
-assbasg5347
+assbasg5276
 (lp6188
-VProceeding with regular agent loop.
+Vidle
 p6189
 asVcurrentstate
 p6190
 (lp6191
 Vstart
 p6192
-asg5276
+asg5347
 (lp6193
-Vidle
+VProceeding with regular agent loop.
 p6194
 assba(ipoplib
 MultiDict
@@ -19454,18 +19454,18 @@ p6211
 (lp6212
 VFirmInitEmployment
 p6213
-asg5347
+asg5276
 (lp6214
-VFirm posts its Id for employment initilialization.
+Vfirm_init_post_id
 p6215
 asVcurrentstate
 p6216
 (lp6217
 VFirmInitPostId
 p6218
-asg5276
+asg5347
 (lp6219
-Vfirm_init_post_id
+VFirm posts its Id for employment initilialization.
 p6220
 assba(ipoplib
 MultiDict
@@ -19553,18 +19553,18 @@ p6258
 (lp6259
 VFirmInitBalanceSheet
 p6260
-asg5347
+asg5276
 (lp6261
-VFirm recieves its list of employees.
+Vfirm_init_employment
 p6262
 asVcurrentstate
 p6263
 (lp6264
 VFirmInitEmployment
 p6265
-asg5276
+asg5347
 (lp6266
-Vfirm_init_employment
+VFirm recieves its list of employees.
 p6267
 assba(ipoplib
 MultiDict
@@ -19617,18 +19617,18 @@ p6288
 (lp6289
 VFirmLoop
 p6290
-asg5347
+asg5276
 (lp6291
-VSynchronizing the mortgage debt and deposit with respective banks.
+Vfirm_init_balancesheet
 p6292
 asVcurrentstate
 p6293
 (lp6294
 VFirmInitBalanceSheet
 p6295
-asg5276
+asg5347
 (lp6296
-Vfirm_init_balancesheet
+VSynchronizing the mortgage debt and deposit with respective banks.
 p6297
 assba(ipoplib
 MultiDict
@@ -19643,18 +19643,18 @@ p6301
 (lp6302
 VFirmCreditStart
 p6303
-asg5347
+asg5276
 (lp6304
-VResumes with its regular iteration loop.
+Vfirm_iterate
 p6305
 asVcurrentstate
 p6306
 (lp6307
 VFirmLoop
 p6308
-asg5276
+asg5347
 (lp6309
-Vfirm_iterate
+VResumes with its regular iteration loop.
 p6310
 assba(ipoplib
 MultiDict
@@ -19710,18 +19710,18 @@ asg5920
 (lp6334
 Vmonthly
 p6335
-assbassbassbasg5347
+assbassbassbasg5276
 (lp6336
-VSkip the bank account updates.
+Vidle
 p6337
 asVcurrentstate
 p6338
 (lp6339
 VFirmUpdateDeposits
 p6340
-asg5276
+asg5347
 (lp6341
-Vidle
+VSkip the bank account updates.
 p6342
 assba(ipoplib
 MultiDict
@@ -20013,18 +20013,18 @@ assbasg6154
 (lp6468
 VEQ
 p6469
-assbasg5347
+assbasg5276
 (lp6470
-VAgent initilialization.
+Vidle
 p6471
 asVcurrentstate
 p6472
 (lp6473
 Vstart
 p6474
-asg5276
+asg5347
 (lp6475
-Vidle
+VAgent initilialization.
 p6476
 assba(ipoplib
 MultiDict
@@ -20081,18 +20081,18 @@ assbasg6154
 (lp6499
 VNEQ
 p6500
-assbasg5347
+assbasg5276
 (lp6501
-VProceeding with regular agent loop.
+Vidle
 p6502
 asVcurrentstate
 p6503
 (lp6504
 Vstart
 p6505
-asg5276
+asg5347
 (lp6506
-Vidle
+VProceeding with regular agent loop.
 p6507
 assba(ipoplib
 MultiDict
@@ -20132,18 +20132,18 @@ p6522
 (lp6523
 VHouseholdInitEmployment
 p6524
-asg5347
+asg5276
 (lp6525
-VHousehold posts its Id for employment initilialization.
+Vhousehold_init_post_id
 p6526
 asVcurrentstate
 p6527
 (lp6528
 VHouseholdInitPostId
 p6529
-asg5276
+asg5347
 (lp6530
-Vhousehold_init_post_id
+VHousehold posts its Id for employment initilialization.
 p6531
 assba(ipoplib
 MultiDict
@@ -20228,18 +20228,18 @@ p6566
 (lp6567
 VHouseholdInitBalanceSheet
 p6568
-asg5347
+asg5276
 (lp6569
-VHousehold recieves agent Id of his employer.
+Vhousehold_init_employment
 p6570
 asVcurrentstate
 p6571
 (lp6572
 VHouseholdInitEmployment
 p6573
-asg5276
+asg5347
 (lp6574
-Vhousehold_init_employment
+VHousehold recieves agent Id of his employer.
 p6575
 assba(ipoplib
 MultiDict
@@ -20292,18 +20292,18 @@ p6596
 (lp6597
 VHouseholdLoop
 p6598
-asg5347
+asg5276
 (lp6599
-VSynchronizing the mortgage debt and deposit with respective banks.
+Vhousehold_init_balancesheet
 p6600
 asVcurrentstate
 p6601
 (lp6602
 VHouseholdInitBalanceSheet
 p6603
-asg5276
+asg5347
 (lp6604
-Vhousehold_init_balancesheet
+VSynchronizing the mortgage debt and deposit with respective banks.
 p6605
 assba(ipoplib
 MultiDict
@@ -20318,18 +20318,18 @@ p6609
 (lp6610
 VHHCreditStart
 p6611
-asg5347
+asg5276
 (lp6612
-VResumes its regular iteration.
+Vhousehold_iterate
 p6613
 asVcurrentstate
 p6614
 (lp6615
 VHouseholdLoop
 p6616
-asg5276
+asg5347
 (lp6617
-Vhousehold_iterate
+VResumes its regular iteration.
 p6618
 assba(ipoplib
 MultiDict
@@ -20382,18 +20382,18 @@ asg5920
 (lp6639
 Vmonthly
 p6640
-assbassbassbasg5347
+assbassbassbasg5276
 (lp6641
-VSkip the bank account updates.
+Vidle
 p6642
 asVcurrentstate
 p6643
 (lp6644
 VHouseholdUpdateDeposits
 p6645
-asg5276
+asg5347
 (lp6646
-Vidle
+VSkip the bank account updates.
 p6647
 assba(ipoplib
 MultiDict
@@ -20720,18 +20720,18 @@ assbasg6154
 (lp6790
 VNEQ
 p6791
-assbasg5347
+assbasg5276
 (lp6792
-VProceeding with regular agent loop.
+Vidle
 p6793
 asVcurrentstate
 p6794
 (lp6795
 Vstart
 p6796
-asg5276
+asg5347
 (lp6797
-Vidle
+VProceeding with regular agent loop.
 p6798
 assba(ipoplib
 MultiDict
@@ -20746,18 +20746,18 @@ p6802
 (lp6803
 VEquityFundCredit
 p6804
-asg5347
+asg5276
 (lp6805
-VNotifies its id.
+Vequityfund_iterate
 p6806
 asVcurrentstate
 p6807
 (lp6808
 VEquityFundLoop
 p6809
-asg5276
+asg5347
 (lp6810
-Vequityfund_iterate
+VNotifies its id.
 p6811
 assbassbasg6379
 (lp6812
@@ -20893,18 +20893,18 @@ assbasg6154
 (lp6868
 VEQ
 p6869
-assbasg5347
+assbasg5276
 (lp6870
-VAgent initilialization.
+Vidle
 p6871
 asVcurrentstate
 p6872
 (lp6873
 Vstart
 p6874
-asg5276
+asg5347
 (lp6875
-Vidle
+VAgent initilialization.
 p6876
 assba(ipoplib
 MultiDict
@@ -20961,18 +20961,18 @@ assbasg6154
 (lp6899
 VNEQ
 p6900
-assbasg5347
+assbasg5276
 (lp6901
-VProceeding with regular agent loop.
+Vidle
 p6902
 asVcurrentstate
 p6903
 (lp6904
 Vstart
 p6905
-asg5276
+asg5347
 (lp6906
-Vidle
+VProceeding with regular agent loop.
 p6907
 assba(ipoplib
 MultiDict
@@ -21057,18 +21057,18 @@ p6942
 (lp6943
 VBankInitMortgages
 p6944
-asg5347
+asg5276
 (lp6945
-VGathers loans from firms.
+Vbank_init_loans
 p6946
 asVcurrentstate
 p6947
 (lp6948
 VBankInitLoans
 p6949
-asg5276
+asg5347
 (lp6950
-Vbank_init_loans
+VGathers loans from firms.
 p6951
 assba(ipoplib
 MultiDict
@@ -21153,18 +21153,18 @@ p6986
 (lp6987
 VBankInitDeposits
 p6988
-asg5347
+asg5276
 (lp6989
-VGather mortgages from households.
+Vbank_init_mortgages
 p6990
 asVcurrentstate
 p6991
 (lp6992
 VBankInitMortgages
 p6993
-asg5276
+asg5347
 (lp6994
-Vbank_init_mortgages
+VGather mortgages from households.
 p6995
 assba(ipoplib
 MultiDict
@@ -21307,18 +21307,18 @@ p7056
 (lp7057
 VBankInitBalanceSheet
 p7058
-asg5347
+asg5276
 (lp7059
-VGather deposits from firms and households.
+Vbank_init_deposits
 p7060
 asVcurrentstate
 p7061
 (lp7062
 VBankInitDeposits
 p7063
-asg5276
+asg5347
 (lp7064
-Vbank_init_deposits
+VGather deposits from firms and households.
 p7065
 assba(ipoplib
 MultiDict
@@ -21371,18 +21371,18 @@ p7086
 (lp7087
 VBankLoop
 p7088
-asg5347
+asg5276
 (lp7089
-VBank initializes total assets, equity, debt to central bank and liquidity.
+Vbank_init_balancesheet
 p7090
 asVcurrentstate
 p7091
 (lp7092
 VBankInitBalanceSheet
 p7093
-asg5276
+asg5347
 (lp7094
-Vbank_init_balancesheet
+VBank initializes total assets, equity, debt to central bank and liquidity.
 p7095
 assba(ipoplib
 MultiDict
@@ -21397,18 +21397,18 @@ p7099
 (lp7100
 VBankCreditStart
 p7101
-asg5347
+asg5276
 (lp7102
-VBank resumes its iterative functions.
+Vbank_iterate
 p7103
 asVcurrentstate
 p7104
 (lp7105
 VBankLoop
 p7106
-asg5276
+asg5347
 (lp7107
-Vbank_iterate
+VBank resumes its iterative functions.
 p7108
 assba(ipoplib
 MultiDict
@@ -21461,18 +21461,18 @@ asg5920
 (lp7129
 Vmonthly
 p7130
-assbassbassbasg5347
+assbassbassbasg5276
 (lp7131
-VSkip the bank account updates.
+Vidle
 p7132
 asVcurrentstate
 p7133
 (lp7134
 VBankUpdateDeposits
 p7135
-asg5276
+asg5347
 (lp7136
-Vidle
+VSkip the bank account updates.
 p7137
 assba(ipoplib
 MultiDict
@@ -21921,18 +21921,18 @@ assbasg6154
 (lp7334
 VNEQ
 p7335
-assbasg5347
+assbasg5276
 (lp7336
-VProceeding with regular agent loop.
+Vidle
 p7337
 asVcurrentstate
 p7338
 (lp7339
 Vstart
 p7340
-asg5276
+asg5347
 (lp7341
-Vidle
+VProceeding with regular agent loop.
 p7342
 assba(ipoplib
 MultiDict
@@ -21947,18 +21947,18 @@ p7346
 (lp7347
 VGovernmentCredit
 p7348
-asg5347
+asg5276
 (lp7349
-VRegular loop start point.
+Vgovernment_iterate
 p7350
 asVcurrentstate
 p7351
 (lp7352
 VGovernmentLoop
 p7353
-asg5276
+asg5347
 (lp7354
-Vgovernment_iterate
+VRegular loop start point.
 p7355
 assbassbasg6379
 (lp7356
@@ -22094,18 +22094,18 @@ assbasg6154
 (lp7412
 VEQ
 p7413
-assbasg5347
+assbasg5276
 (lp7414
-VAgent initilialization.
+Vidle
 p7415
 asVcurrentstate
 p7416
 (lp7417
 Vstart
 p7418
-asg5276
+asg5347
 (lp7419
-Vidle
+VAgent initilialization.
 p7420
 assba(ipoplib
 MultiDict
@@ -22162,18 +22162,18 @@ assbasg6154
 (lp7443
 VNEQ
 p7444
-assbasg5347
+assbasg5276
 (lp7445
-VProceeding with regular agent loop.
+Vidle
 p7446
 asVcurrentstate
 p7447
 (lp7448
 Vstart
 p7449
-asg5276
+asg5347
 (lp7450
-Vidle
+VProceeding with regular agent loop.
 p7451
 assba(ipoplib
 MultiDict
@@ -22252,18 +22252,18 @@ p7484
 (lp7485
 VCentralBankLoop
 p7486
-asg5347
+asg5276
 (lp7487
-VSynchronizing the bank debts.
+Vcentralbank_init_balancesheet
 p7488
 asVcurrentstate
 p7489
 (lp7490
 VCentralBankInitBalanceSheet
 p7491
-asg5276
+asg5347
 (lp7492
-Vcentralbank_init_balancesheet
+VSynchronizing the bank debts.
 p7493
 assba(ipoplib
 MultiDict
@@ -22278,18 +22278,18 @@ p7497
 (lp7498
 VCentralBankCredit
 p7499
-asg5347
+asg5276
 (lp7500
-VResumes its regular iteration.
+Vcentralbank_iterate
 p7501
 asVcurrentstate
 p7502
 (lp7503
 VCentralBankLoop
 p7504
-asg5276
+asg5347
 (lp7505
-Vcentralbank_iterate
+VResumes its regular iteration.
 p7506
 assbassbasg6379
 (lp7507
@@ -22502,18 +22502,18 @@ assbasg6154
 (lp7596
 VEQ
 p7597
-assbasg5347
+assbasg5276
 (lp7598
-VAgent initilialization.
+Vidle
 p7599
 asVcurrentstate
 p7600
 (lp7601
 Vstart
 p7602
-asg5276
+asg5347
 (lp7603
-Vidle
+VAgent initilialization.
 p7604
 assba(ipoplib
 MultiDict
@@ -22570,18 +22570,18 @@ assbasg6154
 (lp7627
 VNEQ
 p7628
-assbasg5347
+assbasg5276
 (lp7629
-VProceeding with regular agent loop.
+Vidle
 p7630
 asVcurrentstate
 p7631
 (lp7632
 Vstart
 p7633
-asg5276
+asg5347
 (lp7634
-Vidle
+VProceeding with regular agent loop.
 p7635
 assba(ipoplib
 MultiDict
@@ -22737,18 +22737,18 @@ p7705
 (lp7706
 VJPOLabourMarket
 p7707
-asg5347
+asg5276
 (lp7708
-VNotifies its id.
+Vjpoffice_iterate
 p7709
 asVcurrentstate
 p7710
 (lp7711
 VJPOfficeLoop
 p7712
-asg5276
+asg5347
 (lp7713
-Vjpoffice_iterate
+VNotifies its id.
 p7714
 assbassbasg6379
 (lp7715
@@ -22842,18 +22842,18 @@ p7752
 (lp7753
 VMallConsumptionMarket
 p7754
-asg5347
+asg5276
 (lp7755
-VNotifies its id.
+Vmall_init
 p7756
 asVcurrentstate
 p7757
 (lp7758
 Vstart
 p7759
-asg5276
+asg5347
 (lp7760
-Vmall_init
+VNotifies its id.
 p7761
 assbassbasg6379
 (lp7762
@@ -22947,18 +22947,18 @@ p7799
 (lp7800
 VREAgencyHousingMarket
 p7801
-asg5347
+asg5276
 (lp7802
-VNotifies its id.
+Vreagency_init
 p7803
 asVcurrentstate
 p7804
 (lp7805
 Vstart
 p7806
-asg5276
+asg5347
 (lp7807
-Vreagency_init
+VNotifies its id.
 p7808
 assbassbasg6379
 (lp7809
@@ -31134,21 +31134,21 @@ p9268
 sg4946
 VInverse of price. It is used to decrease computation time at the mall.
 p9269
-ssg9260
+ssg9258
 (dp9270
 g4945
 Vint
 p9271
 sg4946
-VNumber of items available for sale.
+VId of the firm agent.
 p9272
-ssg9258
+ssg9260
 (dp9273
 g4945
 Vint
 p9274
 sg4946
-VId of the firm agent.
+VNumber of items available for sale.
 p9275
 sssg2693
 VSeller data.
