@@ -1204,7 +1204,7 @@
                     <description>Number of housing units owned by a household.</description>
                 </variable>
                 <variable>
-                    <type>int</type>
+                    <type>double</type>
                     <name>n_shares</name>
                     <description>Number of shares an household owns.</description>
                 </variable>
@@ -1432,7 +1432,7 @@
                     <description>Liquidity.</description>
                 </variable>
                 <variable>
-                    <type>int</type>
+                    <type>double</type>
                     <name>n_shares</name>
                     <description>Number of households(shares) to recieve liquid shares from firm net income.</description>
                 </variable>
