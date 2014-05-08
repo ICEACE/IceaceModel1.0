@@ -121,7 +121,7 @@ int equityfund_credit_distribute_shares()
     add_household_share_message(per_share);
     add_capital_tax_message(DIVIDENDS_PAID * CAPITAL_TAX_RATE);
     if (PRINT_DEBUG_MODE) {
-        printf("Equity Fund: Shares %d, Dividends Paid = %f, Per Share = %f \n", N_SHARES, DIVIDENDS_PAID, per_share);
+        printf("Equity Fund: Shares %f, Dividends Paid = %f, Per Share = %f \n", N_SHARES, DIVIDENDS_PAID, per_share);
     }
     
 	return 0; /* Returning zero means the agent is not removed */

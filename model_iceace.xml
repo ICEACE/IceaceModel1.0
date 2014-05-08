@@ -88,6 +88,21 @@
                 <name>mortgage_set_by_household_leverage</name>
                 <description>Flag, 0 or 1. To use variable household_startup_leverage to set the mortgage level, it needs to be set to 1.</description>
             </variable>
+            <variable>
+                <type>int</type>
+                <name>min_loanterm_at_start</name>
+                <description>In years. Used together with max_loanterm_at_start to set a random loan term of mortgages in initialization.</description>
+            </variable>
+            <variable>
+                <type>int</type>
+                <name>max_loanterm_at_start</name>
+                <description>In years. Used together with min_loanterm_at_start to set a random loan term of mortgages in initialization.</description>
+            </variable>
+            <variable>
+                <type>double</type>
+                <name>mortgage_cost_to_income_ratio</name>
+                <description>Initialization parameter for mortgages</description>
+            </variable>
         </constants>
         <functionFiles>
         <!-- List of C files that hold agent functions -->

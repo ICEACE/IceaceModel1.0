@@ -74,11 +74,11 @@ int household_init_balancesheet()
      */
     double d1, d2, annuity;
     double total_income = LABOUR_INCOME + CAPITAL_INCOME;
-    double mortgage_cost_income_ratio = 0.15;
+    double mortgage_cost_income_ratio = MORTGAGE_COST_TO_INCOME_RATIO;
     double used_interest_rate = 0;
     int rand_loanterm;
 
-    rand_loanterm = random_int(25,40)*4;
+    rand_loanterm = random_int(MIN_LOANTERM_AT_START,MAX_LOANTERM_AT_START)*4;
 
     if (MORTGAGE_CHOICE == 1) {
         if(MORTGAGE_SET_BY_HOUSEHOLD_LEVERAGE) {
