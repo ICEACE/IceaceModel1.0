@@ -37,18 +37,29 @@ int centralbank_update_price_indices(){
     price_avg = prices / 4;
     price_housing = HOUSES.avg_price;
     
-    for(i = 0; i < 11; i++){
+    for(i = 0; i < 12; i++){
         CONSUMPTION_GOODS_PRICES[i] = CONSUMPTION_GOODS_PRICES[i+1];
+        HOUSING_PRICES[i] = HOUSING_PRICES[i+1];
     }
-    CONSUMPTION_GOODS_PRICES[11] = 0.85 * price_avg + 0.15 * price_housing;
+    CONSUMPTION_GOODS_PRICES[12] = price_avg;
+    HOUSING_PRICES[12] = price_housing;
+    double qpi_goods, qpi_housing;
+    
 
-    if(CONSUMPTION_GOODS_PRICES[8] == 0){
-        quarterly_price_change = 0;
+    if(CONSUMPTION_GOODS_PRICES[9] == 0){
+        qpi_goods = 0;
     }
     else {
-        quarterly_price_change = (CONSUMPTION_GOODS_PRICES[11] - CONSUMPTION_GOODS_PRICES[8]) / CONSUMPTION_GOODS_PRICES[8];
+        qpi_goods = (CONSUMPTION_GOODS_PRICES[12] - CONSUMPTION_GOODS_PRICES[9]) / CONSUMPTION_GOODS_PRICES[9];
     }
-    
+    if(HOUSING_PRICES[9] == 0) {
+        qpi_housing = 0;
+    }
+    else {
+        qpi_housing = (HOUSING_PRICES[12]/HOUSING_PRICES[9] - 1);
+    }
+    quarterly_price_change = 0.85 * qpi_goods + 0.15 * qpi_housing;
+        
     // MONTHLY_PRICE_INDEX = MONTHLY_PRICE_INDEX + MONTHLY_PRICE_INDEX * monthly_price_change;
     
     add_centralbank_households_quarterly_cpi_message(quarterly_price_change);

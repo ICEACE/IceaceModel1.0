@@ -208,7 +208,8 @@
                     <name>idle</name>
                     <description>It is not the day of the week to shop.</description>
                     <currentState>HHConsumptionWeekly</currentState>
-                    <nextState>HHConsumptionMonthly</nextState>
+                    <nextState>HHHousingStart</nextState>
+                    <!--<nextState>HHConsumptionMonthly</nextState>-->
                     <condition>
                         <not><time>
                             <period>weekly</period>
@@ -237,7 +238,8 @@
                     <name>household_consumption_recieve_goods</name>
                     <description>A household recieves goods bought from the mall.</description>
                     <currentState>HHConsumptionRecieveGoods</currentState>
-                    <nextState>HHConsumptionMonthly</nextState>
+                    <nextState>HHHousingStart</nextState>
+                    <!--<nextState>HHConsumptionMonthly</nextState>-->
                     <inputs>
                         <input>
                             <messageName>bought</messageName>
@@ -254,7 +256,8 @@
                     <name>idle</name>
                     <description>It is not the end of month.</description>
                     <currentState>HHConsumptionMonthly</currentState>
-                    <nextState>HHHousingStart</nextState>
+                    <!--<nextState>HHHousingStart</nextState>-->
+                    <nextState>HHLabourPayroll</nextState>
                     <condition>
                         <not><time>
                             <period>monthly</period>
@@ -266,7 +269,8 @@
                     <name>household_consumption_trace_cpi</name>
                     <description>Household traces monthly cpi.</description>
                     <currentState>HHConsumptionMonthly</currentState>
-                    <nextState>HHHousingStart</nextState>
+                    <!--<nextState>HHHousingStart</nextState>-->
+                    <nextState>HHLabourPayroll</nextState>
                     <condition>
                         <time>
                             <period>monthly</period>
@@ -416,7 +420,8 @@
                     <name>idle</name>
                     <description>It is not the day of the week to act.</description>
                     <currentState>CentralBankConsumption</currentState>
-                    <nextState>CentralBankConsumptionPrices</nextState>
+                    <!--<nextState>CentralBankConsumptionPrices</nextState>-->
+                    <nextState>CentralBankHousing</nextState>
                     <condition>
                         <not><time>
                             <period>weekly</period>
@@ -428,7 +433,8 @@
                     <name>centralbank_trace_goods_prices</name>
                     <description>It is the day of the week to act.</description>
                     <currentState>CentralBankConsumption</currentState>
-                    <nextState>CentralBankConsumptionPrices</nextState>
+                    <!--<nextState>CentralBankConsumptionPrices</nextState>-->
+                    <nextState>CentralBankHousing</nextState>
                     <condition>
                         <time>
                             <period>weekly</period>
@@ -445,7 +451,8 @@
                     <name>idle</name>
                     <description>It is not the end of month.</description>
                     <currentState>CentralBankConsumptionPrices</currentState>
-                    <nextState>CentralBankHousing</nextState>
+                    <!--<nextState>CentralBankHousing</nextState>-->
+                    <nextState>CentralBankLabour</nextState>
                     <condition>
                         <not><time>
                             <period>monthly</period>
@@ -457,7 +464,8 @@
                     <name>centralbank_update_price_indices</name>
                     <description>The central bank computes monthly price average.</description>
                     <currentState>CentralBankConsumptionPrices</currentState>
-                    <nextState>CentralBankHousing</nextState>
+                    <!--<nextState>CentralBankHousing</nextState>-->
+                    <nextState>CentralBankLabour</nextState>
                     <condition>
                         <time>
                             <period>monthly</period>

@@ -292,7 +292,8 @@
                     <name>idle</name>
                     <description>It is not the first day of the month.</description>
                     <currentState>HHHousingStart</currentState>
-                    <nextState>HHLabourPayroll</nextState>
+                    <!--<nextState>HHLabourPayroll</nextState>-->
+                    <nextState>HHConsumptionMonthly</nextState>
                     <condition>
                         <not><time>
                             <period>monthly</period>
@@ -482,7 +483,8 @@
                     <name>household_housing_debt_writeoff</name>
                     <description>When debt of household drops below a certain threshold its earnings, the debt is written off.</description>
                     <currentState>HHHousingWriteOff</currentState>
-                    <nextState>HHLabourPayroll</nextState>
+                    <nextState>HHConsumptionMonthly</nextState>
+                    <!--<nextState>HHLabourPayroll</nextState>-->
                     <outputs>
                         <output>
                             <messageName>mortgage_writeoff</messageName>
@@ -699,7 +701,8 @@
                     <name>idle</name>
                     <description>It is not the day of the month to act.</description>
                     <currentState>CentralBankHousing</currentState>
-                    <nextState>CentralBankLabour</nextState>
+                    <!--<nextState>CentralBankLabour</nextState>-->
+                    <nextState>CentralBankConsumptionPrices</nextState>
                     <condition>
                         <not><time>
                             <period>monthly</period>
@@ -711,7 +714,8 @@
                     <name>centralbank_trace_housing_prices</name>
                     <description>It is the day of the month to act.</description>
                     <currentState>CentralBankHousing</currentState>
-                    <nextState>CentralBankLabour</nextState>
+                    <!--<nextState>CentralBankLabour</nextState>-->
+                    <nextState>CentralBankConsumptionPrices</nextState>
                     <condition>
                         <time>
                             <period>monthly</period>

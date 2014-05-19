@@ -727,8 +727,13 @@
                 </variable>
                 <variable>
                     <type>double</type>
-                    <name>consumption_goods_prices[12]</name>
-                    <description>Unemployment rate. It is updated monthly</description>
+                    <name>consumption_goods_prices[13]</name>
+                    <description>Average goods prices. It is updated monthly</description>
+                </variable>
+                <variable>
+                    <type>double</type>
+                    <name>housing_prices[13]</name>
+                    <description>Average housing price. It is updated monthly</description>
                 </variable>
                 <variable>
                     <type>int</type>

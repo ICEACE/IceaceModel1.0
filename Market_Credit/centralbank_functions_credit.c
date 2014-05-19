@@ -7,15 +7,21 @@
  */
 int centralbank_set_interest_rate()
 {
-    double inflation, rcb, rcb_pre;
+    double inflation, rcb, rcb_pre, infl_goods, infl_housing;
     
     if (CONSUMPTION_GOODS_PRICES[0] == 0) {
-        inflation = 0;
+        infl_goods = 0;
     }
     else {
-        inflation = (CONSUMPTION_GOODS_PRICES[11] - CONSUMPTION_GOODS_PRICES[0]) / CONSUMPTION_GOODS_PRICES[0];
+        infl_goods = (CONSUMPTION_GOODS_PRICES[12] - CONSUMPTION_GOODS_PRICES[0]) / CONSUMPTION_GOODS_PRICES[0];
     }
-    
+    if (HOUSING_PRICES[0] == 0) {
+        infl_housing = 0;
+    }
+    else {
+        infl_housing = HOUSING_PRICES[12] / HOUSING_PRICES[0] - 1;
+    }
+    inflation = 0.15*infl_housing + 0.85 * infl_goods;
     
     // Taylors Rule:
     rcb = inflation;
