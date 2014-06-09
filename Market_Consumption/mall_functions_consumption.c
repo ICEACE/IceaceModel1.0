@@ -12,6 +12,7 @@ int mall_consumption_shopping()
     /* Allocate local buyer queues and seller lists. */
     seller_array sellers_list;
     buyer_array buyers_list;
+    
     /* Initialize arrays. */
     init_seller_array(&sellers_list);
     init_buyer_array(&buyers_list);
