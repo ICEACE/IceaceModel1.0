@@ -543,6 +543,8 @@ int household_housing_pay_mortgages()
 	return 0; /* Returning zero means the agent is not removed */
 }
 
+FILE * hh_mfirst;
+int hh_mfirst_open = 0;
 /*
  * \fn: household_housing_debt_writeoff()
  * \brief: if household pays a significant amount of his income
@@ -559,16 +561,19 @@ int household_housing_debt_writeoff()
     size = MORTGAGES_LIST.size;
     if (size == 0){
         if (DATA_COLLECTION_MODE && COLLECT_HOUSEHOLD_DATA) {
-            char * filename;
-            FILE * file1;
-            filename = malloc(100*sizeof(char));
-            filename[0]=0;
-            strcpy(filename, "./outputs/data/Household_Monthly_FirstDay.txt");
-            file1 = fopen(filename,"a");
+            if(hh_mfirst_open == 0) {
+                char * filename;
+                filename = malloc(100*sizeof(char));
+                filename[0]=0;
+                strcpy(filename, "./outputs/data/Household_Monthly_FirstDay.txt");
+                hh_mfirst = fopen(filename,"a");
+                free(filename);
+                hh_mfirst_open = 1;
+            }
             double mcost = MORTGAGE_COSTS[0];
-            fprintf(file1,"%d %d %f %f %d %f %f %f\n",IT_NO, ID, MORTGAGES, mcost, HOUSING_UNITS, HOUSING_VALUE, EQUITY_RATIO, LIQUIDITY);
-            fclose(file1);
-            free(filename);
+            fprintf(hh_mfirst,"%d %d %f %f %d %f %f %f\n",IT_NO, ID, MORTGAGES, mcost, HOUSING_UNITS, HOUSING_VALUE, EQUITY_RATIO, LIQUIDITY);
+            /* Would be good to know when to close the file */
+            //fclose(file1);
         }
         return 0;
     }
@@ -716,16 +721,18 @@ int household_housing_debt_writeoff()
     }
     
     if (DATA_COLLECTION_MODE && COLLECT_HOUSEHOLD_DATA) {
-        char * filename;
-        FILE * file1;
-        filename = malloc(100*sizeof(char));
-        filename[0]=0;
-        strcpy(filename, "./outputs/data/Household_Monthly_FirstDay.txt");
-        file1 = fopen(filename,"a");
+        if(hh_mfirst_open == 0) {
+            char * filename;
+            filename = malloc(100*sizeof(char));
+            filename[0]=0;
+            strcpy(filename, "./outputs/data/Household_Monthly_FirstDay.txt");
+            hh_mfirst = fopen(filename,"a");
+            free(filename);
+            hh_mfirst_open = 1;
+        }
         double mcost = MORTGAGE_COSTS[0];
-        fprintf(file1,"%d %d %f %f %d %f %f %f\n",IT_NO, ID, MORTGAGES, mcost, HOUSING_UNITS, HOUSING_VALUE, EQUITY_RATIO, LIQUIDITY);
-        fclose(file1);
-        free(filename);
+        fprintf(hh_mfirst,"%d %d %f %f %d %f %f %f\n",IT_NO, ID, MORTGAGES, mcost, HOUSING_UNITS, HOUSING_VALUE, EQUITY_RATIO, LIQUIDITY);
+//        fclose(file1);
     }
     
     //free_mortgage(&mort);

@@ -186,7 +186,8 @@ int household_credit_collect_shares()
 	return 0; /* Returning zero means the agent is not removed */
 }
 
-
+FILE * hh_q;
+int hh_q_open = 0;
 /*
  * \fn: int household_credit_do_balance_sheet()
  * \brief:
@@ -203,16 +204,19 @@ int household_credit_do_balance_sheet()
     EQUITY = TOTAL_ASSETS - MORTGAGES;
 
     if (DATA_COLLECTION_MODE && COLLECT_HOUSEHOLD_DATA) {
-        char * filename;
-        FILE * file1;
-        filename = malloc(100*sizeof(char));
-        filename[0]=0;
-        strcpy(filename, "./outputs/data/Household_Quarterly.txt");
-        
-        file1 = fopen(filename,"a");
-        fprintf(file1,"%d %d %f %f %f %f %f %f %f %f %f\n",IT_NO, ID, TOTAL_ASSETS, LIQUIDITY, HOUSING_VALUE, LABOUR_INCOME, GOVERNMENT_BENEFITS, CAPITAL_INCOME, MORTGAGES, HOUSING_PAYMENT, EQUITY);
-        fclose(file1);
-        free(filename);
+        if(hh_q_open == 0)
+        {
+            char * filename;
+            filename = malloc(100*sizeof(char));
+            filename[0]=0;
+            strcpy(filename, "./outputs/data/Household_Quarterly.txt");
+            
+            hh_q = fopen(filename,"a");
+            free(filename);
+            hh_q_open = 1;
+        }
+        fprintf(hh_q,"%d %d %f %f %f %f %f %f %f %f %f\n",IT_NO, ID, TOTAL_ASSETS, LIQUIDITY, HOUSING_VALUE, LABOUR_INCOME, GOVERNMENT_BENEFITS, CAPITAL_INCOME, MORTGAGES, HOUSING_PAYMENT, EQUITY);
+        // fclose(file1);
     }
     
     /* Shares are liquidified. */
@@ -221,6 +225,8 @@ int household_credit_do_balance_sheet()
 	return 0; /* Returning zero means the agent is not removed */
 }
 
+FILE * hh_mlast;
+int hh_mlast_open = 0;
 /*
  * \fn: int household_credit_collect_benefits()
  * \brief: Collect general transfer benefits and/or unemployment benefits from the government.
@@ -251,15 +257,18 @@ int household_credit_collect_benefits()
     PREVIOUS_BENEFITS[0] = GOVERNMENT_BENEFITS;
     
     if (DATA_COLLECTION_MODE && COLLECT_HOUSEHOLD_DATA) {
-        char * filename;
-        FILE * file1;
-        filename = malloc(100*sizeof(char));
-        filename[0]=0;
-        strcpy(filename, "./outputs/data/Household_Monthly_LastDay.txt");
-        file1 = fopen(filename,"a");
-        fprintf(file1,"%d %d %d %f %f %f\n",IT_NO, ID, MY_EMPLOYER_ID, WAGE, unemployment_benefit, general_benefit);
-        fclose(file1);
-        free(filename);
+        if(hh_mlast_open == 0) {
+            char * filename;
+            filename = malloc(100*sizeof(char));
+            filename[0]=0;
+            strcpy(filename, "./outputs/data/Household_Monthly_LastDay.txt");
+            hh_mlast = fopen(filename,"a");
+            free(filename);
+            hh_mlast_open = 1;
+        }
+        fprintf(hh_mlast,"%d %d %d %f %f %f\n",IT_NO, ID, MY_EMPLOYER_ID, WAGE, unemployment_benefit, general_benefit);
+        // fclose(file1);
+        
     }
     
 	return 0; /* Returning zero means the agent is not removed */

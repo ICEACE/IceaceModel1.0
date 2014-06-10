@@ -70,6 +70,8 @@ int household_consumption_demand()
 	return 0; /* Returning zero means the agent is not removed */
 }
 
+FILE * hh_weekly;
+int hh_weekly_open = 0;
 /*
  * \fn: int household_consumption_recieve_goods()
  * \brief: Household updates its post-mall planned consumption and liquidity.
@@ -108,16 +110,20 @@ int household_consumption_recieve_goods()
     }
     
     if (DATA_COLLECTION_MODE && COLLECT_HOUSEHOLD_DATA) {
-        char * filename;
-        FILE * file1;
-        filename = malloc(100*sizeof(char));
-        filename[0]=0;
-        strcpy(filename, "./outputs/data/Household_Weekly.txt");
+        if(hh_weekly_open == 0)
+        {
+            char * filename;
+            filename = malloc(100*sizeof(char));
+            filename[0]=0;
+            strcpy(filename, "./outputs/data/Household_Weekly.txt");
+            
+            hh_weekly = fopen(filename,"a");
+            free(filename);
+            hh_weekly_open = 1;
+        }
+        fprintf(hh_weekly,"%d %d %f %f %f %f %d\n",IT_NO, ID, LIQUIDITY, WEEKLY_CONSUMPTION_BUDGET, money_to_spend, total_money_spent, quantity_bought);
+        //fclose(file1);
         
-        file1 = fopen(filename,"a");
-        fprintf(file1,"%d %d %f %f %f %f %d\n",IT_NO, ID, LIQUIDITY, WEEKLY_CONSUMPTION_BUDGET, money_to_spend, total_money_spent, quantity_bought);
-        fclose(file1);
-        free(filename);
     }
     
 	return 0; /* Returning zero means the agent is not removed */
