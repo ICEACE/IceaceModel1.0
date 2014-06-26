@@ -606,7 +606,7 @@ int household_housing_debt_writeoff()
             add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, LOANTERM, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
         }
         else if (MORTGAGE_CHOICE == 2){
-            MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / (MORTGAGES_INTEREST_RATE / 4 + 1/LOANTERM);
+            MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / (MORTGAGES_INTEREST_RATE / 4 + 1.0/LOANTERM);
             quarterly_interest = MORTGAGES * MORTGAGES_INTEREST_RATE / 4;
             quarterly_principal = (MORTGAGES / LOANTERM);
             add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, LOANTERM, quarterly_interest, quarterly_principal, MORTGAGES_INTEREST_RATE, MORTGAGE_CHOICE);
@@ -631,7 +631,7 @@ int household_housing_debt_writeoff()
             } else {
                 used_interest_rate = MORTGAGES_INTEREST_RATE - IIM_RATE_DISCOUNT; 
             }
-            MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / (used_interest_rate / 4 + 1/LOANTERM);
+            MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / (used_interest_rate / 4 + 1.0/LOANTERM);
             quarterly_interest = MORTGAGES * used_interest_rate/4;
             quarterly_principal = (MORTGAGES / LOANTERM);
             add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, LOANTERM, quarterly_interest, quarterly_principal, used_interest_rate, MORTGAGE_CHOICE);
@@ -648,7 +648,7 @@ int household_housing_debt_writeoff()
         }
         else if (MORTGAGE_CHOICE == 6){
             used_interest_rate = MORTGAGES_INTEREST_RATE + 0.01;
-            MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / (used_interest_rate / 4 + 1/LOANTERM);
+            MORTGAGES = (total_income * HOUSEHOLD_MORTGAGE_WRITEOFF_LOW) / (used_interest_rate / 4 + 1.0/LOANTERM);
             quarterly_interest = MORTGAGES * (MORTGAGES_INTEREST_RATE + 0.01)/4;
             quarterly_principal = (MORTGAGES / LOANTERM);
             add_mortgage(&MORTGAGES_LIST, BANK_ID, MORTGAGES, LOANTERM, quarterly_interest, quarterly_principal, used_interest_rate, MORTGAGE_CHOICE);
