@@ -85,12 +85,15 @@ int firm_labour_fire()
  */
 int firm_labour_job_announcement_stage1()
 {
+    double offer = AVERAGE_WAGE;
+
     if (WAGE_OFFER <= AVERAGE_WAGE) {
-        WAGE_OFFER = 1.01 * AVERAGE_WAGE;
+        //WAGE_OFFER = 1.01 * AVERAGE_WAGE;
+        offer = 1.01 * AVERAGE_WAGE;
     }
     
     for (int i = 0; i < VACANCIES; i++) {
-        add_vacancy_stage1_message(ID, WAGE_OFFER);
+        add_vacancy_stage1_message(ID, offer);
     }
     
 	return 0; /* Returning zero means the agent is not removed */
@@ -119,6 +122,11 @@ int firm_labour_job_offer_stage1()
     /* It is possible that fewer than needed applications were recieved. */
     VACANCIES -= n_hired;
     NO_EMPLOYEES = EMPLOYEES.size;
+    
+    /* Firm updates its wage rate */
+    if (n_hired) {
+        WAGE_OFFER = 1.01 * AVERAGE_WAGE;
+    }
     
 	return 0; /* Returning zero means the agent is not removed */
 }
@@ -162,8 +170,15 @@ int firm_labour_update()
  */
 int firm_labour_job_announcement_stage2()
 {
+    double offer = AVERAGE_WAGE;
+    
+    /* Firm increses its bid in the second stage. */
+    if (WAGE_OFFER <= AVERAGE_WAGE) {
+        offer = 1.012 * AVERAGE_WAGE;
+    }
+
     for (int i = 0; i < VACANCIES; i++) {
-        add_vacancy_stage2_message(ID,WAGE_OFFER);
+        add_vacancy_stage2_message(ID,offer);
     }
     
     
@@ -195,6 +210,11 @@ int firm_labour_job_offer_stage2()
     
     VACANCIES -= n_hired;
     NO_EMPLOYEES = EMPLOYEES.size;
+    
+    /* Firm updates its wage rate */
+    if (n_hired) {
+        WAGE_OFFER = 1.012 * AVERAGE_WAGE;
+    }
     
     if (PRINT_DEBUG_MODE){
         printf("Firm ID = %d is at the end of Labour Market Stage 2: Number of Employees =%d, Vacancies = %d \n", ID, NO_EMPLOYEES, VACANCIES);
