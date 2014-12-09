@@ -90,7 +90,10 @@ int household_housing_enter_market()
     
     /* Endogenous mortgage choice mechnism may be implemented at that point.*/
     
-    cash = LIQUIDITY;
+    /* Households aim to finance their housing purchase fully via mortgage credits.
+     */
+    //cash = LIQUIDITY;
+    cash = 0;
     add_buy_housing_message(ID, BANK_ID, cash, income, HOUSING_PAYMENT, MORTGAGE_CHOICE);
     
 	return 0; /* Returning zero means the agent is not removed */
