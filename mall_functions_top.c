@@ -26,7 +26,6 @@ int mall_init()
     }
 
     IT_NO++;
-    fprintf(stdout, "Agent: Loop - %d\n", DAY);
     
     return 0; /* Returning zero means the agent is not removed */
 }
