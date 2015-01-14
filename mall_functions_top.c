@@ -1,5 +1,6 @@
 #include "header.h"
 #include "mall_agent_header.h"
+#include "library_header.h"
 
 /*
  * \fn: int mall_init()
@@ -25,6 +26,8 @@ int mall_init()
     }
 
     IT_NO++;
-	return 0; /* Returning zero means the agent is not removed */
+    fprintf(stdout, "Agent: Loop - %d\n", DAY);
+    
+    return 0; /* Returning zero means the agent is not removed */
 }
 

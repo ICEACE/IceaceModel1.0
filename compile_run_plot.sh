@@ -15,7 +15,7 @@ cp ./initialization/iceace_model_v1.0.0.test.xml ./outputs/its/0.xml
 ./main 3600 initialization/0 -f 240
 
 ### Cleaning up ###
-make vclean
+#make vclean
 
 # Plotting the results of single run:
 Rscript outputs/scripts/singleRunAnals.R

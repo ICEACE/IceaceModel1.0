@@ -127,7 +127,7 @@ int firm_labour_job_offer_stage1()
      All employees has a wage increase equal to latest employee's wage.
      */
     if (n_hired) {
-        if (WAGE_OFFER < AVERAGE_WAGE)) {
+        if (WAGE_OFFER < AVERAGE_WAGE) {
             WAGE_OFFER = 1.01 * AVERAGE_WAGE;
         }
     }
@@ -217,7 +217,7 @@ int firm_labour_job_offer_stage2()
     
     /* Firm updates its wage rate */
     if (n_hired) {
-        if (WAGE_OFFER < AVERAGE_WAGE)) {
+        if (WAGE_OFFER < AVERAGE_WAGE) {
             WAGE_OFFER = 1.012 * AVERAGE_WAGE;
         }
     }
