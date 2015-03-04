@@ -505,6 +505,9 @@ int household_housing_pay_mortgages()
         bankid = MORTGAGES_LIST.array[i].bank_id;
         interest_paid = MORTGAGES_LIST.array[i].quarterly_interest / 3;
         principal_paid = MORTGAGES_LIST.array[i].quarterly_principal / 3;
+        if (principal_paid > MORTGAGES_LIST.array[i].principal) {
+            principal_paid = MORTGAGES_LIST.array[i].principal;
+        }
         principal_left = MORTGAGES_LIST.array[i].principal - principal_paid;
         MORTGAGES_LIST.array[i].principal = principal_left;
         add_mortgage_payment_message(bankid, interest_paid, principal_paid);
