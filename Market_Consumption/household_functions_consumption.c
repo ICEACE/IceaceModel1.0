@@ -13,7 +13,11 @@ int household_consumption_compute_budget()
     double budget;
     
     HOUSING_PAYMENT = MORTGAGE_COSTS[0] + MORTGAGE_COSTS[1] + MORTGAGE_COSTS[2];
-    
+    /*Here we need to take into account only a part of the CAPITAL_INCOME
+    e.g. the line could be:
+    disposable_income = LABOUR_INCOME + 0.25*CAPITAL_INCOME - HOUSING_PAYMENT
+    or if we can create a constant named CAP_INCOME_RATIO
+    disposable_income = LABOUR_INCOME + CAP_INCOME_RATIO*CAPITAL_INCOME - HOUSING_PAYMENT */
     disposable_income = LABOUR_INCOME + CAPITAL_INCOME - HOUSING_PAYMENT;
     
     
