@@ -17,8 +17,9 @@ int household_consumption_compute_budget()
     e.g. the line could be:
     disposable_income = LABOUR_INCOME + 0.25*CAPITAL_INCOME - HOUSING_PAYMENT
     or if we can create a constant named CAP_INCOME_RATIO
-    disposable_income = LABOUR_INCOME + CAP_INCOME_RATIO*CAPITAL_INCOME - HOUSING_PAYMENT */
-    disposable_income = LABOUR_INCOME + CAPITAL_INCOME - HOUSING_PAYMENT;
+     */
+    disposable_income = LABOUR_INCOME + CAP_INCOME_RATIO*CAPITAL_INCOME - HOUSING_PAYMENT;
+    //disposable_income = LABOUR_INCOME + CAPITAL_INCOME - HOUSING_PAYMENT;
     
     
     budget = disposable_income;

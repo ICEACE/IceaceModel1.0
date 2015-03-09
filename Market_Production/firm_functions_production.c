@@ -262,6 +262,10 @@ int firm_production_construction_plan()
         }
     }
     
+    /* Computing production plan considering firm memory persistance and production estimates.
+     */
+    //PRODUCTION_PLAN = (int) (FIRM_MEMORY_PERSISTANCE * last_production + (1.0 - FIRM_MEMORY_PERSISTANCE) * PRODUCTION_PLAN);
+    
     if (DATA_COLLECTION_MODE && COLLECT_FIRM_DATA) {
         char * filename;
         FILE * file1;

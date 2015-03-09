@@ -21,6 +21,11 @@
                 <name>wealth_effect</name>
                 <description>A rate of influence from housing market to regular economy. Used by Household agents.</description>
             </variable>
+            <variable>
+                <type>double</type>
+                <name>cap_income_ratio</name>
+                <description>The ratio of savings on capital income before calculating consumption budget.</description>
+            </variable>
         </constants>
         <functionFiles>
         <!-- List of C files that hold agent functions -->
