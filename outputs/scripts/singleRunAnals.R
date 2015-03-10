@@ -1,45 +1,61 @@
 ### Init Workspace  ###
 rm(list = ls())
-source("/Users/toti/github/ICEACE-FLAME/IceaceModel1.0/outputs/scripts/LibIceace.R", echo = TRUE)
-data_dir = "/Users/toti/github/ICEACE-FLAME/IceaceModel1.0/outputs/data"
-output_dir = "/Users/toti/github/ICEACE-FLAME/IceaceModel1.0/outputs/plots/"
+
+base_dir = "/Users/bulent/Documents/AWorkspace/iceace/IceaceModel1.0"
+scripts_dir = paste(base_dir, "/", "outputs/scripts/", sep ="")
+data_dir = paste(base_dir, "/", "outputs/data/", sep ="")
+output_dir = paste(base_dir, "/", "outputs/plots/", sep ="")
 setwd(output_dir)
+
+sfile = paste(scripts_dir, "/", "LibIceace.R", sep ="")
+source(sfile, echo = TRUE)
+
+
 
 # Import Datasets #
 data_household = 0
-source("/Users/toti/github/ICEACE-FLAME/IceaceModel1.0/outputs/scripts/importSimResults.R", echo = T)
+sfile = paste(scripts_dir, "/", "importSimResults.R", sep ="")
+source(sfile, echo = TRUE)
 
 # Plotting Mall, Real Estate, Government, Central Bank and Equity Fund Vars #
-source("/Users/toti/github/ICEACE-FLAME/IceaceModel1.0/outputs/scripts/plotAgentVars.R", echo = T)
-
+sfile = paste(scripts_dir, "/", "plotAgentVars.R", sep ="")
+source(sfile, echo = TRUE)
 
 # Plot Bank Vars #
-bankA = 1637
-bankB = 1638
-source("/Users/toti/github/ICEACE-FLAME/IceaceModel1.0/outputs/scripts/plotBanksVars.R", echo = T)
+bankA = 66
+bankB = 67
+sfile = paste(scripts_dir, "/", "plotBanksVars.R", sep ="")
+source(sfile, echo = TRUE)
 
 # Plot Firm Vars #
-source("/Users/toti/github/ICEACE-FLAME/IceaceModel1.0/outputs/scripts/plotFirmsVars.R", echo = T)
-
+sfile = paste(scripts_dir, "/", "plotFirmsVars.R", sep ="")
+source(sfile, echo = TRUE)
 
 # Compute GDP #
-betaval = "0.20"
-source("/Users/toti/github/ICEACE-FLAME/IceaceModel1.0/outputs/scripts/computeGDPs.R", echo = T)
+betaval = "0.40"
+sfile = paste(scripts_dir, "/", "computeGDPs.R", sep ="")
+source(sfile, echo = TRUE)
 
 # Compute Writeoff Cases #
-niter = 3600
-source("/Users/toti/github/ICEACE-FLAME/IceaceModel1.0/outputs/scripts/computeWriteoffs.R", echo = T)
+niter = 7200
+sfile = paste(scripts_dir, "/", "computeWriteoffs.R", sep ="")
+source(sfile, echo = TRUE)
 
 # Compute Crediting Frequencies #
-source("/Users/toti/github/ICEACE-FLAME/IceaceModel1.0/outputs/scripts/computeCreditings.R", echo = T)
+sfile = paste(scripts_dir, "/", "computeCreditings.R", sep ="")
+source(sfile, echo = TRUE)
 
 # Plot Household Vars #
 if (data_household){
-	source("/Users/toti/github/ICEACE-FLAME/IceaceModel1.0/outputs/scripts/plotHouseholdVars.R", echo = T)
+	sfile = paste(scripts_dir, "/", "plotHouseholdVars.R", sep ="")
+	source(sfile, echo = TRUE)
 	}
 
 # Compute Housing Market Activities#
-source("/Users/toti/github/ICEACE-FLAME/IceaceModel1.0/outputs/scripts/computeHousing.R", echo = T)
+sfile = paste(scripts_dir, "/", "computeHousing.R", sep ="")
+source(sfile, echo = TRUE)
 
-source("/Users/toti/github/ICEACE-FLAME/IceaceModel1.0/outputs/scripts/identityCheck.R", echo = T)
 
+# Identity Check
+sfile = paste(scripts_dir, "/", "identityCheck.R", sep ="")
+source(sfile, echo = TRUE)
