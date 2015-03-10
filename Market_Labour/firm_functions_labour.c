@@ -85,9 +85,9 @@ int firm_labour_fire()
  */
 int firm_labour_job_announcement_stage1()
 {
-    double offer = AVERAGE_WAGE;
+    double offer = WAGE_OFFER;
 
-    if (WAGE_OFFER <= AVERAGE_WAGE) {
+    if (offer <= AVERAGE_WAGE) {
         //WAGE_OFFER = 1.01 * AVERAGE_WAGE;
         offer = 1.01 * AVERAGE_WAGE;
     }
@@ -127,7 +127,7 @@ int firm_labour_job_offer_stage1()
      All employees has a wage increase equal to latest employee's wage.
      */
     if (n_hired) {
-        if (WAGE_OFFER < AVERAGE_WAGE) {
+        if (WAGE_OFFER <= AVERAGE_WAGE) {
             WAGE_OFFER = 1.01 * AVERAGE_WAGE;
         }
     }
@@ -177,7 +177,7 @@ int firm_labour_job_announcement_stage2()
     double offer = AVERAGE_WAGE;
     
     /* Firm increses its bid in the second stage. */
-    if (WAGE_OFFER <= AVERAGE_WAGE) {
+    if (offer <= AVERAGE_WAGE) {
         offer = 1.012 * AVERAGE_WAGE;
     }
 
@@ -217,7 +217,7 @@ int firm_labour_job_offer_stage2()
     
     /* Firm updates its wage rate */
     if (n_hired) {
-        if (WAGE_OFFER < AVERAGE_WAGE) {
+        if (WAGE_OFFER <= AVERAGE_WAGE) {
             WAGE_OFFER = 1.012 * AVERAGE_WAGE;
         }
     }
