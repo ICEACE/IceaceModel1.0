@@ -22,14 +22,12 @@ int household_housing_market_role()
     if (CAPITAL_INCOME > LABOUR_INCOME) {
         /* Seller: */
         if (DELTA_HOUSING_PRICE < 0) {
-            HMARKET_ROLE = 2;
-            return 0;
-        }
+            HMARKET_ROLE = 2;}
         /* Buyer: */
         else {
             HMARKET_ROLE = 3;
-            return 0;
         }
+        return 0;
     }
 
 
