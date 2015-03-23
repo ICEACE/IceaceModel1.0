@@ -22,8 +22,8 @@ sfile = paste(scripts_dir, "/", "plotAgentVars.R", sep ="")
 source(sfile, echo = TRUE)
 
 # Plot Bank Vars #
-bankA = 66
-bankB = 67
+bankA = 3267
+bankB = 3268
 sfile = paste(scripts_dir, "/", "plotBanksVars.R", sep ="")
 source(sfile, echo = TRUE)
 
@@ -32,12 +32,12 @@ sfile = paste(scripts_dir, "/", "plotFirmsVars.R", sep ="")
 source(sfile, echo = TRUE)
 
 # Compute GDP #
-betaval = "0.40"
+betaval = "0.60, Share Holders' Ratio = 1.0"
 sfile = paste(scripts_dir, "/", "computeGDPs.R", sep ="")
 source(sfile, echo = TRUE)
 
 # Compute Writeoff Cases #
-niter = 7200
+niter = 4800
 sfile = paste(scripts_dir, "/", "computeWriteoffs.R", sep ="")
 source(sfile, echo = TRUE)
 

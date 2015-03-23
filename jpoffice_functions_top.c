@@ -63,7 +63,7 @@ int jpoffice_init_employment()
      * These 2 values should be added to jpoffice memory for parameterization!!
      */
     constructor_firm_size = (int) (nhouseholds * 0.075 / ncfirms);
-    employment_size = (int) (nhouseholds * 0.95);
+    employment_size = (int) (nhouseholds * 0.90);
     
     if (PRINT_DEBUG_MODE) {
         printf("nRFirms: %d nCFirms: %d, nHH: %d\n", nrfirms, ncfirms, nhouseholds);
