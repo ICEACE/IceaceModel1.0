@@ -18,24 +18,19 @@ int household_housing_market_role()
         if (HOUSING_UNITS == 0) { HMARKET_ROLE = 0; } else { HMARKET_ROLE  = 1;}
         return 0;
     }
-    /* MATLAB CODE FOR CAPITALISTS HOUSING MARKER DECISION */
-    /*if sum(Households.QuarterlyLaborIncome(:,h)) < REmarket.CapitalLaborRatio*Households.QuarterlyCapitalIncome(h)
-        if REmarket.HousingPrice(end) > REmarket.HousingPrice(end-1)
-              Households.HousingMarketAction(h) = 1;
-        elseif REmarket.HousingPrice(end) <= REmarket.HousingPrice(end-1)
-              Households.HousingMarketAction(h) = -1;
-        end
-    */
-    /* THIS IS HOW IT COULD BE IN FLAME */
-    /*if CAPITAL_INCOME > LABOUR_INCOME {
-        if QUARTERLY_PRICE_CHANGE > 0 {
+    
+    if (CAPITAL_INCOME > LABOUR_INCOME) {
+        /* Seller: */
+        if (DELTA_HOUSING_PRICE < 0) {
             HMARKET_ROLE = 2;
             return 0;
-        else
-            HMARKET_ROLE = 1;
+        }
+        /* Buyer: */
+        else {
+            HMARKET_ROLE = 3;
             return 0;
         }
-    } */
+    }
 
 
     
@@ -246,7 +241,7 @@ int household_housing_buy()
  */
 int household_housing_sell()
 {
-    if (HOUSING_UNITS == 0) {
+    if (HOUSING_UNITS < 3) {
         return 0;
     }
     
@@ -267,7 +262,7 @@ int household_housing_sell()
  */
 int household_housing_fire_sell()
 {
-    if (HOUSING_UNITS == 0) {
+    if (HOUSING_UNITS < 3) {
         return 0;
     }
     
@@ -486,9 +481,10 @@ int household_housing_collect_sale_revenue()
  */
 int household_housing_update_market_price()
 {
-    double pre_value;
+    double pre_value, pre_price;
     
     pre_value = HOUSING_UNITS * HOUSING_PRICE;
+    pre_price = HOUSING_PRICE;
     
     START_HOUSING_PRICE_MESSAGE_LOOP
     HOUSING_PRICE = housing_price_message->price;
@@ -496,6 +492,7 @@ int household_housing_update_market_price()
     
     HOUSING_VALUE = HOUSING_UNITS * HOUSING_PRICE;
     DELTA_HOUSING_VALUE = HOUSING_VALUE - pre_value;
+    DELTA_HOUSING_PRICE = HOUSING_PRICE - pre_price;
     
 	return 0; /* Returning zero means the agent is not removed */
 }

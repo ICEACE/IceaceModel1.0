@@ -281,6 +281,11 @@
                     <description>Value change on housing value on a monthly basis.</description>
                 </variable>
                 <variable>
+                    <type>double</type>
+                    <name>delta_housing_price</name>
+                    <description>Monthly change on average housing prices.</description>
+                </variable>
+                <variable>
                     <type>int</type>
                     <name>mortgage_choice</name>
                     <description>Type of mortgage household chooses.</description>
